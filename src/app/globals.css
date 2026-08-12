@@ -1,6 +1,213 @@
 @import "tailwindcss";
 
-/*
- * Deliberately bare. Design tokens (colour, type scale, typefaces, spacing) are
- * decided in the Phase B token plan and land here only after owner approval.
- */
+/* ─────────────────────────────────────────────────────────────
+   Tokens. Six values, approved in the Phase B plan.
+   Dark mode is prefers-color-scheme only — no toggle UI.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  --paper: #f5f6f8;
+  --ink: #14181f;
+  --muted: #5a6472;
+  --rule: #d9dde3;
+  --accent: #1a3fa0;
+  --mark: #f7e9a0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #12151a;
+    --ink: #e7eaef;
+    --muted: #9aa4b2;
+    --rule: #272d38;
+    --accent: #a8bcff;
+    --mark: #3d3722;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-mark: var(--mark);
+
+  /* Bengali sits after Charis: Charis has no Bengali glyphs, so the browser
+     falls through to Noto for exactly those codepoints and nothing else. */
+  --font-serif: var(--font-charis), var(--font-bengali), Charter, Georgia, serif;
+  --font-mono: var(--font-fira-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Base
+   ───────────────────────────────────────────────────────────── */
+
+@layer base {
+  html {
+    color-scheme: light dark;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Charis ships 400 and 700 only. Titles are large-and-regular, which is the
+     paper convention anyway; bold is reserved for emphasis inside prose. */
+  h1,
+  h2,
+  h3 {
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  ::selection {
+    background-color: var(--mark);
+  }
+
+  /* Never let a long URL, BibTeX key or dataset name push the page sideways. */
+  pre,
+  code {
+    overflow-wrap: break-word;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Structure: the record grid.
+
+   One reading column with a left gutter holding monospace field labels, so a
+   page reads as a typeset record with its metadata in the margin. Below the
+   lg breakpoint the labels simply stack above the blocks they name.
+   ───────────────────────────────────────────────────────────── */
+
+@layer components {
+  /* Page container. Width = gutter + gap + reading column + padding, so the
+     header wordmark, the margin labels and the prose all share one left edge. */
+  .shell {
+    width: 100%;
+    max-width: 56.5rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  .record {
+    display: grid;
+    grid-template-columns: minmax(0, 42.5rem);
+    row-gap: 2.75rem;
+  }
+
+  .record > .field {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+    row-gap: 0.5rem;
+  }
+
+  /* A block with no field label. It still sits in the reading column, so every
+     line of prose on the site shares one left edge and one right edge. */
+  .record > .unlabelled {
+    grid-column: 1 / -1;
+  }
+
+  @media (min-width: 64rem) {
+    .record {
+      grid-template-columns: 8.5rem minmax(0, 42.5rem);
+      column-gap: 2.5rem;
+    }
+
+    .record > .unlabelled {
+      grid-column: 2;
+    }
+
+    /* The one element allowed to break the margin: the name. Deliberate, and
+       the only place it happens, so it reads as typesetting and not as drift. */
+    .hangs-left {
+      margin-left: -11rem;
+    }
+  }
+
+  /* Field labels double as real headings — the h2 lives in the margin. */
+  .field-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    /* Optical nudge so a 12px label sits on the first baseline of 18px prose. */
+    padding-top: 0.3rem;
+  }
+
+  .field-label .field-label-note {
+    display: block;
+    text-transform: none;
+    letter-spacing: 0.02em;
+  }
+
+  /* Metadata set as monospace, the way a record's machine-readable half looks. */
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  /* Links: underline is present at rest (never hover-only), and only its
+     weight and distance move. 120ms, and nothing at all under reduced motion. */
+  .link {
+    color: var(--accent);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    text-decoration-color: color-mix(in oklab, var(--accent) 40%, transparent);
+    transition:
+      text-decoration-color 120ms ease,
+      text-decoration-thickness 120ms ease;
+  }
+
+  .link:hover {
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--accent);
+  }
+
+  /* The owner's name in an author list, highlighted the way you highlight your
+     own name in a PDF. Not bolded, not recoloured — co-authors keep parity. */
+  .self {
+    background-color: var(--mark);
+    box-shadow: 0 0 0 0.15em var(--mark);
+    border-radius: 0.05em;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Motion budget: hover states only, and none of it under reduce.
+   ───────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

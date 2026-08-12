@@ -30,11 +30,16 @@ export const SITE_URL = 'https://todo.invalid';
 const POSITIONING =
   'I work on low-resource Bangla NLP and the security of biometric models, and I ship the deployment code as well as the papers.';
 
+/** Home-page bio, third person, as supplied by the owner. Do not rewrite. */
+const BIO =
+  'Kamruzzaman Khan Alve is a final-semester Computer Science and Engineering student at Rajshahi University of Engineering and Technology, Bangladesh. His research sits at the intersection of low-resource language modeling and the security of learned systems: comparative work on monolingual and multilingual transformers for Bangla, and an undergraduate thesis on adversarial robustness in fingerprint presentation attack detection. He is affiliated with {{TODO: confirm lab affiliations to list, e.g. Young Learners Research Lab, TextLab RUET}}. Alongside research he builds and deploys the inference systems that put these models in front of users.';
+
 export const site = {
   /** Canonical name string. Byte-identical everywhere on the site. */
   name: 'Kamruzzaman Khan Alve',
   url: SITE_URL,
   positioning: POSITIONING,
+  bio: BIO,
   affiliation: 'Rajshahi University of Engineering and Technology',
   affiliationShort: 'RUET',
   location: 'Bangladesh',
