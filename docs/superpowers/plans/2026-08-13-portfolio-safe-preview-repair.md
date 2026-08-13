@@ -874,7 +874,7 @@ git commit -m "feat: add static content detail routes"
 - Create: `src/lib/seo.ts`
 - Create: `src/app/sitemap.ts`
 - Create: `src/app/robots.ts`
-- Create: `src/app/opengraph-image.png/route.tsx`
+- Create: `public/opengraph-image.png`
 - Create: `tests/unit/readiness.test.mjs`
 - Modify: `src/app/layout.tsx`
 - Modify: `src/app/research/page.tsx`
@@ -1054,7 +1054,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 }
 ```
 
-Implement the Open Graph image as a force-static ordinary route handler at `/opengraph-image.png`, not through the metadata file convention. Next.js auto-injects convention images into preview metadata and otherwise falls back to a localhost `metadataBase`, which violates the origin-omission rule. The ordinary route keeps the asset available while root metadata links it only when a valid production origin exists. Render only verified values in the existing palette:
+Use a static PNG at `/opengraph-image.png`, following the fallback explicitly permitted by the project brief. Next.js auto-injects convention images into preview metadata and otherwise falls back to a localhost `metadataBase`, which violates the origin-omission rule; a route handler would violate the no-route-handler constraint. The static asset stays available while root metadata links it only when a valid production origin exists. The asset contains only verified values in the existing palette:
 
 ```tsx
 export default function OpenGraphImage() {
