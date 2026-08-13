@@ -20,6 +20,7 @@
 - Missing production configuration must produce a safe, non-indexable preview build.
 - A configured production origin must be a public absolute HTTPS URL or fail the build.
 - Use no new test dependency; tests run against real TypeScript helpers and static exports.
+- Use Next.js's supported webpack build mode because this execution environment blocks the local worker port Turbopack opens during CSS processing.
 
 ## File Map
 
@@ -153,7 +154,7 @@ Add package scripts and ESM package mode:
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
     "test:unit": "node --disable-warning=ExperimentalWarning --test tests/unit/*.test.mjs",
