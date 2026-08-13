@@ -32,6 +32,7 @@
 - `src/lib/readiness.ts`: server-only live project readiness assembly.
 - `src/lib/seo.ts`: origin-aware canonical URL and route metadata helpers.
 - `src/lib/content.ts`: filesystem parsing plus public collection filtering.
+- `scripts/prune-empty-routes.mjs`: remove build-only empty-collection sentinel output required by Next.js static export.
 - `src/app/**`: base routes, dynamic routes, metadata, sitemap, robots, and Open Graph image.
 - `tests/unit/*.test.mjs`: helper behavior exercised through Node type stripping.
 - `tests/fixtures/content/**`: complete test-only MDX used to exercise dynamic static routes.
@@ -51,6 +52,8 @@
 - Modify: `tsconfig.json`
 - Modify: `src/lib/schemas.ts`
 - Modify: `src/lib/content.ts`
+- Create: `scripts/prune-empty-routes.mjs`
+- Modify: `package.json`
 - Modify: `src/lib/site.ts`
 - Modify: `src/components/ProfileLinks.tsx`
 - Modify: `src/components/PersonJsonLd.tsx`
@@ -732,6 +735,8 @@ const CONTENT_DIR = configuredContentDir
 ```
 
 Keep all parsing, filename-derived slugs, validation, filtering, and sorting identical across default and fixture roots.
+
+Next.js 16 static export rejects a dynamic route whose `generateStaticParams()` returns an empty array. When a public collection is empty, return the reserved `__empty__` parameter so prerendering can call `notFound()`, then have the build script remove the two reserved output directories. The export test must assert neither reserved URL remains in `out/`. Fixture builds return only their real public slugs, so this compatibility path is unused when content exists.
 
 - [ ] **Step 5: Implement the paper detail route**
 

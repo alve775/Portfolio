@@ -20,7 +20,10 @@ import type { Note, Paper, Project } from '@/lib/schemas';
  * identifier available, so renaming a file breaks its public URL. See README.
  */
 
-const CONTENT_DIR = path.join(process.cwd(), 'src', 'content');
+const configuredContentDir = process.env.PORTFOLIO_CONTENT_DIR;
+const CONTENT_DIR = configuredContentDir
+  ? path.resolve(configuredContentDir)
+  : path.join(process.cwd(), 'src', 'content');
 
 /** A parsed entry: validated frontmatter plus the raw MDX body. */
 export type Entry<T> = {

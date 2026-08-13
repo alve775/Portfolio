@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import { access, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
@@ -35,6 +36,20 @@ async function collectFiles(directory, accept) {
   return nested.flat();
 }
 
+function runBuild(extraEnv = {}) {
+  const env = { ...process.env, ...extraEnv };
+  if (!Object.hasOwn(extraEnv, 'PORTFOLIO_CONTENT_DIR')) {
+    delete env.PORTFOLIO_CONTENT_DIR;
+  }
+
+  const result = spawnSync('npm', ['run', 'build'], {
+    cwd: root,
+    env,
+    encoding: 'utf8',
+  });
+  assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+}
+
 test('preview root contains no unresolved public values and is not indexable', async () => {
   const html = await readFile(path.join(out, 'index.html'), 'utf8');
   assert.equal(html.includes(unresolved), false, 'root HTML leaked an unresolved marker');
@@ -52,6 +67,8 @@ test('exports base routes and resolves every rendered internal link', async () =
   for (const relative of requiredPages) {
     await assert.doesNotReject(access(path.join(out, relative)));
   }
+  await assert.rejects(access(path.join(out, 'research/__empty__/index.html')));
+  await assert.rejects(access(path.join(out, 'notes/__empty__/index.html')));
 
   const htmlFiles = await collectFiles(out, (name) => name.endsWith('.html'));
   for (const file of htmlFiles) {
@@ -63,5 +80,33 @@ test('exports base routes and resolves every rendered internal link', async () =
         `${file} links to missing ${href}`,
       );
     }
+  }
+});
+
+test('exports complete fixture paper and note details', { timeout: 60_000 }, async () => {
+  try {
+    runBuild({ PORTFOLIO_CONTENT_DIR: path.join(root, 'tests/fixtures/content') });
+    const paperHtml = await readFile(
+      path.join(out, 'research/fixture-study/index.html'),
+      'utf8',
+    );
+    const noteHtml = await readFile(path.join(out, 'notes/fixture-note/index.html'), 'utf8');
+    const projectHtml = await readFile(path.join(out, 'projects/index.html'), 'utf8');
+    const researchHtml = await readFile(path.join(out, 'research/index.html'), 'utf8');
+    const notesHtml = await readFile(path.join(out, 'notes/index.html'), 'utf8');
+    assert.match(paperHtml, /Fixture Study/);
+    assert.match(paperHtml, /This paper body verifies optional MDX rendering\./);
+    assert.match(noteHtml, /This note verifies static MDX rendering\./);
+    assert.match(projectHtml, /Fixture Project/);
+    assert.match(researchHtml, /href="\/research\/fixture-study\/"/);
+    assert.match(notesHtml, /href="\/notes\/fixture-note\/"/);
+    assert.deepEqual(
+      [...paperHtml.matchAll(/<meta name="citation_author" content="([^"]+)"/g)].map(
+        (match) => match[1],
+      ),
+      ['Kamruzzaman Khan Alve', 'Fixture Collaborator'],
+    );
+  } finally {
+    runBuild();
   }
 });

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build --webpack",
+    "build": "next build --webpack && node scripts/prune-empty-routes.mjs",
     "start": "next start",
     "lint": "eslint",
     "test:unit": "node --disable-warning=ExperimentalWarning --test tests/unit/*.test.mjs",
