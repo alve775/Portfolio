@@ -25,6 +25,37 @@ test('publishes only explicit complete paper and project records', () => {
   );
 });
 
+test('requires public HTTPS destinations for rendered content links', () => {
+  assert.equal(
+    isPublishablePaper({
+      frontmatter: { draft: false, title: 'Ready', pdfUrl: 'https://papers.example.edu/study.pdf' },
+      body: '',
+    }),
+    true,
+  );
+  assert.equal(
+    isPublishablePaper({
+      frontmatter: { draft: false, title: 'Ready', pdfUrl: 'http://papers.example.edu/study.pdf' },
+      body: '',
+    }),
+    false,
+  );
+  assert.equal(
+    isPublishableProject({
+      frontmatter: { draft: false, title: 'Ready', repoUrl: 'https://github.com/example/project' },
+      body: '',
+    }),
+    true,
+  );
+  assert.equal(
+    isPublishableProject({
+      frontmatter: { draft: false, title: 'Ready', repoUrl: 'repository' },
+      body: '',
+    }),
+    false,
+  );
+});
+
 test('requires a safe non-empty note body and safely omits optional bodies', () => {
   assert.equal(
     isPublishableNote({ frontmatter: { draft: false, title: 'Ready' }, body: 'Body' }),

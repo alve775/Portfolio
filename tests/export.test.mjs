@@ -101,6 +101,35 @@ test('exports base routes and resolves every rendered internal link', async () =
   }
 });
 
+test('contains only sanitized static output', async () => {
+  const allFiles = await collectFiles(out, () => true);
+  assert.equal(
+    allFiles.some((file) => file.split(path.sep).some((part) => part.endsWith('.func'))),
+    false,
+  );
+
+  for (const file of allFiles.filter((name) =>
+    name.endsWith('_clientMiddlewareManifest.js'),
+  )) {
+    const source = await readFile(file, 'utf8');
+    assert.match(source, /__MIDDLEWARE_MATCHERS\s*=\s*\[\]/);
+  }
+
+  for (const file of allFiles.filter((name) => name.endsWith('.html'))) {
+    const html = await readFile(file, 'utf8');
+    assert.equal(html.includes(unresolved), false, `${file} leaked an unresolved marker`);
+    assert.equal(html.includes('todo.invalid'), false, `${file} leaked an invalid origin`);
+    assert.equal(html.includes('http://localhost'), false, `${file} leaked a fallback origin`);
+
+    for (const match of html.matchAll(
+      /<script type="application\/ld\+json">([^<]+)<\/script>/g,
+    )) {
+      const value = JSON.parse(match[1]);
+      assert.equal(JSON.stringify(value).includes(unresolved), false);
+    }
+  }
+});
+
 test('exports complete fixture paper and note details', { timeout: 60_000 }, async () => {
   try {
     runBuild({

@@ -1,3 +1,5 @@
+import { asPublicHttpsUrl, containsUnresolved } from './site-validation.ts';
+
 type ContentRecord<T> = {
   frontmatter: T;
   body: string;
@@ -7,23 +9,33 @@ type DraftRecord = {
   draft: boolean;
 };
 
-const unresolvedPrefix = ['{{', 'TO', 'DO'].join('');
-
-export function containsUnresolved(value: unknown): boolean {
-  if (typeof value === 'string') return value.includes(unresolvedPrefix);
-  if (Array.isArray(value)) return value.some(containsUnresolved);
-  if (value && typeof value === 'object') {
-    return Object.values(value).some(containsUnresolved);
-  }
-  return false;
-}
+export { containsUnresolved };
 
 function hasPublicFrontmatter<T extends DraftRecord>(entry: ContentRecord<T>): boolean {
   return entry.frontmatter.draft === false && !containsUnresolved(entry.frontmatter);
 }
 
-export const isPublishablePaper = hasPublicFrontmatter;
-export const isPublishableProject = hasPublicFrontmatter;
+export function isPublishablePaper<
+  T extends DraftRecord & { pdfUrl?: string; codeUrl?: string },
+>(entry: ContentRecord<T>): boolean {
+  return (
+    hasPublicFrontmatter(entry) &&
+    [entry.frontmatter.pdfUrl, entry.frontmatter.codeUrl].every(
+      (value) => value === undefined || asPublicHttpsUrl(value) !== null,
+    )
+  );
+}
+
+export function isPublishableProject<
+  T extends DraftRecord & { repoUrl?: string; liveUrl?: string },
+>(entry: ContentRecord<T>): boolean {
+  return (
+    hasPublicFrontmatter(entry) &&
+    asPublicHttpsUrl(entry.frontmatter.repoUrl) !== null &&
+    (entry.frontmatter.liveUrl === undefined ||
+      asPublicHttpsUrl(entry.frontmatter.liveUrl) !== null)
+  );
+}
 
 export function isPublishableNote<T extends DraftRecord>(entry: ContentRecord<T>): boolean {
   return hasPublicFrontmatter(entry) && safeOptionalBody(entry.body) !== null;

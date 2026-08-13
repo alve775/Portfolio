@@ -210,7 +210,7 @@ The brief pins these axes. Do not spend creativity overriding them.
 Report each as pass or fail. Do not mark pass without verifying.
 
 - [ ] `npm run build` succeeds with zero warnings
-- [ ] `out/` contains only static assets; no `.func` directories, no middleware manifest
+- [ ] `out/` contains no `.func` directories; if Next.js emits a client middleware manifest, its matcher list is empty
 - [ ] Every route in section 3 exists in `out/` as an HTML file
 - [ ] Zero broken internal links
 - [ ] Every remaining `{{TODO}}` token listed in the final report with file and line

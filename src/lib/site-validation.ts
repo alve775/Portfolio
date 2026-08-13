@@ -1,7 +1,31 @@
-import { containsUnresolved } from './publishability.ts';
-
 const reservedHosts = new Set(['localhost', 'example.com', 'example.net', 'example.org']);
-const reservedSuffixes = ['.example.com', '.example.net', '.example.org'];
+const reservedSuffixes = [
+  '.alt',
+  '.example',
+  '.example.com',
+  '.example.net',
+  '.example.org',
+  '.home',
+  '.home.arpa',
+  '.internal',
+  '.invalid',
+  '.lan',
+  '.local',
+  '.localdomain',
+  '.localhost',
+  '.onion',
+  '.test',
+];
+const unresolvedPrefix = ['{{', 'TO', 'DO'].join('');
+
+export function containsUnresolved(value: unknown): boolean {
+  if (typeof value === 'string') return value.includes(unresolvedPrefix);
+  if (Array.isArray(value)) return value.some(containsUnresolved);
+  if (value && typeof value === 'object') {
+    return Object.values(value).some(containsUnresolved);
+  }
+  return false;
+}
 
 function isPublicHostname(hostname: string): boolean {
   const host = hostname.toLowerCase();
@@ -10,9 +34,6 @@ function isPublicHostname(hostname: string): boolean {
     host.includes('.') &&
     !/^\d+(?:\.\d+){3}$/.test(host) &&
     !host.includes(':') &&
-    !host.endsWith('.local') &&
-    !host.endsWith('.invalid') &&
-    !host.endsWith('.test') &&
     !reservedSuffixes.some((suffix) => host.endsWith(suffix)) &&
     !reservedHosts.has(host)
   );

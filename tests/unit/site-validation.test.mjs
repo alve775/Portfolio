@@ -17,6 +17,8 @@ test('accepts public HTTPS values and a conventional public email', () => {
 test('omits unresolved and malformed contact values', () => {
   assert.equal(asPublicHttpsUrl(unresolvedUrl), null);
   assert.equal(asPublicHttpsUrl('https://todo.invalid'), null);
+  assert.equal(asPublicHttpsUrl('https://portfolio.example'), null);
+  assert.equal(asPublicHttpsUrl('https://portfolio.internal'), null);
   assert.equal(asPublicHttpsUrl('javascript:alert(1)'), null);
   assert.equal(asPublicEmail('not-an-email'), null);
 });
