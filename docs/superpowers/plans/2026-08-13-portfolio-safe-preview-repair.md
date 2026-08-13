@@ -507,7 +507,7 @@ export default function ResearchPage() {
         <Field label="STATUS"><p>No verified research entries are published yet.</p></Field>
       ) : (
         <>
-          <PaperList label="PUBLISHED" papers={finished} />
+          <PaperList label="FINISHED WORK" papers={finished} />
           <PaperList label="IN PROGRESS" papers={inProgress} />
         </>
       )}
