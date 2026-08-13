@@ -4,6 +4,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 
 import { Field } from '@/components/Field';
 import { getNote, getNotes } from '@/lib/content';
+import { routeMetadata } from '@/lib/seo';
 
 type NotePageProps = {
   params: Promise<{ slug: string }>;
@@ -19,7 +20,11 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: NotePageProps): Promise<Metadata> {
   const note = getNote((await params).slug);
   if (!note) notFound();
-  return { title: note.frontmatter.title, description: note.frontmatter.summary };
+  return routeMetadata({
+    title: note.frontmatter.title,
+    description: note.frontmatter.summary,
+    pathname: `/notes/${note.slug}/`,
+  });
 }
 
 export default async function NotePage({ params }: NotePageProps) {

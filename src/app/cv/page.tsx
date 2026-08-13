@@ -1,13 +1,13 @@
-import type { Metadata } from 'next';
-
 import { Field } from '@/components/Field';
 import { hasCvPdf } from '@/lib/cv';
+import { routeMetadata } from '@/lib/seo';
 import { site } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata = routeMetadata({
   title: 'Curriculum vitae',
   description: `Curriculum vitae for ${site.name}.`,
-};
+  pathname: '/cv/',
+});
 
 export default function CvPage() {
   return (

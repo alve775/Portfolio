@@ -874,7 +874,7 @@ git commit -m "feat: add static content detail routes"
 - Create: `src/lib/seo.ts`
 - Create: `src/app/sitemap.ts`
 - Create: `src/app/robots.ts`
-- Create: `src/app/opengraph-image.tsx`
+- Create: `src/app/opengraph-image.png/route.tsx`
 - Create: `tests/unit/readiness.test.mjs`
 - Modify: `src/app/layout.tsx`
 - Modify: `src/app/research/page.tsx`
@@ -988,7 +988,11 @@ export function routeMetadata({ title, description, pathname }: {
   return {
     title,
     description,
-    ...(canonical ? { alternates: { canonical }, openGraph: { title, description, url: canonical } } : {}),
+    ...(canonical ? {
+      alternates: { canonical },
+      openGraph: { title, description, url: canonical, images: [new URL('/opengraph-image.png', canonical)] },
+      twitter: { card: 'summary_large_image', title, description, images: [new URL('/opengraph-image.png', canonical)] },
+    } : {}),
   };
 }
 ```
@@ -1050,7 +1054,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 }
 ```
 
-Open Graph image exports `alt`, `size = { width: 1200, height: 630 }`, and `contentType = 'image/png'`; render only verified values in the existing palette:
+Implement the Open Graph image as a force-static ordinary route handler at `/opengraph-image.png`, not through the metadata file convention. Next.js auto-injects convention images into preview metadata and otherwise falls back to a localhost `metadataBase`, which violates the origin-omission rule. The ordinary route keeps the asset available while root metadata links it only when a valid production origin exists. Render only verified values in the existing palette:
 
 ```tsx
 export default function OpenGraphImage() {

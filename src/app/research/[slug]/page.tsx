@@ -8,6 +8,7 @@ import { Field } from '@/components/Field';
 import { getPaper, getPapers } from '@/lib/content';
 import { recordLine } from '@/lib/paper';
 import { safeOptionalBody } from '@/lib/publishability';
+import { routeMetadata } from '@/lib/seo';
 import { site } from '@/lib/site';
 
 type PaperPageProps = {
@@ -27,8 +28,11 @@ export async function generateMetadata({ params }: PaperPageProps): Promise<Meta
   if (!paper) notFound();
 
   return {
-    title: paper.frontmatter.title,
-    description: paper.frontmatter.takeaway,
+    ...routeMetadata({
+      title: paper.frontmatter.title,
+      description: paper.frontmatter.takeaway,
+      pathname: `/research/${paper.slug}/`,
+    }),
     other: {
       citation_title: paper.frontmatter.title,
       citation_author: paper.frontmatter.authors,

@@ -48,12 +48,15 @@ function runBuild(extraEnv = {}) {
     encoding: 'utf8',
   });
   assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+  assert.doesNotMatch(`${result.stdout}\n${result.stderr}`, /metadataBase property .* is not set/);
 }
 
 test('preview root contains no unresolved public values and is not indexable', async () => {
   const html = await readFile(path.join(out, 'index.html'), 'utf8');
   assert.equal(html.includes(unresolved), false, 'root HTML leaked an unresolved marker');
   assert.equal(html.includes('todo.invalid'), false, 'root HTML leaked the invalid placeholder origin');
+  assert.equal(html.includes('http://localhost'), false, 'root HTML leaked a fallback origin');
+  assert.doesNotMatch(html, /property="og:image"/);
   assert.match(html, /<meta name="robots" content="noindex, nofollow"/);
 
   for (const match of html.matchAll(
@@ -61,6 +64,21 @@ test('preview root contains no unresolved public values and is not indexable', a
   )) {
     assert.doesNotThrow(() => JSON.parse(match[1]));
   }
+});
+
+test('exports preview-safe discovery artifacts', async () => {
+  for (const relative of ['robots.txt', 'sitemap.xml', 'opengraph-image.png']) {
+    await assert.doesNotReject(access(path.join(out, relative)));
+  }
+
+  const robots = await readFile(path.join(out, 'robots.txt'), 'utf8');
+  const sitemap = await readFile(path.join(out, 'sitemap.xml'), 'utf8');
+  const image = await readFile(path.join(out, 'opengraph-image.png'));
+  assert.match(robots, /Disallow: \/(?:\r?\n|$)/);
+  assert.doesNotMatch(sitemap, /<url>/);
+  assert.deepEqual([...image.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+  assert.equal(image.readUInt32BE(16), 1200);
+  assert.equal(image.readUInt32BE(20), 630);
 });
 
 test('exports base routes and resolves every rendered internal link', async () => {
@@ -85,7 +103,11 @@ test('exports base routes and resolves every rendered internal link', async () =
 
 test('exports complete fixture paper and note details', { timeout: 60_000 }, async () => {
   try {
-    runBuild({ PORTFOLIO_CONTENT_DIR: path.join(root, 'tests/fixtures/content') });
+    runBuild({
+      PORTFOLIO_CONTENT_DIR: path.join(root, 'tests/fixtures/content'),
+      NEXT_PUBLIC_SITE_URL: 'https://portfolio.rfc-editor.org',
+    });
+    const rootHtml = await readFile(path.join(out, 'index.html'), 'utf8');
     const paperHtml = await readFile(
       path.join(out, 'research/fixture-study/index.html'),
       'utf8',
@@ -94,6 +116,24 @@ test('exports complete fixture paper and note details', { timeout: 60_000 }, asy
     const projectHtml = await readFile(path.join(out, 'projects/index.html'), 'utf8');
     const researchHtml = await readFile(path.join(out, 'research/index.html'), 'utf8');
     const notesHtml = await readFile(path.join(out, 'notes/index.html'), 'utf8');
+    const fixtureRobots = await readFile(path.join(out, 'robots.txt'), 'utf8');
+    const fixtureSitemap = await readFile(path.join(out, 'sitemap.xml'), 'utf8');
+    assert.match(rootHtml, /<link rel="canonical" href="https:\/\/portfolio\.rfc-editor\.org\/"/);
+    assert.match(
+      rootHtml,
+      /<meta property="og:image" content="https:\/\/portfolio\.rfc-editor\.org\/opengraph-image\.png"/,
+    );
+    assert.match(
+      paperHtml,
+      /<link rel="canonical" href="https:\/\/portfolio\.rfc-editor\.org\/research\/fixture-study\/"/,
+    );
+    assert.match(
+      paperHtml,
+      /<meta property="og:image" content="https:\/\/portfolio\.rfc-editor\.org\/opengraph-image\.png"/,
+    );
+    assert.match(rootHtml, /<meta name="robots" content="noindex, nofollow"/);
+    assert.match(fixtureRobots, /Disallow: \/(?:\r?\n|$)/);
+    assert.doesNotMatch(fixtureSitemap, /<url>/);
     assert.match(paperHtml, /Fixture Study/);
     assert.match(paperHtml, /This paper body verifies optional MDX rendering\./);
     assert.match(noteHtml, /This note verifies static MDX rendering\./);

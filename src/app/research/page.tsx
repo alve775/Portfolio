@@ -1,14 +1,14 @@
-import type { Metadata } from 'next';
-
 import { Field } from '@/components/Field';
 import { PaperList } from '@/components/PaperList';
 import { getPapers } from '@/lib/content';
+import { routeMetadata } from '@/lib/seo';
 import { site } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata = routeMetadata({
   title: 'Research',
   description: `Research by ${site.name}.`,
-};
+  pathname: '/research/',
+});
 
 export default function ResearchPage() {
   const papers = getPapers();

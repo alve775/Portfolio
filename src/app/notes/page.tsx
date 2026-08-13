@@ -1,14 +1,15 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { Field } from '@/components/Field';
 import { getNotes } from '@/lib/content';
+import { routeMetadata } from '@/lib/seo';
 import { site } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata = routeMetadata({
   title: 'Notes',
   description: `Research and engineering notes by ${site.name}.`,
-};
+  pathname: '/notes/',
+});
 
 export default function NotesPage() {
   const notes = getNotes();
