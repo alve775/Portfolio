@@ -1,30 +1,24 @@
-import { site } from '@/lib/site';
-import { isTodo } from '@/lib/todo';
+import { productionOrigin, publicEmail, site, usableProfiles } from '@/lib/site';
 
 /**
  * schema.org Person for the root layout.
  *
- * `{{TODO}}` tokens are left in `sameAs` on purpose, per the brief: a missing
- * profile URL should be visible in the source, not silently dropped.
+ * Optional fields are emitted only after their public values validate.
  */
 export function PersonJsonLd() {
   const person = {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: site.name,
-    url: site.url,
-    email: isTodo(site.email) ? site.email : `mailto:${site.email}`,
+    ...(productionOrigin ? { url: productionOrigin.href } : {}),
+    ...(publicEmail ? { email: `mailto:${publicEmail}` } : {}),
     affiliation: {
       '@type': 'CollegeOrUniversity',
       name: site.affiliation,
     },
-    sameAs: [
-      site.socials.github,
-      site.socials.scholar,
-      site.socials.orcid,
-      site.socials.huggingface,
-      site.socials.linkedin,
-    ],
+    ...(usableProfiles.length > 0
+      ? { sameAs: usableProfiles.map(({ href }) => href) }
+      : {}),
   };
 
   return (

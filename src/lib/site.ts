@@ -6,13 +6,13 @@
  * the tagline, or any social URL anywhere else in the codebase.
  */
 
-/**
- * Production origin. Must be a parseable absolute URL because `metadataBase`,
- * `sitemap.ts` and `robots.ts` construct `new URL()` from it — a `{{TODO}}` token
- * here would throw at build time rather than fail visibly in the rendered page.
- * {{TODO: replace with the real production origin, e.g. https://example.com}}
- */
-export const SITE_URL = 'https://todo.invalid';
+import {
+  asPublicEmail,
+  asPublicHttpsUrl,
+  resolveProductionOrigin,
+} from '@/lib/site-validation';
+
+export const productionOrigin = resolveProductionOrigin(process.env.NEXT_PUBLIC_SITE_URL);
 
 /**
  * Positioning sentence. Draft 3 is the working default per the brief.
@@ -32,12 +32,12 @@ const POSITIONING =
 
 /** Home-page bio, third person, as supplied by the owner. Do not rewrite. */
 const BIO =
-  'Kamruzzaman Khan Alve is a final-semester Computer Science and Engineering student at Rajshahi University of Engineering and Technology, Bangladesh. His research sits at the intersection of low-resource language modeling and the security of learned systems: comparative work on monolingual and multilingual transformers for Bangla, and an undergraduate thesis on adversarial robustness in fingerprint presentation attack detection. He is affiliated with {{TODO: confirm lab affiliations to list, e.g. Young Learners Research Lab, TextLab RUET}}. Alongside research he builds and deploys the inference systems that put these models in front of users.';
+  'Kamruzzaman Khan Alve is a final-semester Computer Science and Engineering student at Rajshahi University of Engineering and Technology, Bangladesh. His research sits at the intersection of low-resource language modeling and the security of learned systems: comparative work on monolingual and multilingual transformers for Bangla, and an undergraduate thesis on adversarial robustness in fingerprint presentation attack detection. Alongside research he builds and deploys the inference systems that put these models in front of users.';
 
 export const site = {
   /** Canonical name string. Byte-identical everywhere on the site. */
   name: 'Kamruzzaman Khan Alve',
-  url: SITE_URL,
+  url: productionOrigin?.href ?? null,
   positioning: POSITIONING,
   bio: BIO,
   affiliation: 'Rajshahi University of Engineering and Technology',
@@ -58,5 +58,20 @@ export const site = {
     linkedin: '{{TODO: LinkedIn profile URL}}',
   },
 } as const;
+
+export const publicEmail = asPublicEmail(site.email);
+
+export const publicProfiles = [
+  ['GitHub', site.socials.github],
+  ['Google Scholar', site.socials.scholar],
+  ['HuggingFace', site.socials.huggingface],
+  ['ORCID', site.socials.orcid],
+  ['LinkedIn', site.socials.linkedin],
+] as const;
+
+export const usableProfiles = publicProfiles.flatMap(([label, raw]) => {
+  const href = asPublicHttpsUrl(raw);
+  return href ? [{ label, href }] : [];
+});
 
 export type Site = typeof site;

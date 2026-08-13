@@ -33,6 +33,7 @@ export const paperSchema = z.object({
   bibtex: z.string().optional(),
   /** The owner's plain statement of what the work shows. Never generated. */
   takeaway: z.string().min(1),
+  draft: z.boolean(),
   order: z.number().int(),
 });
 
@@ -45,6 +46,7 @@ export const projectSchema = z.object({
   repoUrl: z.string().min(1),
   liveUrl: z.string().min(1).optional(),
   status: z.enum(['live', 'archived', 'wip']),
+  draft: z.boolean(),
   order: z.number().int(),
 });
 

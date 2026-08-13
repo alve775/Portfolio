@@ -2,11 +2,15 @@
   "name": "portfolio",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:unit": "node --disable-warning=ExperimentalWarning --test tests/unit/*.test.mjs",
+    "test:export": "npm run build && node --test --test-concurrency=1 tests/export.test.mjs",
+    "test": "npm run test:unit && npm run test:export"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",

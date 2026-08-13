@@ -9,24 +9,21 @@ import { site } from '@/lib/site';
 import './globals.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
   title: {
     default: site.name,
     template: `%s · ${site.name}`,
   },
   description: site.positioning,
-  authors: [{ name: site.name, url: site.url }],
+  authors: [{ name: site.name }],
   creator: site.name,
-  alternates: { canonical: '/' },
   openGraph: {
     type: 'profile',
     siteName: site.name,
     locale: 'en_US',
-    url: '/',
     title: site.name,
     description: site.positioning,
   },
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {

@@ -5,6 +5,11 @@ import path from 'node:path';
 
 import matter from 'gray-matter';
 
+import {
+  isPublishableNote,
+  isPublishablePaper,
+  isPublishableProject,
+} from '@/lib/publishability';
 import { noteSchema, paperSchema, projectSchema } from '@/lib/schemas';
 import type { Note, Paper, Project } from '@/lib/schemas';
 
@@ -61,9 +66,9 @@ function parseWith<T>(schema: { parse: (data: unknown) => T }) {
 }
 
 export function getPapers(): Entry<Paper>[] {
-  return readCollection('papers', parseWith(paperSchema)).sort(
-    (a, b) => a.frontmatter.order - b.frontmatter.order,
-  );
+  return readCollection('papers', parseWith(paperSchema))
+    .filter(isPublishablePaper)
+    .sort((a, b) => a.frontmatter.order - b.frontmatter.order);
 }
 
 export function getPaper(slug: string): Entry<Paper> | undefined {
@@ -71,15 +76,15 @@ export function getPaper(slug: string): Entry<Paper> | undefined {
 }
 
 export function getProjects(): Entry<Project>[] {
-  return readCollection('projects', parseWith(projectSchema)).sort(
-    (a, b) => a.frontmatter.order - b.frontmatter.order,
-  );
+  return readCollection('projects', parseWith(projectSchema))
+    .filter(isPublishableProject)
+    .sort((a, b) => a.frontmatter.order - b.frontmatter.order);
 }
 
 /** Published notes only, newest first. Drafts never reach the build. */
 export function getNotes(): Entry<Note>[] {
   return readCollection('notes', parseWith(noteSchema))
-    .filter((note) => !note.frontmatter.draft)
+    .filter(isPublishableNote)
     .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date));
 }
 
