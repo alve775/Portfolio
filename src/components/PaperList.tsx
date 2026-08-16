@@ -1,28 +1,32 @@
-import Link from 'next/link';
-
-import { Field } from '@/components/Field';
+import { RecordCard } from '@/components/RecordCard';
 import type { Entry } from '@/lib/content';
-import { recordLine } from '@/lib/paper';
 import type { Paper } from '@/lib/schemas';
 
-export function PaperList({ label, papers }: { label: string; papers: Entry<Paper>[] }) {
+/** One titled group of record cards on /research. */
+export function PaperList({
+  label,
+  papers,
+  startIndex = 1,
+}: {
+  label: string;
+  papers: Entry<Paper>[];
+  startIndex?: number;
+}) {
   if (papers.length === 0) return null;
 
   return (
-    <Field label={label}>
-      <ul className="space-y-6">
-        {papers.map((paper) => (
-          <li key={paper.slug}>
-            <Link
-              className="link text-[1.3125rem] leading-[1.4]"
-              href={`/research/${paper.slug}/`}
-            >
-              {paper.frontmatter.title}
-            </Link>
-            <p className="meta mt-2">{recordLine(paper.frontmatter)}</p>
-          </li>
+    <section className="mt-14 first:mt-0">
+      <div className="section-head">
+        <h2 className="mono-label">{label}</h2>
+        <span className="mono-label">
+          {papers.length} {papers.length === 1 ? 'record' : 'records'}
+        </span>
+      </div>
+      <div className="mt-5 grid gap-3">
+        {papers.map((paper, index) => (
+          <RecordCard key={paper.slug} paper={paper} index={startIndex + index} />
         ))}
-      </ul>
-    </Field>
+      </div>
+    </section>
   );
 }

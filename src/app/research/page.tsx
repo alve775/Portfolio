@@ -1,4 +1,4 @@
-import { Field } from '@/components/Field';
+import { PageHeader } from '@/components/PageHeader';
 import { PaperList } from '@/components/PaperList';
 import { getPapers } from '@/lib/content';
 import { routeMetadata } from '@/lib/seo';
@@ -16,20 +16,23 @@ export default function ResearchPage() {
   const inProgress = papers.filter(({ frontmatter }) => frontmatter.status === 'in-progress');
 
   return (
-    <div className="record">
-      <div className="unlabelled">
-        <h1>Research</h1>
-      </div>
+    <>
+      <PageHeader
+        title="Research"
+        lede="Publications first, then work that is still in progress."
+      />
       {papers.length === 0 ? (
-        <Field label="STATUS">
-          <p>No verified research entries are published yet.</p>
-        </Field>
+        <p className="empty">No verified research entries are published yet.</p>
       ) : (
         <>
-          <PaperList label="FINISHED WORK" papers={finished} />
-          <PaperList label="IN PROGRESS" papers={inProgress} />
+          <PaperList label="Published and accepted" papers={finished} />
+          <PaperList
+            label="In progress"
+            papers={inProgress}
+            startIndex={finished.length + 1}
+          />
         </>
       )}
-    </div>
+    </>
   );
 }

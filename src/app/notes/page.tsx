@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { Field } from '@/components/Field';
+import { PageHeader } from '@/components/PageHeader';
 import { getNotes } from '@/lib/content';
 import { routeMetadata } from '@/lib/seo';
 import { site } from '@/lib/site';
@@ -15,32 +15,33 @@ export default function NotesPage() {
   const notes = getNotes();
 
   return (
-    <div className="record">
-      <div className="unlabelled">
-        <h1>Notes</h1>
-      </div>
-      <Field label="NOTES">
-        {notes.length === 0 ? (
-          <p>No notes are published yet.</p>
-        ) : (
-          <ul className="space-y-6">
-            {notes.map(({ slug, frontmatter }) => (
-              <li key={slug}>
-                <Link
-                  className="link text-[1.3125rem] leading-[1.4]"
-                  href={`/notes/${slug}/`}
-                >
-                  {frontmatter.title}
-                </Link>
-                <p className="meta mt-2">
-                  <time dateTime={frontmatter.date}>{frontmatter.date}</time>
-                </p>
-                <p className="mt-2">{frontmatter.summary}</p>
-              </li>
-            ))}
-          </ul>
-        )}
-      </Field>
-    </div>
+    <>
+      <PageHeader title="Notes" />
+
+      {notes.length === 0 ? (
+        <p className="empty">No notes are published yet.</p>
+      ) : (
+        <ul className="border-t border-ink">
+          {notes.map(({ slug, frontmatter }) => (
+            <li className="border-b border-rule" key={slug}>
+              <Link
+                className="card-link group grid gap-x-8 gap-y-1 py-5 no-underline sm:grid-cols-[7rem_minmax(0,1fr)]"
+                href={`/notes/${slug}/`}
+              >
+                <time className="meta sm:pt-1.5" dateTime={frontmatter.date}>
+                  {frontmatter.date}
+                </time>
+                <span>
+                  <span className="card-title title-md block">{frontmatter.title}</span>
+                  <span className="measure mt-1.5 block text-[0.9375rem] text-muted">
+                    {frontmatter.summary}
+                  </span>
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
   );
 }

@@ -1,37 +1,59 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────
-   Tokens. Six values, approved in the Phase B plan.
+   Tokens.
+
+   Six content tokens from the approved plan, plus three surface
+   tokens (--card, --bar, --bar-ink) that the card treatment needs:
+   a card is only legible if the page ground sits behind it.
    Dark mode is prefers-color-scheme only — no toggle UI.
    ───────────────────────────────────────────────────────────── */
 
 :root {
-  --paper: #f5f6f8;
+  --paper: #f1f2f4;
+  --card: #fcfcfd;
   --ink: #14181f;
   --muted: #5a6472;
-  --rule: #d9dde3;
+  --rule: #dcdfe4;
   --accent: #1a3fa0;
+  --accent-soft: #e6ebf8;
   --mark: #f7e9a0;
+  --mark-ink: #14181f;
+  --bar: #14181f;
+  --bar-ink: #f1f2f4;
+  --bar-muted: #939cab;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: #12151a;
+    --paper: #0d1016;
+    --card: #141920;
     --ink: #e7eaef;
     --muted: #9aa4b2;
-    --rule: #272d38;
+    --rule: #242b35;
     --accent: #a8bcff;
+    --accent-soft: #1a2233;
     --mark: #3d3722;
+    --mark-ink: #e7eaef;
+    --bar: #070a0e;
+    --bar-ink: #e7eaef;
+    --bar-muted: #7d8695;
   }
 }
 
 @theme inline {
   --color-paper: var(--paper);
+  --color-card: var(--card);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-rule: var(--rule);
   --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
   --color-mark: var(--mark);
+  --color-mark-ink: var(--mark-ink);
+  --color-bar: var(--bar);
+  --color-bar-ink: var(--bar-ink);
+  --color-bar-muted: var(--bar-muted);
 
   /* Bengali sits after Charis: Charis has no Bengali glyphs, so the browser
      falls through to Noto for exactly those codepoints and nothing else. */
@@ -53,14 +75,12 @@
     background-color: var(--paper);
     color: var(--ink);
     font-family: var(--font-serif);
-    font-size: 1.125rem;
+    font-size: 1.0625rem;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
-  /* Charis ships 400 and 700 only. Titles are large-and-regular, which is the
-     paper convention anyway; bold is reserved for emphasis inside prose. */
   h1,
   h2,
   h3 {
@@ -80,98 +100,229 @@
 
   ::selection {
     background-color: var(--mark);
+    color: var(--mark-ink);
   }
 
-  /* Never let a long URL, BibTeX key or dataset name push the page sideways. */
   pre,
   code {
     overflow-wrap: break-word;
   }
 }
 
-/* ─────────────────────────────────────────────────────────────
-   Structure: the record grid.
-
-   One reading column with a left gutter holding monospace field labels, so a
-   page reads as a typeset record with its metadata in the margin. Below the
-   lg breakpoint the labels simply stack above the blocks they name.
-   ───────────────────────────────────────────────────────────── */
-
 @layer components {
-  /* Page container. Width = gutter + gap + reading column + padding, so the
-     header wordmark, the margin labels and the prose all share one left edge. */
+  /* ── Containers ─────────────────────────────────────────── */
+
   .shell {
     width: 100%;
-    max-width: 56.5rem;
+    max-width: 62rem;
     margin-inline: auto;
     padding-inline: 1.5rem;
   }
 
-  .record {
-    display: grid;
-    grid-template-columns: minmax(0, 42.5rem);
-    row-gap: 2.75rem;
+  /* Prose never exceeds the reading measure, even inside a wide card. */
+  .measure {
+    max-width: 40rem;
   }
 
-  .record > .field {
-    display: grid;
-    grid-template-columns: subgrid;
-    grid-column: 1 / -1;
-    row-gap: 0.5rem;
+  /* ── Type ───────────────────────────────────────────────── */
+
+  /* The display size the brief's original scale did not allow. Charis is a
+     text face, so at this size it needs negative tracking to hold together. */
+  .display {
+    font-size: clamp(2.5rem, 7.4vw, 4.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.028em;
   }
 
-  /* A block with no field label. It still sits in the reading column, so every
-     line of prose on the site shares one left edge and one right edge. */
-  .record > .unlabelled {
-    grid-column: 1 / -1;
+  .lede {
+    font-size: clamp(1.3125rem, 2.4vw, 1.75rem);
+    line-height: 1.32;
+    letter-spacing: -0.01em;
+    max-width: 32ch;
   }
 
-  @media (min-width: 64rem) {
-    .record {
-      grid-template-columns: 8.5rem minmax(0, 42.5rem);
-      column-gap: 2.5rem;
-    }
-
-    .record > .unlabelled {
-      grid-column: 2;
-    }
-
-    /* The one element allowed to break the margin: the name. Deliberate, and
-       the only place it happens, so it reads as typesetting and not as drift. */
-    .hangs-left {
-      margin-left: -11rem;
-    }
+  /* Paper titles: display presence without the hero's scale, because a real
+     title is 12 words long and would break apart at 76px. */
+  .title-display {
+    font-size: clamp(1.875rem, 4vw, 2.75rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
   }
 
-  /* Field labels double as real headings — the h2 lives in the margin. */
-  .field-label {
+  .title-lg {
+    font-size: clamp(1.5rem, 2.6vw, 1.875rem);
+    line-height: 1.18;
+    letter-spacing: -0.014em;
+  }
+
+  .title-md {
+    font-size: 1.375rem;
+    line-height: 1.28;
+    letter-spacing: -0.01em;
+  }
+
+  .mono-label {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.6875rem;
     line-height: 1.5;
-    font-weight: 400;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.11em;
     text-transform: uppercase;
     color: var(--muted);
-    /* Optical nudge so a 12px label sits on the first baseline of 18px prose. */
-    padding-top: 0.3rem;
   }
 
-  .field-label .field-label-note {
-    display: block;
-    text-transform: none;
-    letter-spacing: 0.02em;
-  }
-
-  /* Metadata set as monospace, the way a record's machine-readable half looks. */
   .meta {
     font-family: var(--font-mono);
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     line-height: 1.6;
     color: var(--muted);
   }
 
-  /* Links: underline is present at rest (never hover-only), and only its
-     weight and distance move. 120ms, and nothing at all under reduced motion. */
+  /* ── Eyebrow ────────────────────────────────────────────── */
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 0.4375rem;
+    height: 0.4375rem;
+    border-radius: 50%;
+    background-color: var(--accent);
+    flex: none;
+  }
+
+  /* ── Section heads ──────────────────────────────────────── */
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  /* ── Cards ──────────────────────────────────────────────── */
+
+  .card {
+    background-color: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 0.25rem;
+    overflow: hidden;
+  }
+
+  .card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6875rem 1.25rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* Capped so card prose keeps a readable measure. The card itself stays full
+     width — the remaining space reads as padding, not as an empty column. */
+  .card-body {
+    padding: 1.375rem 1.25rem 1.5rem;
+    max-width: 50rem;
+  }
+
+  /* Hover is the entire motion budget: border and title underline. 120ms. */
+  .card-link {
+    transition: border-color 120ms ease;
+  }
+
+  .card-link:hover {
+    border-color: color-mix(in oklab, var(--accent) 55%, var(--rule));
+  }
+
+  .card-link:hover .card-title {
+    text-decoration-color: var(--accent);
+  }
+
+  .card-title {
+    color: var(--ink);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.14em;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 120ms ease;
+  }
+
+  /* ── Status badge ───────────────────────────────────────── */
+
+  .badge {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.1875rem 0.5rem;
+    border-radius: 0.125rem;
+    white-space: nowrap;
+    background-color: var(--accent);
+    color: var(--card);
+    border: 1px solid var(--accent);
+  }
+
+  /* In-progress work is deliberately quiet: nothing may read as accepted. */
+  .badge-quiet {
+    background-color: transparent;
+    color: var(--muted);
+    border-color: var(--rule);
+  }
+
+  /* ── Takeaway: the owner's own claim, promoted above the abstract ── */
+
+  .takeaway {
+    background-color: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    padding: 0.9375rem 1.125rem 1rem;
+    border-radius: 0 0.125rem 0.125rem 0;
+  }
+
+  /* ── The owner's name inside an author list ─────────────── */
+
+  .self {
+    background-color: var(--mark);
+    color: var(--mark-ink);
+    box-shadow: 0 0 0 0.15em var(--mark);
+    border-radius: 0.05em;
+  }
+
+  /* ── Link table ─────────────────────────────────────────── */
+
+  .link-table {
+    border-top: 1px solid var(--rule);
+  }
+
+  .link-table a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 2.75rem;
+    padding: 0.375rem 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 120ms ease;
+  }
+
+  .link-table a:hover {
+    color: var(--accent);
+  }
+
+  .link-table a::after {
+    content: '↗';
+    color: var(--accent);
+    font-size: 0.875rem;
+  }
+
+  /* ── Inline links in prose ──────────────────────────────── */
+
   .link {
     color: var(--accent);
     text-decoration-line: underline;
@@ -188,12 +339,63 @@
     text-decoration-color: var(--accent);
   }
 
-  /* The owner's name in an author list, highlighted the way you highlight your
-     own name in a PDF. Not bolded, not recoloured — co-authors keep parity. */
-  .self {
-    background-color: var(--mark);
-    box-shadow: 0 0 0 0.15em var(--mark);
-    border-radius: 0.05em;
+  /* ── Empty state ────────────────────────────────────────── */
+
+  .empty {
+    border: 1px dashed var(--rule);
+    border-radius: 0.25rem;
+    padding: 1.75rem 1.25rem;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  /* ── The record grid, still used by the paper detail page ─ */
+
+  .record {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 2.25rem;
+  }
+
+  .record > .field {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+    row-gap: 0.5rem;
+  }
+
+  .record > .unlabelled {
+    grid-column: 1 / -1;
+  }
+
+  @media (min-width: 64rem) {
+    .record {
+      grid-template-columns: 8.5rem minmax(0, 42.5rem);
+      column-gap: 2.5rem;
+    }
+
+    .record > .unlabelled {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .field-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.5;
+    font-weight: 400;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 0.35rem;
+  }
+
+  /* Second line of a field label, e.g. ABSTRACT / "as submitted". Must be a
+     block or the two strings run together as one word. */
+  .field-label-note {
+    display: block;
+    text-transform: none;
+    letter-spacing: 0.02em;
   }
 }
 

@@ -5,8 +5,10 @@ import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 
 import { Field } from '@/components/Field';
+import { PageHeader } from '@/components/PageHeader';
+import { StatusBadge, Takeaway } from '@/components/RecordCard';
 import { getPaper, getPapers } from '@/lib/content';
-import { recordLine } from '@/lib/paper';
+import { cardHeadLine } from '@/lib/paper';
 import { safeOptionalBody } from '@/lib/publishability';
 import { routeMetadata } from '@/lib/seo';
 import { site } from '@/lib/site';
@@ -53,12 +55,15 @@ export default async function PaperPage({ params }: PaperPageProps) {
   const body = safeOptionalBody(paper.body);
 
   return (
-    <article className="record">
-      <div className="unlabelled">
-        <h1>{frontmatter.title}</h1>
-      </div>
-      <Field label="AUTHORS">
-        <p>
+    <article>
+      {/* Takeaway-first: the owner's own claim is the first thing read, and the
+          abstract — the venue's words, not his — is demoted below it. */}
+      <PageHeader size="compact" title={frontmatter.title}>
+        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
+          <StatusBadge status={frontmatter.status} />
+          <span className="meta">{cardHeadLine(frontmatter)}</span>
+        </div>
+        <p className="measure mt-4 text-[0.9375rem] text-muted">
           {frontmatter.authors.map((author, index) => (
             <Fragment key={`${author}-${index}`}>
               {index > 0 ? ', ' : null}
@@ -66,15 +71,14 @@ export default async function PaperPage({ params }: PaperPageProps) {
             </Fragment>
           ))}
         </p>
-      </Field>
-      <Field label="STATUS">
-        <p>{recordLine(frontmatter)}</p>
-      </Field>
-      <Field label="ABSTRACT">
-        <p>{frontmatter.abstract}</p>
-      </Field>
-      <Field label="TAKEAWAY">
-        <p className="bg-mark px-4 py-3">{frontmatter.takeaway}</p>
+        <Takeaway size="lg" className="mt-8">
+          {frontmatter.takeaway}
+        </Takeaway>
+      </PageHeader>
+
+      <div className="record border-t border-rule pt-10">
+      <Field label="ABSTRACT" note="as submitted">
+        <p className="measure">{frontmatter.abstract}</p>
       </Field>
       {frontmatter.pdfUrl || frontmatter.codeUrl ? (
         <Field label="LINKS">
@@ -94,16 +98,19 @@ export default async function PaperPage({ params }: PaperPageProps) {
       ) : null}
       {frontmatter.bibtex ? (
         <Field label="BIBTEX">
-          <pre>
+          <pre className="card overflow-x-auto p-4 font-mono text-[0.8125rem] leading-[1.6]">
             <code>{frontmatter.bibtex}</code>
           </pre>
         </Field>
       ) : null}
       {body ? (
         <Field label="NOTES">
-          <MDXRemote source={body} />
+          <div className="measure">
+            <MDXRemote source={body} />
+          </div>
         </Field>
       ) : null}
+      </div>
     </article>
   );
 }

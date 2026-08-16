@@ -1,40 +1,49 @@
-import Link from 'next/link';
-
+import { PageHeader } from '@/components/PageHeader';
 import { ProfileLinks } from '@/components/ProfileLinks';
+import { RecordCard } from '@/components/RecordCard';
 import { getPapers } from '@/lib/content';
-import { kindLabel, recordLine } from '@/lib/paper';
 import { site } from '@/lib/site';
 
 /**
  * Home. Per the brief: name, positioning sentence, bio, one row of links, then
- * three linked proof points. Nothing else — no hero, no sections, no calls to
- * action. The proof points are the two papers and the thesis.
+ * three linked proof points — the two papers and the thesis. Nothing else.
  */
 export default function HomePage() {
   const proofPoints = getPapers().slice(0, 3);
 
   return (
-    <div className="record">
-      <div className="unlabelled">
-        <h1 className="hangs-left text-[2.125rem] leading-[1.15] tracking-[-0.015em]">
-          {site.name}
-        </h1>
-        <p className="mt-5 text-[1.3125rem] leading-[1.5]">{site.positioning}</p>
-        <p className="mt-7">{site.bio}</p>
-        <ProfileLinks className="mt-6" />
+    <>
+      <PageHeader
+        eyebrow={`${site.affiliationShort} · ${site.location}`}
+        title={site.name}
+        lede={site.positioning}
+      />
+
+      <div className="grid gap-x-14 gap-y-8 border-t border-rule pt-8 lg:grid-cols-[1.55fr_1fr]">
+        <p className="measure text-[0.9375rem] leading-[1.7] text-muted">{site.bio}</p>
+        <ProfileLinks />
       </div>
 
-      {proofPoints.map((paper) => (
-        <section className="field border-t border-rule pt-5" key={paper.slug}>
-          <h2 className="field-label">{kindLabel(paper.frontmatter)}</h2>
-          <div>
-            <Link href={`/research/${paper.slug}/`} className="link text-[1.3125rem] leading-[1.4]">
-              {paper.frontmatter.title}
-            </Link>
-            <p className="meta mt-2">{recordLine(paper.frontmatter)}</p>
+      <section className="mt-16">
+        <div className="section-head">
+          <h2 className="mono-label">Selected work</h2>
+          {proofPoints.length > 0 ? (
+            <span className="mono-label">
+              {proofPoints.length} {proofPoints.length === 1 ? 'record' : 'records'}
+            </span>
+          ) : null}
+        </div>
+
+        {proofPoints.length === 0 ? (
+          <p className="empty mt-5">No verified research entries are published yet.</p>
+        ) : (
+          <div className="mt-5 grid gap-3">
+            {proofPoints.map((paper, index) => (
+              <RecordCard key={paper.slug} paper={paper} index={index + 1} />
+            ))}
           </div>
-        </section>
-      ))}
-    </div>
+        )}
+      </section>
+    </>
   );
 }

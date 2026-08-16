@@ -31,3 +31,21 @@ export function recordLine(frontmatter: Paper): string {
 export function kindLabel(frontmatter: Paper): string {
   return frontmatter.status === 'in-progress' ? 'IN PROGRESS' : 'PAPER';
 }
+
+/**
+ * The line in a record card's header strip.
+ *
+ * Venues usually already carry the year ("IEEE QPAIN 2026"), so repeating it
+ * produced "IEEE QPAIN 2026 · 2026". Only add the year when it is missing.
+ */
+export function cardHeadLine(frontmatter: Paper): string {
+  const parts: string[] = [];
+  if (frontmatter.status !== 'in-progress') {
+    parts.push(frontmatter.venue);
+  }
+  if (!parts.some((part) => part.includes(String(frontmatter.year)))) {
+    parts.push(String(frontmatter.year));
+  }
+  parts.push(ROLE_LABEL[frontmatter.role]);
+  return parts.join(' · ');
+}
