@@ -9,6 +9,9 @@ const nextConfig = {
   // Fully static export: emits out/ with zero serverless functions and no middleware.
   // Accepted trade-offs: no next/image optimization, no ISR, no route handlers.
   output: 'export',
+  // Next regenerates AGENTS.md/CLAUDE.md on every dev start. The brief asks for
+  // a single README.md at the repo root, so keep them out of the tree.
+  agentRules: false,
   images: { unoptimized: true },
   trailingSlash: true,
 };
