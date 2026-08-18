@@ -43,8 +43,8 @@ export const site = {
   affiliation: 'Rajshahi University of Engineering and Technology',
   affiliationShort: 'RUET',
   location: 'Bangladesh',
-  /** {{TODO: public contact email address}} */
-  email: '{{TODO: public contact email address}}',
+  /** Swap for an institutional address if you would rather publish that one. */
+  email: 'kamruzzamanalve@gmail.com',
   socials: {
     /** {{TODO: GitHub profile URL}} */
     github: '{{TODO: GitHub profile URL}}',
