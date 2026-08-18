@@ -2,33 +2,34 @@ import Link from 'next/link';
 
 import { Nav, type NavItem } from '@/components/Nav';
 import { getNotes } from '@/lib/content';
-import { site } from '@/lib/site';
+import { publicEmail, site } from '@/lib/site';
 
-/**
- * A solid ink bar. It anchors the page immediately and gives the light ground
- * below it something to sit against.
- */
 export function SiteHeader() {
   // Per the brief: if there are no published notes, the section is not linked.
   const hasNotes = getNotes().length > 0;
 
   const items: NavItem[] = [
-    { href: '/research/', label: 'research' },
-    { href: '/projects/', label: 'projects' },
-    ...(hasNotes ? [{ href: '/notes/', label: 'notes' }] : []),
-    { href: '/cv/', label: 'cv' },
+    { href: '/research/', label: 'Research' },
+    { href: '/projects/', label: 'Projects' },
+    ...(hasNotes ? [{ href: '/notes/', label: 'Notes' }] : []),
+    { href: '/cv/', label: 'CV' },
   ];
 
   return (
-    <header className="bg-bar text-bar-ink">
-      <div className="shell flex flex-wrap items-center justify-between gap-x-8 gap-y-1 py-2">
-        <Link
-          href="/"
-          className="meta inline-flex min-h-11 items-center whitespace-nowrap text-bar-ink no-underline"
-        >
-          {site.name}
+    <header className="site-header">
+      <div className="site-shell site-header-inner">
+        <Link href="/" className="site-brand">
+          <span className="brand-signal" aria-hidden="true" />
+          <span>{site.name}</span>
         </Link>
-        <Nav items={items} />
+        <div className="site-header-actions">
+          <Nav items={items} />
+          {publicEmail ? (
+            <a className="header-contact" href={`mailto:${publicEmail}`}>
+              Email <span aria-hidden="true">↗</span>
+            </a>
+          ) : null}
+        </div>
       </div>
     </header>
   );

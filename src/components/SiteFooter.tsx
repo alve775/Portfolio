@@ -3,11 +3,14 @@ import { site } from '@/lib/site';
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-rule">
-      <div className="shell flex flex-wrap items-center justify-between gap-x-8 gap-y-3 py-7">
-        <p className="meta">
-          {site.name} · {site.affiliationShort}, {site.location}
-        </p>
+    <footer className="site-footer">
+      <div className="site-shell site-footer-inner">
+        <div>
+          <p className="footer-name">{site.name}</p>
+          <p className="meta footer-meta">
+            {site.affiliationShort} · {site.location}
+          </p>
+        </div>
         <ProfileLinks variant="inline" />
       </div>
     </footer>

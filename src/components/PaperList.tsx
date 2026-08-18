@@ -6,25 +6,23 @@ import type { Paper } from '@/lib/schemas';
 export function PaperList({
   label,
   papers,
-  startIndex = 1,
 }: {
   label: string;
   papers: Entry<Paper>[];
-  startIndex?: number;
 }) {
   if (papers.length === 0) return null;
 
   return (
-    <section className="mt-14 first:mt-0">
-      <div className="section-head">
-        <h2 className="mono-label">{label}</h2>
-        <span className="mono-label">
+    <section className="work-section" data-research-index>
+      <div className="section-heading">
+        <h2>{label}</h2>
+        <span className="meta">
           {papers.length} {papers.length === 1 ? 'record' : 'records'}
         </span>
       </div>
-      <div className="mt-5 grid gap-3">
-        {papers.map((paper, index) => (
-          <RecordCard key={paper.slug} paper={paper} index={startIndex + index} />
+      <div className="research-index">
+        {papers.map((paper) => (
+          <RecordCard key={paper.slug} paper={paper} />
         ))}
       </div>
     </section>

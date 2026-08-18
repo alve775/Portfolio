@@ -18,30 +18,30 @@ export default function NotesPage() {
     <>
       <PageHeader title="Notes" />
 
-      {notes.length === 0 ? (
-        <p className="empty">No notes are published yet.</p>
-      ) : (
-        <ul className="border-t border-ink">
-          {notes.map(({ slug, frontmatter }) => (
-            <li className="border-b border-rule" key={slug}>
-              <Link
-                className="card-link group grid gap-x-8 gap-y-1 py-5 no-underline sm:grid-cols-[7rem_minmax(0,1fr)]"
-                href={`/notes/${slug}/`}
-              >
-                <time className="meta sm:pt-1.5" dateTime={frontmatter.date}>
-                  {frontmatter.date}
-                </time>
-                <span>
-                  <span className="card-title title-md block">{frontmatter.title}</span>
-                  <span className="measure mt-1.5 block text-[0.9375rem] text-muted">
-                    {frontmatter.summary}
+      <section className="notes-section" data-note-index aria-label="Published notes">
+        {notes.length === 0 ? (
+          <p className="empty-state">No notes are published yet.</p>
+        ) : (
+          <ul className="note-index">
+            {notes.map(({ slug, frontmatter }) => (
+              <li key={slug}>
+                <Link className="note-link" href={`/notes/${slug}/`}>
+                  <time className="meta" dateTime={frontmatter.date}>
+                    {frontmatter.date}
+                  </time>
+                  <span className="note-copy">
+                    <span className="note-title">{frontmatter.title}</span>
+                    <span className="note-summary">{frontmatter.summary}</span>
                   </span>
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+                  <span className="note-arrow" aria-hidden="true">
+                    ↗
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </>
   );
 }

@@ -17,10 +17,10 @@ export function ProfileLinks({
 
   if (variant === 'inline') {
     return (
-      <ul className={`flex flex-wrap items-center gap-x-6 gap-y-1 ${className}`}>
+      <ul className={`profile-links profile-links-inline ${className}`}>
         {links.map(({ label, href }) => (
           <li key={label}>
-            <a className="link meta inline-flex min-h-11 items-center" href={href} rel="me noopener">
+            <a className="profile-link" href={href} rel="me noopener">
               {label}
             </a>
           </li>
@@ -30,12 +30,15 @@ export function ProfileLinks({
   }
 
   return (
-    <div className={`link-table ${className}`}>
+    <ul className={`profile-links profile-links-grid ${className}`}>
       {links.map(({ label, href }) => (
-        <a key={label} href={href} rel="me noopener">
-          <span className="mono-label">{label}</span>
-        </a>
+        <li key={label}>
+          <a className="profile-link profile-link-primary" href={href} rel="me noopener">
+            <span>{label}</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

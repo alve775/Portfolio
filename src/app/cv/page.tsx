@@ -15,9 +15,9 @@ export default function CvPage() {
     <>
       <PageHeader title="Curriculum vitae">
         {hasCvPdf() ? (
-          <p className="mt-7">
+          <p className="page-action">
             <a
-              className="badge inline-flex min-h-11 items-center px-4 text-[0.75rem] no-underline"
+              className="primary-link"
               href="/cv.pdf"
               download
             >
@@ -27,13 +27,13 @@ export default function CvPage() {
         ) : null}
       </PageHeader>
 
-      <div className="record border-t border-rule pt-10">
-        <Field label="PROFILE">
-          <p className="measure">{site.positioning}</p>
+      <div className="cv-grid" data-cv-grid>
+        <Field label="Profile">
+          <p>{site.positioning}</p>
         </Field>
-        <Field label="EDUCATION">
+        <Field label="Education">
           <p>Computer Science and Engineering</p>
-          <p className="meta mt-2">
+          <p className="meta field-meta">
             {site.affiliation} · {site.location}
           </p>
         </Field>

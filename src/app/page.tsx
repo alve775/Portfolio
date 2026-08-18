@@ -1,6 +1,5 @@
-import { PageHeader } from '@/components/PageHeader';
 import { ProfileLinks } from '@/components/ProfileLinks';
-import { RecordCard } from '@/components/RecordCard';
+import { PaperList } from '@/components/PaperList';
 import { getPapers } from '@/lib/content';
 import { site } from '@/lib/site';
 
@@ -13,36 +12,31 @@ export default function HomePage() {
 
   return (
     <>
-      <PageHeader
-        eyebrow={`${site.affiliationShort} · ${site.location}`}
-        title={site.name}
-        lede={site.positioning}
-      />
-
-      <div className="grid gap-x-14 gap-y-8 border-t border-rule pt-8 lg:grid-cols-[1.55fr_1fr]">
-        <p className="measure text-[0.9375rem] leading-[1.7] text-muted">{site.bio}</p>
-        <ProfileLinks />
-      </div>
-
-      <section className="mt-16">
-        <div className="section-head">
-          <h2 className="mono-label">Selected work</h2>
-          {proofPoints.length > 0 ? (
-            <span className="mono-label">
-              {proofPoints.length} {proofPoints.length === 1 ? 'record' : 'records'}
-            </span>
-          ) : null}
+      <section className="home-hero" data-home-hero aria-labelledby="home-title">
+        <div className="hero-identity">
+          <p className="eyebrow">{site.affiliationShort} · {site.location}</p>
+          <h1 id="home-title" className="hero-name">{site.name}</h1>
         </div>
+        <div className="hero-copy">
+          <p className="hero-thesis">{site.positioning}</p>
+          <ProfileLinks />
+        </div>
+      </section>
 
-        {proofPoints.length === 0 ? (
-          <p className="empty mt-5">No verified research entries are published yet.</p>
-        ) : (
-          <div className="mt-5 grid gap-3">
-            {proofPoints.map((paper, index) => (
-              <RecordCard key={paper.slug} paper={paper} index={index + 1} />
-            ))}
-          </div>
-        )}
+      {proofPoints.length > 0 ? (
+        <PaperList label="Selected research" papers={proofPoints} />
+      ) : (
+        <section className="work-section" data-research-index>
+          <div className="section-heading"><h2>Selected research</h2></div>
+          <p className="empty-state">No verified research entries are published yet.</p>
+        </section>
+      )}
+
+      <section className="profile-section" aria-labelledby="profile-title">
+        <div className="section-heading section-heading-plain">
+          <h2 id="profile-title">Profile</h2>
+        </div>
+        <p className="profile-copy">{site.bio}</p>
       </section>
     </>
   );

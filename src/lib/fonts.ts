@@ -1,23 +1,13 @@
 import localFont from 'next/font/local';
 
-/**
- * Self-hosted, subset to latin. No third-party font requests at runtime.
- *
- * Charis SIL carries the reading (a Bitstream Charter derivative — the register
- * of a well-set technical report). Fira Mono carries every piece of metadata.
- * Both OFL 1.1; licences ship alongside the files in public/fonts/.
- */
-
-export const charis = localFont({
-  src: [
-    { path: '../../public/fonts/charis-sil-latin-400-normal.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/charis-sil-latin-400-italic.woff2', weight: '400', style: 'italic' },
-    { path: '../../public/fonts/charis-sil-latin-700-normal.woff2', weight: '700', style: 'normal' },
-  ],
-  variable: '--font-charis',
+/** Self-hosted variable sans. No third-party font request is made at runtime. */
+export const instrumentSans = localFont({
+  src: '../../public/fonts/instrument-sans-variable.ttf',
+  variable: '--font-instrument-sans',
   display: 'swap',
-  adjustFontFallback: 'Times New Roman',
-  fallback: ['Charter', 'Georgia', 'serif'],
+  weight: '400 700',
+  style: 'normal',
+  fallback: ['Inter', 'Avenir Next', 'Helvetica Neue', 'Arial', 'sans-serif'],
 });
 
 export const firaMono = localFont({
@@ -31,8 +21,8 @@ export const firaMono = localFont({
 });
 
 /**
- * Bangla coverage. Charis SIL has no Bengali glyphs, so a Bangla paper title or
- * dataset name would render as tofu on the site whose subject is Bangla NLP.
+ * Bangla coverage. Instrument Sans has no Bengali glyphs, so a Bangla paper
+ * title or dataset name needs an explicit fallback on this Bangla NLP site.
  *
  * The `unicode-range` descriptor means this file is only downloaded when Bengali
  * codepoints are actually painted: zero cost on pages without them.
@@ -63,4 +53,4 @@ export const notoSerifBengali = localFont({
 });
 
 /** Applied once, on <html>, in the root layout. */
-export const fontVariables = `${charis.variable} ${firaMono.variable} ${notoSerifBengali.variable}`;
+export const fontVariables = `${instrumentSans.variable} ${firaMono.variable} ${notoSerifBengali.variable}`;

@@ -11,6 +11,14 @@ export const ROLE_LABEL: Record<Paper['role'], string> = {
   'co-author': 'co-author',
 };
 
+/** A short visual-index label derived only from public title and venue text. */
+export function researchArea(frontmatter: Pick<Paper, 'title' | 'venue'>): string {
+  const recordText = `${frontmatter.title} ${frontmatter.venue}`.toLowerCase();
+  if (/fingerprint|biometric|presentation attack|liveness/.test(recordText)) return 'Security';
+  if (/bangla|language|vocabulary|sentence|bert|nlp/.test(recordText)) return 'Language';
+  return 'Research';
+}
+
 /**
  * The monospace record line under a title.
  *

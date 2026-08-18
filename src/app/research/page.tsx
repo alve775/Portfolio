@@ -22,14 +22,15 @@ export default function ResearchPage() {
         lede="Publications first, then work that is still in progress."
       />
       {papers.length === 0 ? (
-        <p className="empty">No verified research entries are published yet.</p>
+        <div className="empty-state" data-research-index>
+          No verified research entries are published yet.
+        </div>
       ) : (
         <>
           <PaperList label="Published and accepted" papers={finished} />
           <PaperList
             label="In progress"
             papers={inProgress}
-            startIndex={finished.length + 1}
           />
         </>
       )}

@@ -145,6 +145,7 @@ test('exports complete fixture paper and note details', { timeout: 60_000 }, asy
     const projectHtml = await readFile(path.join(out, 'projects/index.html'), 'utf8');
     const researchHtml = await readFile(path.join(out, 'research/index.html'), 'utf8');
     const notesHtml = await readFile(path.join(out, 'notes/index.html'), 'utf8');
+    const cvHtml = await readFile(path.join(out, 'cv/index.html'), 'utf8');
     const fixtureRobots = await readFile(path.join(out, 'robots.txt'), 'utf8');
     const fixtureSitemap = await readFile(path.join(out, 'sitemap.xml'), 'utf8');
     assert.match(rootHtml, /<link rel="canonical" href="https:\/\/portfolio\.rfc-editor\.org\/"/);
@@ -169,6 +170,15 @@ test('exports complete fixture paper and note details', { timeout: 60_000 }, asy
     assert.match(projectHtml, /Fixture Project/);
     assert.match(researchHtml, /href="\/research\/fixture-study\/"/);
     assert.match(notesHtml, /href="\/notes\/fixture-note\/"/);
+    assert.match(rootHtml, /data-design="quiet-technical"/);
+    assert.match(rootHtml, /data-home-hero/);
+    assert.match(rootHtml, /data-research-index/);
+    assert.match(researchHtml, /data-research-index/);
+    assert.match(researchHtml, /data-research-entry/);
+    assert.match(paperHtml, /data-research-detail/);
+    assert.match(projectHtml, /data-project-index/);
+    assert.match(notesHtml, /data-note-index/);
+    assert.match(cvHtml, /data-cv-grid/);
     assert.deepEqual(
       [...paperHtml.matchAll(/<meta name="citation_author" content="([^"]+)"/g)].map(
         (match) => match[1],

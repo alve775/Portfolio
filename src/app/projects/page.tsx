@@ -11,12 +11,11 @@ export const metadata = routeMetadata({
 
 const STATUS_LABEL = { live: 'live', archived: 'archived', wip: 'wip' } as const;
 
-/** Problem / approach / result, kept as a labelled three-row record. */
-function ProjectRow({ label, children }: { label: string; children: string }) {
+function ProjectFact({ label, children }: { label: string; children: string }) {
   return (
-    <div className="grid gap-x-5 gap-y-1 border-t border-rule py-3 sm:grid-cols-[5.5rem_minmax(0,1fr)]">
-      <span className="mono-label sm:pt-1">{label}</span>
-      <p className="measure text-[0.9375rem] leading-[1.6]">{children}</p>
+    <div className="project-fact">
+      <span>{label}</span>
+      <p>{children}</p>
     </div>
   );
 }
@@ -28,55 +27,53 @@ export default function ProjectsPage() {
     <>
       <PageHeader title="Projects" />
 
-      <div className="section-head">
-        <h2 className="mono-label">Selected builds</h2>
-        {projects.length > 0 ? (
-          <span className="mono-label">
-            {projects.length} {projects.length === 1 ? 'record' : 'records'}
-          </span>
-        ) : null}
-      </div>
+      <section className="project-index" data-project-index aria-labelledby="project-list-title">
+        <div className="section-heading">
+          <h2 id="project-list-title">Selected builds</h2>
+          {projects.length > 0 ? (
+            <span className="meta">
+              {projects.length} {projects.length === 1 ? 'record' : 'records'}
+            </span>
+          ) : null}
+        </div>
 
-      {projects.length === 0 ? (
-        <p className="empty mt-5">No verified projects are published yet.</p>
-      ) : (
-        <div className="mt-5 grid gap-3">
-          {projects.map(({ slug, frontmatter }, index) => (
-            <article className="card card-link" key={slug}>
-              <div className="card-head">
-                <span className="meta">
-                  <span className="text-accent">{String(index + 1).padStart(2, '0')}</span>
-                  {'  '}
-                  {frontmatter.stack.join(' · ')}
-                </span>
-                <span
-                  className={frontmatter.status === 'live' ? 'badge' : 'badge badge-quiet'}
-                >
-                  {STATUS_LABEL[frontmatter.status]}
-                </span>
-              </div>
-              <div className="card-body">
-                <h3 className="title-lg">{frontmatter.title}</h3>
-                <div className="mt-4">
-                  <ProjectRow label="Problem">{frontmatter.problem}</ProjectRow>
-                  <ProjectRow label="Approach">{frontmatter.approach}</ProjectRow>
-                  <ProjectRow label="Result">{frontmatter.result}</ProjectRow>
+        {projects.length === 0 ? (
+          <p className="empty-state">No verified projects are published yet.</p>
+        ) : (
+          <div>
+            {projects.map(({ slug, frontmatter }) => (
+              <article className="project-entry" key={slug}>
+                <div className="project-topline">
+                  <span className="meta">{frontmatter.stack.join(' · ')}</span>
+                  <span
+                    className={
+                      frontmatter.status === 'live' ? 'status' : 'status status-quiet'
+                    }
+                  >
+                    {STATUS_LABEL[frontmatter.status]}
+                  </span>
                 </div>
-                <p className="mt-4 flex flex-wrap gap-x-6">
-                  <a className="link meta inline-flex min-h-11 items-center" href={frontmatter.repoUrl} rel="noopener">
-                    Repository
+                <h3 className="project-title">{frontmatter.title}</h3>
+                <div className="project-facts">
+                  <ProjectFact label="Problem">{frontmatter.problem}</ProjectFact>
+                  <ProjectFact label="Approach">{frontmatter.approach}</ProjectFact>
+                  <ProjectFact label="Result">{frontmatter.result}</ProjectFact>
+                </div>
+                <p className="project-links">
+                  <a className="link" href={frontmatter.repoUrl} rel="noopener">
+                    Repository ↗
                   </a>
                   {frontmatter.liveUrl ? (
-                    <a className="link meta inline-flex min-h-11 items-center" href={frontmatter.liveUrl} rel="noopener">
-                      Live
+                    <a className="link" href={frontmatter.liveUrl} rel="noopener">
+                      Live ↗
                     </a>
                   ) : null}
                 </p>
-              </div>
-            </article>
-          ))}
-        </div>
-      )}
+              </article>
+            ))}
+          </div>
+        )}
+      </section>
     </>
   );
 }

@@ -3,14 +3,14 @@ import { Fragment } from 'react';
 import Link from 'next/link';
 
 import type { Entry } from '@/lib/content';
-import { STATUS_LABEL, cardHeadLine } from '@/lib/paper';
+import { STATUS_LABEL, cardHeadLine, researchArea } from '@/lib/paper';
 import type { Paper } from '@/lib/schemas';
 import { site } from '@/lib/site';
 
 /** Author list in exact publication order. The owner's name is never moved. */
 export function AuthorList({ authors }: { authors: string[] }) {
   return (
-    <p className="mt-3 text-[0.9375rem] text-muted">
+    <p className="author-list">
       {authors.map((author, index) => (
         <Fragment key={`${author}-${index}`}>
           {index > 0 ? ', ' : null}
@@ -23,7 +23,7 @@ export function AuthorList({ authors }: { authors: string[] }) {
 
 export function StatusBadge({ status }: { status: Paper['status'] }) {
   const quiet = status === 'in-progress';
-  return <span className={quiet ? 'badge badge-quiet' : 'badge'}>{STATUS_LABEL[status]}</span>;
+  return <span className={quiet ? 'status status-quiet' : 'status'}>{STATUS_LABEL[status]}</span>;
 }
 
 /**
@@ -42,50 +42,40 @@ export function Takeaway({
   className?: string;
 }) {
   return (
-    <div className={`takeaway ${className}`}>
-      <span className="mono-label block text-accent">What this shows</span>
-      <p
-        className={
-          size === 'lg'
-            ? 'mt-2 text-[1.125rem] leading-[1.6]'
-            : 'mt-1.5 text-[0.9375rem] leading-[1.6]'
-        }
-      >
-        {children}
-      </p>
+    <div className={`takeaway takeaway-${size} ${className}`}>
+      <span className="takeaway-label">What this shows</span>
+      <p>{children}</p>
     </div>
   );
 }
 
-/** One paper, project or thesis as a record card. Used by home and /research. */
-export function RecordCard({ paper, index }: { paper: Entry<Paper>; index: number }) {
+/** One paper or thesis as a node in the vertical research index. */
+export function RecordCard({ paper }: { paper: Entry<Paper> }) {
   const { frontmatter } = paper;
 
   return (
-    <article className="card card-link">
-      <div className="card-head">
-        <span className="meta">
-          <span className="text-accent">{String(index).padStart(2, '0')}</span>
-          {'  '}
-          {cardHeadLine(frontmatter)}
-        </span>
-        <span className="flex items-center gap-2">
+    <article className="research-entry" data-research-entry>
+      <p className="research-domain">{researchArea(frontmatter)}</p>
+      <div className="research-entry-content">
+        <div className="research-meta-row">
+          <span className="meta">{cardHeadLine(frontmatter)}</span>
+          <span className="status-row">
           {frontmatter.draft ? (
-            <span className="badge badge-draft" title="Not included in the production build">
+            <span className="status status-draft" title="Not included in the production build">
               draft
             </span>
           ) : null}
           <StatusBadge status={frontmatter.status} />
-        </span>
-      </div>
-      <div className="card-body">
-        <h3 className="title-lg">
-          <Link className="card-title" href={`/research/${paper.slug}/`}>
+          </span>
+        </div>
+        <h3 className="research-title">
+          <Link href={`/research/${paper.slug}/`}>
             {frontmatter.title}
+            <span className="research-arrow" aria-hidden="true">↗</span>
           </Link>
         </h3>
         <AuthorList authors={frontmatter.authors} />
-        <Takeaway className="mt-4">{frontmatter.takeaway}</Takeaway>
+        <Takeaway>{frontmatter.takeaway}</Takeaway>
       </div>
     </article>
   );

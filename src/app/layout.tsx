@@ -50,15 +50,15 @@ export function generateMetadata(): Metadata {
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={fontVariables}>
-      <body className="flex min-h-dvh flex-col">
+      <body data-design="quiet-technical" className="site-body">
         <a
           href="#main"
-          className="link meta sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-10 focus:bg-paper focus:px-3 focus:py-2"
+          className="skip-link"
         >
           Skip to content
         </a>
         <SiteHeader />
-        <main id="main" className="shell grow py-16">
+        <main id="main" className="site-shell main-content">
           {children}
         </main>
         <SiteFooter />

@@ -21,7 +21,7 @@ export function Field({
         {label}
         {note ? <span className="field-label-note">{note}</span> : null}
       </h2>
-      <div>{children}</div>
+      <div className="field-content">{children}</div>
     </section>
   );
 }
