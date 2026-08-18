@@ -317,12 +317,13 @@
   }
 
   .hero-name {
-    max-width: 11ch;
+    max-width: 14ch;
     margin-top: 1.4rem;
-    font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+    font-size: clamp(1.6rem, 2.2vw, 2rem);
     font-weight: 580;
-    letter-spacing: -0.04em;
-    line-height: 1.04;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    overflow-wrap: break-word;
   }
 
   .hero-copy {
@@ -330,11 +331,11 @@
   }
 
   .hero-thesis {
-    max-width: 18ch;
-    font-size: clamp(2.6rem, 6.2vw, 5.4rem);
+    max-width: 21ch;
+    font-size: clamp(2.4rem, 4.5vw, 4.15rem);
     font-weight: 520;
-    letter-spacing: -0.06em;
-    line-height: 0.98;
+    letter-spacing: -0.045em;
+    line-height: 1.04;
   }
 
   .profile-links {
@@ -942,7 +943,7 @@
   }
 
   .hero-thesis {
-    font-size: clamp(2.35rem, 11.5vw, 4rem);
+    font-size: clamp(2.15rem, 8vw, 3.25rem);
   }
 
   .section-heading {
