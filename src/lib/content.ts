@@ -25,6 +25,23 @@ const CONTENT_DIR = configuredContentDir
   ? path.resolve(configuredContentDir)
   : path.join(process.cwd(), 'src', 'content');
 
+/**
+ * Whether to render entries that have not passed the publish gate.
+ *
+ * The brief requires missing facts to "fail visibly" as `{{TODO}}` tokens on the
+ * page. The publish gate does the opposite — it hides an incomplete entry
+ * entirely, which makes an authoring session look like a broken site.
+ *
+ * Both are right, at different times. In development every entry renders with
+ * its tokens showing, so gaps are obvious. `next build` sets NODE_ENV to
+ * production, so the static export still contains only verified entries and no
+ * placeholder text can reach the deployed site.
+ */
+function includeUnpublished(): boolean {
+  if (process.env.PORTFOLIO_INCLUDE_DRAFTS === '1') return true;
+  return process.env.NODE_ENV !== 'production';
+}
+
 /** A parsed entry: validated frontmatter plus the raw MDX body. */
 export type Entry<T> = {
   slug: string;
@@ -70,7 +87,7 @@ function parseWith<T>(schema: { parse: (data: unknown) => T }) {
 
 export function getPapers(): Entry<Paper>[] {
   return readCollection('papers', parseWith(paperSchema))
-    .filter(isPublishablePaper)
+    .filter((entry) => isPublishablePaper(entry) || includeUnpublished())
     .sort((a, b) => a.frontmatter.order - b.frontmatter.order);
 }
 
@@ -80,14 +97,14 @@ export function getPaper(slug: string): Entry<Paper> | undefined {
 
 export function getProjects(): Entry<Project>[] {
   return readCollection('projects', parseWith(projectSchema))
-    .filter(isPublishableProject)
+    .filter((entry) => isPublishableProject(entry) || includeUnpublished())
     .sort((a, b) => a.frontmatter.order - b.frontmatter.order);
 }
 
 /** Published notes only, newest first. Drafts never reach the build. */
 export function getNotes(): Entry<Note>[] {
   return readCollection('notes', parseWith(noteSchema))
-    .filter(isPublishableNote)
+    .filter((entry) => isPublishableNote(entry) || includeUnpublished())
     .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date));
 }
 

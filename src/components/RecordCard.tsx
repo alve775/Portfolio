@@ -69,7 +69,14 @@ export function RecordCard({ paper, index }: { paper: Entry<Paper>; index: numbe
           {'  '}
           {cardHeadLine(frontmatter)}
         </span>
-        <StatusBadge status={frontmatter.status} />
+        <span className="flex items-center gap-2">
+          {frontmatter.draft ? (
+            <span className="badge badge-draft" title="Not included in the production build">
+              draft
+            </span>
+          ) : null}
+          <StatusBadge status={frontmatter.status} />
+        </span>
       </div>
       <div className="card-body">
         <h3 className="title-lg">

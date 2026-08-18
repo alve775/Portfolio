@@ -267,6 +267,13 @@
     border: 1px solid var(--accent);
   }
 
+  /* Only ever visible in development: this entry is excluded from the export. */
+  .badge-draft {
+    background-color: var(--mark);
+    color: var(--mark-ink);
+    border-color: color-mix(in oklab, var(--mark) 70%, var(--ink));
+  }
+
   /* In-progress work is deliberately quiet: nothing may read as accepted. */
   .badge-quiet {
     background-color: transparent;
