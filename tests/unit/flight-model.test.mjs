@@ -3,6 +3,7 @@ import test from 'node:test';
 
 import {
   FLIGHT_GEOMETRY,
+  canEnhanceFlight,
   clamp01,
   easeInOutCubic,
   getScrollProgress,
@@ -76,4 +77,17 @@ test('adds a lateral arc between adjacent camera stations', () => {
     midpoint.x !== linearMidpointX || midpoint.y !== linearMidpointY,
     'the halfway camera position should bow away from a straight line',
   );
+});
+
+test('falls back to the static sequence when text scaling cannot fit the flight', () => {
+  const supported = {
+    browserSupported: true,
+    reducedMotion: false,
+    staticLayout: false,
+    canvasFailed: false,
+  };
+
+  assert.equal(canEnhanceFlight({ ...supported, rootFontSize: 16 }), true);
+  assert.equal(canEnhanceFlight({ ...supported, rootFontSize: 20 }), true);
+  assert.equal(canEnhanceFlight({ ...supported, rootFontSize: 32 }), false);
 });

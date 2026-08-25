@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+/.playwright-cli/
+/output/playwright/
 
 # local isolated feature work
 /.worktrees/

@@ -62,6 +62,14 @@ type StationScrollInput = ScrollGeometry &
     stationCount: number;
   }>;
 
+type FlightEnhancementInput = Readonly<{
+  browserSupported: boolean;
+  reducedMotion: boolean;
+  staticLayout: boolean;
+  canvasFailed: boolean;
+  rootFontSize: number;
+}>;
+
 export const FLIGHT_GEOMETRY = [
   {
     id: 'identity',
@@ -97,6 +105,23 @@ export const FLIGHT_GEOMETRY = [
 
 export function clamp01(value: number): number {
   return Math.min(Math.max(value, 0), 1);
+}
+
+export function canEnhanceFlight({
+  browserSupported,
+  reducedMotion,
+  staticLayout,
+  canvasFailed,
+  rootFontSize,
+}: FlightEnhancementInput): boolean {
+  return (
+    browserSupported &&
+    !reducedMotion &&
+    !staticLayout &&
+    !canvasFailed &&
+    Number.isFinite(rootFontSize) &&
+    rootFontSize <= 20
+  );
 }
 
 export function easeInOutCubic(value: number): number {

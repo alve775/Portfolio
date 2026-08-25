@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   type FlightStationContent,
+  canEnhanceFlight,
   getScrollProgress,
   getStationScrollTop,
 } from '@/components/home/flight-model';
@@ -44,13 +45,19 @@ export function ResearchFlight({ stations }: ResearchFlightProps) {
         'IntersectionObserver' in window &&
         'requestAnimationFrame' in window &&
         'HTMLCanvasElement' in window;
+      const rootFontSize = Number.parseFloat(
+        window.getComputedStyle(document.documentElement).fontSize,
+      );
 
       setReducedMotion(motionIsReduced);
       setCapable(
-        browserIsCapable &&
-          !motionIsReduced &&
-          !staticLayoutQuery.matches &&
-          !canvasFailed,
+        canEnhanceFlight({
+          browserSupported: browserIsCapable,
+          reducedMotion: motionIsReduced,
+          staticLayout: staticLayoutQuery.matches,
+          canvasFailed,
+          rootFontSize,
+        }),
       );
       setLateralScale(window.innerWidth < 768 ? 0.58 : 1);
     };
