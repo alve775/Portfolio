@@ -66,6 +66,36 @@ test('preview root contains no unresolved public values and is not indexable', a
   }
 });
 
+test('exports the complete semantic research-flight fallback', async () => {
+  const html = await readFile(path.join(out, 'index.html'), 'utf8');
+  const stationIds = ['identity', 'language', 'security', 'systems', 'contact'];
+  const stationPositions = stationIds.map((id) =>
+    html.indexOf(`id="flight-station-${id}"`),
+  );
+
+  assert.match(html, /data-research-flight/);
+  assert.match(html, /<canvas[^>]+aria-hidden="true"/);
+  assert.deepEqual(
+    stationPositions.every((position) => position >= 0),
+    true,
+    'every research station should be present in exported HTML',
+  );
+  assert.deepEqual(
+    [...stationPositions].sort((a, b) => a - b),
+    stationPositions,
+    'research stations should retain logical document order',
+  );
+  assert.equal((html.match(/<h1(?:\s|>)/g) ?? []).length, 1);
+  assert.equal((html.match(/aria-pressed="true"/g) ?? []).length, 1);
+
+  for (const id of stationIds) {
+    assert.match(html, new RegExp(`aria-controls="flight-station-${id}"`));
+  }
+
+  assert.match(html, /data-research-index/);
+  assert.match(html, /Profile/);
+});
+
 test('exports preview-safe discovery artifacts', async () => {
   for (const relative of ['robots.txt', 'sitemap.xml', 'opengraph-image.png']) {
     await assert.doesNotReject(access(path.join(out, relative)));
@@ -171,7 +201,7 @@ test('exports complete fixture paper and note details', { timeout: 60_000 }, asy
     assert.match(researchHtml, /href="\/research\/fixture-study\/"/);
     assert.match(notesHtml, /href="\/notes\/fixture-note\/"/);
     assert.match(rootHtml, /data-design="quiet-technical"/);
-    assert.match(rootHtml, /data-home-hero/);
+    assert.match(rootHtml, /data-research-flight/);
     assert.match(rootHtml, /data-research-index/);
     assert.match(researchHtml, /data-research-index/);
     assert.match(researchHtml, /data-research-entry/);

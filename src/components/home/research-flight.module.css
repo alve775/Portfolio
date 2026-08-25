@@ -1,0 +1,550 @@
+.root {
+  --flight-background: #07110d;
+  --flight-surface: #0d1b15;
+  --flight-ink: #edf9f3;
+  --flight-muted: #9cb5aa;
+  --flight-line: rgb(190 255 229 / 17%);
+  --flight-signal: #69e4bd;
+  --flight-cobalt: #8ba3ff;
+  --flight-header-height: 0px;
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  overflow: clip;
+  background: var(--flight-background);
+  color: var(--flight-ink);
+  isolation: isolate;
+}
+
+.viewport {
+  position: relative;
+}
+
+.frame {
+  position: relative;
+  z-index: 1;
+  width: min(calc(100% - 2.5rem), 72rem);
+  margin-inline: auto;
+  padding-block: clamp(2rem, 6vw, 4.5rem) clamp(4rem, 9vw, 7rem);
+}
+
+.canvas {
+  display: none;
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--flight-background);
+}
+
+.sceneLabel,
+.marker,
+.meta,
+.instructions,
+.stationButton,
+.progress {
+  font-family: var(--font-utility);
+  text-transform: uppercase;
+}
+
+.sceneLabel {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--flight-line);
+  color: var(--flight-muted);
+  font-size: 0.625rem;
+  letter-spacing: 0.11em;
+}
+
+.instructions {
+  max-width: 32rem;
+  margin-top: 1.1rem;
+  color: var(--flight-muted);
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+}
+
+.controls {
+  margin-top: 2rem;
+}
+
+.controls ol {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stationButton {
+  display: inline-flex;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  width: 100%;
+  align-items: center;
+  gap: 0.65rem;
+  justify-content: center;
+  border: 1px solid var(--flight-line);
+  background: transparent;
+  color: var(--flight-muted);
+  font: inherit;
+  font-size: 0.625rem;
+  letter-spacing: 0.07em;
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.stationButton:hover,
+.stationButton[aria-pressed="true"] {
+  border-color: var(--flight-signal);
+  background: rgb(105 228 189 / 8%);
+  color: var(--flight-ink);
+}
+
+.stationButton:focus-visible,
+.action:focus-visible {
+  outline: 2px solid var(--flight-signal);
+  outline-offset: 3px;
+}
+
+.copyDeck {
+  display: grid;
+  gap: 0;
+  margin-top: clamp(3rem, 8vw, 6rem);
+}
+
+.station {
+  scroll-margin-top: calc(var(--flight-header-height) + 1rem);
+  padding-block: clamp(2.5rem, 7vw, 5.5rem);
+  border-top: 1px solid var(--flight-line);
+}
+
+.station:last-child {
+  border-bottom: 1px solid var(--flight-line);
+}
+
+.marker,
+.meta {
+  color: var(--flight-signal);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+}
+
+.title {
+  max-width: 14ch;
+  margin-top: 1.15rem;
+  color: var(--flight-ink);
+  font-size: clamp(2.4rem, 7vw, 5.7rem);
+  font-weight: 540;
+  letter-spacing: -0.055em;
+  line-height: 0.96;
+  overflow-wrap: break-word;
+}
+
+.meta {
+  max-width: 48rem;
+  margin-top: 1.4rem;
+  color: var(--flight-cobalt);
+}
+
+.body {
+  max-width: 52rem;
+  margin-top: 1.5rem;
+  color: var(--flight-muted);
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  line-height: 1.6;
+}
+
+.action {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  margin-top: 1.75rem;
+  border-bottom: 1px solid var(--flight-signal);
+  color: var(--flight-signal);
+  font-weight: 560;
+  text-decoration: none;
+}
+
+.progress {
+  display: none;
+}
+
+.root[data-enhanced="true"] {
+  height: 500svh;
+  min-height: 210rem;
+}
+
+.root[data-enhanced="true"] .viewport {
+  position: sticky;
+  top: var(--flight-header-height);
+  height: calc(100svh - var(--flight-header-height));
+  min-height: 36rem;
+  overflow: hidden;
+}
+
+.root[data-enhanced="true"] .frame {
+  height: 100%;
+  padding-block: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+.root[data-enhanced="true"] .canvas {
+  display: block;
+}
+
+.root[data-enhanced="true"] .sceneLabel {
+  position: absolute;
+  top: clamp(1.25rem, 3vw, 2.25rem);
+  right: 0;
+  left: 0;
+}
+
+.root[data-enhanced="true"] .instructions {
+  position: absolute;
+  right: 0;
+  bottom: clamp(1.2rem, 3vw, 2rem);
+  max-width: 20rem;
+  margin: 0;
+  text-align: right;
+}
+
+.root[data-enhanced="true"] .controls {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 0;
+  width: 6.5rem;
+  margin: 0;
+  translate: 0 -50%;
+}
+
+.root[data-enhanced="true"] .controls ol {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.35rem;
+}
+
+.root[data-enhanced="true"] .stationButton {
+  justify-content: flex-start;
+  padding-inline: 0.75rem;
+}
+
+.root[data-enhanced="true"] .buttonLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.root[data-enhanced="true"] .copyDeck {
+  position: absolute;
+  top: 50%;
+  left: clamp(5rem, 9vw, 8.5rem);
+  width: min(43vw, 35rem);
+  height: min(55vh, 32rem);
+  margin: 0;
+  translate: 0 -45%;
+}
+
+.root[data-enhanced="true"] .station {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  translate: -1rem 0;
+  transition:
+    opacity 320ms ease,
+    translate 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 420ms;
+}
+
+.root[data-enhanced="true"] .station[data-active="true"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  translate: 0 0;
+  transition-delay: 90ms, 90ms, 0s;
+}
+
+.root[data-enhanced="true"] .title {
+  max-width: 12ch;
+  font-size: clamp(2.5rem, 5.2vw, 5.2rem);
+}
+
+.root[data-enhanced="true"] .body {
+  max-width: 38rem;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+}
+
+.root[data-enhanced="true"] .progress {
+  position: absolute;
+  right: 0;
+  bottom: clamp(3.8rem, 7vw, 5.2rem);
+  display: grid;
+  width: min(15rem, 24vw);
+  gap: 0.75rem;
+  color: var(--flight-muted);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+}
+
+.progressTrack {
+  --flight-progress: 0%;
+  position: relative;
+  display: block;
+  height: 1px;
+  overflow: hidden;
+  background: var(--flight-line);
+}
+
+.progressTrack > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--flight-progress);
+  background: var(--flight-signal);
+}
+
+@media (max-width: 47.99rem) {
+  .frame {
+    width: min(calc(100% - 2rem), 72rem);
+  }
+
+  .controls ol {
+    grid-template-columns: repeat(5, minmax(2.75rem, 1fr));
+    overflow-x: auto;
+  }
+
+  .buttonLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .title {
+    font-size: clamp(2.25rem, 12vw, 4.4rem);
+  }
+
+  .root[data-enhanced="true"] .sceneLabel span:last-child {
+    display: none;
+  }
+
+  .root[data-enhanced="true"] .instructions {
+    right: auto;
+    bottom: 1rem;
+    left: 0;
+    width: calc(100% - 11rem);
+    text-align: left;
+  }
+
+  .root[data-enhanced="true"] .controls {
+    top: auto;
+    right: 0;
+    bottom: 3.5rem;
+    left: 0;
+    width: auto;
+    translate: 0;
+  }
+
+  .root[data-enhanced="true"] .controls ol {
+    grid-template-columns: repeat(5, minmax(2.75rem, 1fr));
+  }
+
+  .root[data-enhanced="true"] .stationButton {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .root[data-enhanced="true"] .copyDeck {
+    top: auto;
+    right: 0;
+    bottom: 7.8rem;
+    left: 0;
+    width: auto;
+    height: min(40vh, 22rem);
+    translate: 0;
+  }
+
+  .root[data-enhanced="true"] .station {
+    justify-content: flex-end;
+    translate: -0.75rem 0;
+  }
+
+  .root[data-enhanced="true"] .station[data-active="true"] {
+    translate: 0 0;
+  }
+
+  .root[data-enhanced="true"] .title {
+    max-width: 14ch;
+    font-size: clamp(2.15rem, 10vw, 3.65rem);
+  }
+
+  .root[data-enhanced="true"] .body {
+    max-width: 34rem;
+    font-size: clamp(0.96rem, 3.8vw, 1.1rem);
+  }
+
+  .root[data-enhanced="true"] .meta {
+    margin-top: 0.9rem;
+  }
+
+  .root[data-enhanced="true"] .body {
+    margin-top: 1rem;
+  }
+
+  .root[data-enhanced="true"] .action {
+    margin-top: 1rem;
+  }
+
+  .root[data-enhanced="true"] .progress {
+    right: 0;
+    bottom: 1rem;
+    width: 9rem;
+  }
+}
+
+@media (max-width: 22rem), (max-height: 42rem) {
+  .root[data-enhanced="true"] {
+    height: auto;
+    min-height: 0;
+  }
+
+  .root[data-enhanced="true"] .viewport {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .root[data-enhanced="true"] .frame {
+    height: auto;
+    padding-block: 2rem 4rem;
+  }
+
+  .root[data-enhanced="true"] .canvas,
+  .root[data-enhanced="true"] .progress {
+    display: none;
+  }
+
+  .root[data-enhanced="true"] .sceneLabel,
+  .root[data-enhanced="true"] .instructions,
+  .root[data-enhanced="true"] .controls,
+  .root[data-enhanced="true"] .copyDeck,
+  .root[data-enhanced="true"] .station {
+    position: static;
+    inset: auto;
+    width: auto;
+    height: auto;
+    margin: 0;
+    translate: 0;
+  }
+
+  .root[data-enhanced="true"] .instructions {
+    margin-top: 1.1rem;
+    text-align: left;
+  }
+
+  .root[data-enhanced="true"] .controls {
+    margin-top: 2rem;
+  }
+
+  .root[data-enhanced="true"] .controls ol {
+    grid-template-columns: repeat(5, minmax(2.75rem, 1fr));
+  }
+
+  .root[data-enhanced="true"] .copyDeck {
+    display: grid;
+    margin-top: 3rem;
+  }
+
+  .root[data-enhanced="true"] .station {
+    display: block;
+    padding-block: 3rem;
+    border-top: 1px solid var(--flight-line);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .root[data-enhanced="true"] .station:last-child {
+    border-bottom: 1px solid var(--flight-line);
+  }
+
+  .root[data-enhanced="true"] .title {
+    max-width: 14ch;
+  }
+}
+
+@media (max-width: 25rem) {
+  .frame {
+    width: min(calc(100% - 2rem), 72rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root[data-enhanced="true"] {
+    height: auto;
+    min-height: 0;
+  }
+
+  .root[data-enhanced="true"] .viewport {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .root[data-enhanced="true"] .canvas,
+  .root[data-enhanced="true"] .progress {
+    display: none;
+  }
+
+  .root[data-enhanced="true"] .frame,
+  .root[data-enhanced="true"] .copyDeck,
+  .root[data-enhanced="true"] .station {
+    position: static;
+    inset: auto;
+    width: auto;
+    height: auto;
+    margin: 0;
+    translate: 0;
+  }
+
+  .root[data-enhanced="true"] .copyDeck {
+    display: grid;
+    margin-top: 3rem;
+  }
+
+  .root[data-enhanced="true"] .station {
+    display: block;
+    padding-block: 3rem;
+    border-top: 1px solid var(--flight-line);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
