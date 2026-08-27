@@ -202,7 +202,7 @@ export function ResearchFlight({ stations }: ResearchFlightProps) {
       data-research-flight
       data-enhanced={enhanced ? 'true' : 'false'}
       data-reduced-motion={reducedMotion ? 'true' : 'false'}
-      aria-label="Research journey"
+      aria-label="Professional journey"
     >
       <div className={styles.viewport}>
         <ResearchFlightCanvas
@@ -216,7 +216,7 @@ export function ResearchFlight({ stations }: ResearchFlightProps) {
 
         <div className={styles.frame}>
           <div className={styles.sceneLabel} aria-hidden="true">
-            <span>Research constellation</span>
+            <span>Work constellation</span>
             <span>Path 01 / 05 stations</span>
           </div>
 
@@ -226,7 +226,7 @@ export function ResearchFlight({ stations }: ResearchFlightProps) {
 
           <nav
             className={styles.controls}
-            aria-label="Research stations"
+            aria-label="Portfolio stations"
             aria-describedby="flight-instructions"
           >
             <ol>

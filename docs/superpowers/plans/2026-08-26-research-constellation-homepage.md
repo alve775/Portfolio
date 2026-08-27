@@ -127,9 +127,9 @@ export type FlightFrame = Readonly<{
 
 export const FLIGHT_GEOMETRY = [
   { id: 'identity', visual: 'origin', anchor: { x: 0, y: 0, z: 0 }, camera: { x: 0, y: 0, z: 44 } },
-  { id: 'language', visual: 'language', anchor: { x: -18, y: -4, z: -72 }, camera: { x: -18, y: -4, z: -28 } },
-  { id: 'security', visual: 'security', anchor: { x: 15, y: 7, z: -144 }, camera: { x: 15, y: 7, z: -100 } },
-  { id: 'systems', visual: 'systems', anchor: { x: -12, y: -8, z: -216 }, camera: { x: -12, y: -8, z: -172 } },
+  { id: 'projects', visual: 'projects', anchor: { x: -18, y: -4, z: -72 }, camera: { x: -18, y: -4, z: -28 } },
+  { id: 'ai', visual: 'ai', anchor: { x: 15, y: 7, z: -144 }, camera: { x: 15, y: 7, z: -100 } },
+  { id: 'research', visual: 'research', anchor: { x: -12, y: -8, z: -216 }, camera: { x: -12, y: -8, z: -172 } },
   { id: 'contact', visual: 'contact', anchor: { x: 8, y: 0, z: -288 }, camera: { x: 8, y: 0, z: -244 } },
 ] as const satisfies readonly FlightStationGeometry[];
 ```
@@ -229,7 +229,7 @@ Station buttons call `getStationScrollTop` and `window.scrollTo`. Use `behavior:
 
 Use a `canvasRef`, a deterministic 72-particle array created once, `ResizeObserver` for backing-store size, and one animation loop gated by `enabled && visible`. Project a world point with `depth = camera.z - point.z`, reject depth outside `2..380`, and use `focalLength = Math.min(width, height) * 1.05`.
 
-The draw order is: solid ink-green background, quiet coordinate grid, projected flight path, bounded particles, then five research objects. The five object functions are `drawOrigin`, `drawLanguage`, `drawSecurity`, `drawSystems`, and `drawContact`; they render respectively concentric origin rings, Bengali glyph fragments joined by token lines, fingerprint-ridge arcs with perturbation crosses, inference nodes with deployment paths, and three paths converging at one contact node. Canvas text is decorative and never substitutes for HTML copy.
+The draw order is: solid ink-green background, quiet coordinate grid, projected flight path, bounded particles, then five work objects. The five object functions are `drawOrigin`, `drawProjects`, `drawAi`, `drawResearch`, and `drawContact`; they render respectively concentric origin rings, connected product nodes, Bengali glyph fragments joined by token lines, an EEG trace above separated subject groups, and three paths converging at one contact node. Canvas text is decorative and never substitutes for HTML copy.
 
 Size the backing store using:
 
@@ -299,25 +299,25 @@ const stations = [
     body: site.positioning,
   },
   {
-    id: 'language',
-    label: 'Language',
+    id: 'projects',
+    label: 'Projects',
     marker: 'Station 02',
-    title: 'Language systems for Bangla',
-    body: 'Comparative work on monolingual and multilingual transformers for Bangla.',
+    title: 'Software that reaches users',
+    body: 'I turn models and ideas into usable software, APIs, and interfaces.',
   },
   {
-    id: 'security',
-    label: 'Security',
+    id: 'ai',
+    label: 'AI/ML',
     marker: 'Station 03',
-    title: 'Security under perturbation',
-    body: 'An undergraduate thesis on adversarial robustness in fingerprint presentation attack detection.',
+    title: 'Machine learning, end to end',
+    body: 'I work across the full workflow: data, modeling, careful evaluation, and deployed inference.',
   },
   {
-    id: 'systems',
-    label: 'Systems',
+    id: 'research',
+    label: 'Research',
     marker: 'Station 04',
-    title: 'Models in front of users',
-    body: 'Alongside research he builds and deploys the inference systems that put these models in front of users.',
+    title: 'Research with careful evaluation',
+    body: 'My work spans low-resource Bangla NLP and a leakage-safe ADHD EEG framework centered on subject-level validation.',
   },
   {
     id: 'contact',

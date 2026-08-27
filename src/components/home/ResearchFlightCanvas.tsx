@@ -155,7 +155,7 @@ function drawOrigin(environment: DrawEnvironment, stationIndex: number): void {
   context.restore();
 }
 
-function drawLanguage(environment: DrawEnvironment, stationIndex: number): void {
+function drawAi(environment: DrawEnvironment, stationIndex: number): void {
   const { context, width, height, camera, stationProgress } = environment;
   const anchor = FLIGHT_GEOMETRY[stationIndex].anchor;
   const nodes = [
@@ -202,7 +202,7 @@ function drawLanguage(environment: DrawEnvironment, stationIndex: number): void 
   }
 }
 
-function drawSecurity(environment: DrawEnvironment, stationIndex: number): void {
+function drawResearch(environment: DrawEnvironment, stationIndex: number): void {
   const { context, width, height, camera, stationProgress } = environment;
   const projected = projectPoint(
     FLIGHT_GEOMETRY[stationIndex].anchor,
@@ -220,33 +220,74 @@ function drawSecurity(environment: DrawEnvironment, stationIndex: number): void 
   context.lineWidth = Math.max(0.75, projected.scale * 0.055);
   context.globalAlpha = alpha;
 
-  for (let ridge = 0; ridge < 7; ridge += 1) {
-    const radius = projected.scale * (1.2 + ridge * 0.42);
-    context.beginPath();
-    context.ellipse(0, 0, radius * 0.78, radius, -0.2, Math.PI * 0.18, Math.PI * 1.82);
-    context.stroke();
+  context.beginPath();
+  for (let sample = 0; sample <= 48; sample += 1) {
+    const progress = sample / 48;
+    const x = (-5.4 + progress * 10.8) * projected.scale;
+    const signal =
+      Math.sin(progress * Math.PI * 7) * 0.36 +
+      Math.sin(progress * Math.PI * 17) * 0.13;
+    const y = (-3.3 + signal) * projected.scale;
+    if (sample === 0) context.moveTo(x, y);
+    else context.lineTo(x, y);
   }
+  context.stroke();
 
   context.strokeStyle = PALETTE.cobalt;
-  for (const [x, y] of [
-    [-2.8, -1.4],
-    [3.1, 0.9],
-    [0.8, 3.7],
-  ]) {
+  context.setLineDash([
+    Math.max(2, projected.scale * 0.22),
+    Math.max(3, projected.scale * 0.32),
+  ]);
+  context.beginPath();
+  context.moveTo(0, -1.9 * projected.scale);
+  context.lineTo(0, 4.9 * projected.scale);
+  context.stroke();
+  context.setLineDash([]);
+
+  const groups = [
+    { color: PALETTE.signal, nodes: [[-3.9, -0.7], [-2.2, 1.4], [-4.1, 3.7]] },
+    { color: PALETTE.cobalt, nodes: [[2.3, -0.7], [4.1, 1.3], [2.5, 3.8]] },
+  ] as const;
+
+  for (const group of groups) {
+    context.strokeStyle = group.color;
+    for (let index = 1; index < group.nodes.length; index += 1) {
+      const [startX, startY] = group.nodes[index - 1];
+      const [endX, endY] = group.nodes[index];
+      context.beginPath();
+      context.moveTo(startX * projected.scale, startY * projected.scale);
+      context.lineTo(endX * projected.scale, endY * projected.scale);
+      context.stroke();
+    }
+
+    for (const [x, y] of group.nodes) {
+      const markerX = x * projected.scale;
+      const markerY = y * projected.scale;
+      const radius = Math.max(3.5, projected.scale * 0.34);
+      context.fillStyle = PALETTE.background;
+      context.beginPath();
+      context.arc(markerX, markerY, radius, 0, Math.PI * 2);
+      context.fill();
+      context.stroke();
+    }
+  }
+
+  context.fillStyle = PALETTE.signalSoft;
+  for (const x of [-5.15, 5.15]) {
     const markerX = x * projected.scale;
-    const markerY = y * projected.scale;
-    const size = Math.max(3, projected.scale * 0.32);
+    const markerY = 4.9 * projected.scale;
+    const size = Math.max(2.5, projected.scale * 0.22);
     context.beginPath();
-    context.moveTo(markerX - size, markerY);
-    context.lineTo(markerX + size, markerY);
-    context.moveTo(markerX, markerY - size);
-    context.lineTo(markerX, markerY + size);
-    context.stroke();
+    context.moveTo(markerX - size, markerY - size);
+    context.lineTo(markerX + size, markerY + size);
+    context.lineTo(markerX + size, markerY - size);
+    context.closePath();
+    context.fill();
   }
   context.restore();
 }
 
-function drawSystems(environment: DrawEnvironment, stationIndex: number): void {
+function drawProjects(environment: DrawEnvironment, stationIndex: number): void {
   const { context, width, height, camera, stationProgress } = environment;
   const anchor = FLIGHT_GEOMETRY[stationIndex].anchor;
   const offsets = [
@@ -408,9 +449,9 @@ function drawScene(
   }
 
   drawOrigin(environment, 0);
-  drawLanguage(environment, 1);
-  drawSecurity(environment, 2);
-  drawSystems(environment, 3);
+  drawProjects(environment, 1);
+  drawAi(environment, 2);
+  drawResearch(environment, 3);
   drawContact(environment, 4);
 }
 

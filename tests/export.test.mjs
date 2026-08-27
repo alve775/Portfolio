@@ -68,7 +68,7 @@ test('preview root contains no unresolved public values and is not indexable', a
 
 test('exports the complete semantic research-flight fallback', async () => {
   const html = await readFile(path.join(out, 'index.html'), 'utf8');
-  const stationIds = ['identity', 'language', 'security', 'systems', 'contact'];
+  const stationIds = ['identity', 'projects', 'ai', 'research', 'contact'];
   const stationPositions = stationIds.map((id) =>
     html.indexOf(`id="flight-station-${id}"`),
   );
@@ -94,6 +94,41 @@ test('exports the complete semantic research-flight fallback', async () => {
 
   assert.match(html, /data-research-index/);
   assert.match(html, /Profile/);
+});
+
+test('presents a hybrid professional journey with projects before research', async () => {
+  const html = await readFile(path.join(out, 'index.html'), 'utf8');
+  const projectsPosition = html.indexOf('data-project-index');
+  const researchPosition = html.indexOf('data-research-index');
+  const projectsNavPosition = html.indexOf('href="/projects/"');
+  const researchNavPosition = html.indexOf('href="/research/"');
+
+  assert.match(html, /Go to Projects station/);
+  assert.match(html, /Go to AI\/ML station/);
+  assert.match(html, /Go to Research station/);
+  assert.deepEqual(projectsPosition >= 0, true, 'the landing page should include projects');
+  assert.deepEqual(researchPosition >= 0, true, 'the landing page should include research');
+  assert.deepEqual(
+    projectsPosition < researchPosition,
+    true,
+    'projects should appear before research in the landing-page proof sections',
+  );
+  assert.deepEqual(
+    projectsNavPosition < researchNavPosition,
+    true,
+    'projects should appear before research in the global navigation',
+  );
+});
+
+test('presents the undergraduate thesis as leakage-safe ADHD EEG research', async () => {
+  const html = await readFile(path.join(out, 'index.html'), 'utf8');
+
+  assert.match(html, /leakage-safe ADHD EEG framework/i);
+  assert.match(html, /subject-level validation/);
+  assert.doesNotMatch(
+    html,
+    /undergraduate thesis on adversarial robustness in fingerprint presentation attack detection/i,
+  );
 });
 
 test('exports preview-safe discovery artifacts', async () => {
@@ -198,6 +233,7 @@ test('exports complete fixture paper and note details', { timeout: 60_000 }, asy
     assert.match(paperHtml, /This paper body verifies optional MDX rendering\./);
     assert.match(noteHtml, /This note verifies static MDX rendering\./);
     assert.match(projectHtml, /Fixture Project/);
+    assert.match(rootHtml, /Fixture Project/);
     assert.match(researchHtml, /href="\/research\/fixture-study\/"/);
     assert.match(notesHtml, /href="\/notes\/fixture-note\/"/);
     assert.match(rootHtml, /data-design="quiet-technical"/);

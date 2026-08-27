@@ -267,7 +267,7 @@ Five drafts. The owner selects one. Use draft 3 as the working default until tol
 
 Third person, for the home page. Roughly 90 words.
 
-> Kamruzzaman Khan Alve is a final-semester Computer Science and Engineering student at Rajshahi University of Engineering and Technology, Bangladesh. His research sits at the intersection of low-resource language modeling and the security of learned systems: comparative work on monolingual and multilingual transformers for Bangla, and an undergraduate thesis on adversarial robustness in fingerprint presentation attack detection. He is affiliated with {{TODO: confirm lab affiliations to list, e.g. Young Learners Research Lab, TextLab RUET}}. Alongside research he builds and deploys the inference systems that put these models in front of users.
+> Kamruzzaman Khan Alve is a final-semester Computer Science and Engineering student at Rajshahi University of Engineering and Technology, Bangladesh. His research spans low-resource language modeling, leakage-safe EEG analysis for ADHD, and the security of learned systems. His undergraduate thesis develops a leakage-safe ADHD EEG framework centered on subject-level validation. He is affiliated with {{TODO: confirm lab affiliations to list, e.g. Young Learners Research Lab, TextLab RUET}}. Alongside research he builds and deploys the inference systems that put these models in front of users.
 
 ### 12.3 Paper takeaways
 

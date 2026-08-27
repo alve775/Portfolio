@@ -1,7 +1,8 @@
 import { PaperList } from '@/components/PaperList';
+import { ProjectList } from '@/components/ProjectList';
 import { ResearchFlight } from '@/components/home/ResearchFlight';
 import type { FlightStationContent } from '@/components/home/flight-model';
-import { getPapers } from '@/lib/content';
+import { getPapers, getProjects } from '@/lib/content';
 import { publicEmail, site } from '@/lib/site';
 
 const stations = [
@@ -14,25 +15,25 @@ const stations = [
     body: site.positioning,
   },
   {
-    id: 'language',
-    label: 'Language',
+    id: 'projects',
+    label: 'Projects',
     marker: 'Station 02',
-    title: 'Language systems for Bangla',
-    body: 'Comparative work on monolingual and multilingual transformers for Bangla.',
+    title: 'Software that reaches users',
+    body: 'I turn models and ideas into usable software, APIs, and interfaces.',
   },
   {
-    id: 'security',
-    label: 'Security',
+    id: 'ai',
+    label: 'AI/ML',
     marker: 'Station 03',
-    title: 'Security under perturbation',
-    body: 'An undergraduate thesis on adversarial robustness in fingerprint presentation attack detection.',
+    title: 'Machine learning, end to end',
+    body: 'I work across the full workflow: data, modeling, careful evaluation, and deployed inference.',
   },
   {
-    id: 'systems',
-    label: 'Systems',
+    id: 'research',
+    label: 'Research',
     marker: 'Station 04',
-    title: 'Models in front of users',
-    body: 'Alongside research he builds and deploys the inference systems that put these models in front of users.',
+    title: 'Research with careful evaluation',
+    body: 'My work spans low-resource Bangla NLP and a leakage-safe ADHD EEG framework centered on subject-level validation.',
   },
   {
     id: 'contact',
@@ -47,15 +48,18 @@ const stations = [
 ] satisfies readonly FlightStationContent[];
 
 export default function HomePage() {
-  const proofPoints = getPapers().slice(0, 3);
+  const selectedProjects = getProjects().slice(0, 3);
+  const selectedResearch = getPapers().slice(0, 3);
 
   return (
     <>
       <ResearchFlight stations={stations} />
 
       <div className="home-editorial">
-        {proofPoints.length > 0 ? (
-          <PaperList label="Selected research" papers={proofPoints} />
+        <ProjectList label="Selected projects" projects={selectedProjects} />
+
+        {selectedResearch.length > 0 ? (
+          <PaperList label="Selected research" papers={selectedResearch} />
         ) : (
           <section className="work-section" data-research-index>
             <div className="section-heading"><h2>Selected research</h2></div>

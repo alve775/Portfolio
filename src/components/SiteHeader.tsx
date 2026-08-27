@@ -9,8 +9,8 @@ export function SiteHeader() {
   const hasNotes = getNotes().length > 0;
 
   const items: NavItem[] = [
-    { href: '/research/', label: 'Research' },
     { href: '/projects/', label: 'Projects' },
+    { href: '/research/', label: 'Research' },
     ...(hasNotes ? [{ href: '/notes/', label: 'Notes' }] : []),
     { href: '/cv/', label: 'CV' },
   ];

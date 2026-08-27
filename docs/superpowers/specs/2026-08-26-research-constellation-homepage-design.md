@@ -2,7 +2,7 @@
 
 ## Objective
 
-Replace the current static homepage opening with an immersive, scroll-driven research journey that expresses the owner's work across low-resource Bangla NLP, biometric-model security, and deployment engineering. The experience must feel like travelling between research stations rather than watching content zoom toward the viewer.
+Replace the current static homepage opening with an immersive, scroll-driven professional journey that presents the owner as a software builder, AI/ML practitioner, and researcher. The experience must feel like travelling between work stations rather than watching content zoom toward the viewer.
 
 The spatial experience is limited to the homepage. Research, project, note, CV, and record-detail routes retain the existing quiet technical editorial interface. Static export, content validation, publishing gates, metadata, robots, sitemap, and route pruning remain unchanged.
 
@@ -10,8 +10,8 @@ The spatial experience is limited to the homepage. Research, project, note, CV, 
 
 The homepage contains two consecutive modes:
 
-1. A full-width dark spatial journey with five stations: Identity, Language, Security, Systems, and Contact.
-2. The existing light editorial Selected Research and Profile sections.
+1. A full-width dark spatial journey with five stations: Identity, Projects, AI/ML, Research, and Contact.
+2. Light editorial Selected Projects, Selected Research, and Profile sections.
 
 The global header remains the site's route navigation. On the homepage it receives a dark, translucent treatment and stays visible while the spatial section is active. Research-station controls live inside the journey and do not replace the global Research, Projects, Notes, CV, or Email links.
 
@@ -30,17 +30,17 @@ Rejected alternatives:
 
 ## Information architecture and copy
 
-The five stations use only verified identity and research facts already present in `src/lib/site.ts`:
+The five stations use only verified identity and professional facts already present in the project:
 
 1. **Identity** — the owner's canonical name, RUET affiliation, Bangladesh location, and existing positioning sentence.
-2. **Language** — low-resource Bangla NLP and the existing description of comparative work on monolingual and multilingual transformers for Bangla.
-3. **Security** — the existing description of the undergraduate thesis on adversarial robustness in fingerprint presentation attack detection.
-4. **Systems** — the existing statement that the owner builds and deploys inference systems that put the models in front of users.
+2. **Projects** — the existing statement that the owner builds and deploys software that puts models in front of users.
+3. **AI/ML** — data, modeling, evaluation, and deployed inference.
+4. **Research** — low-resource Bangla NLP and the leakage-safe ADHD EEG thesis with subject-level validation.
 5. **Contact** — the validated public email action when one exists.
 
 Short station labels and navigation instructions may be newly written, but they must not introduce a publication claim, metric, venue, status, project outcome, URL, employer, or biographical fact. The canonical name and positioning remain sourced from `site.ts` rather than duplicated in components.
 
-Selected Research continues to use `getPapers()` and the existing `PaperList`. Production therefore displays only publishable records. If none qualify, the existing honest empty state remains. The Profile section continues to display the owner-supplied biography unchanged.
+Selected Projects uses `getProjects()` before Selected Research, which continues to use `getPapers()` and the existing `PaperList`. Production displays only publishable records. If none qualify, the existing honest empty states remain. The Profile section continues to display the owner-supplied biography.
 
 ## Interaction model
 
@@ -67,11 +67,11 @@ Manual station changes may update a polite status line after arrival. Passive sc
 
 The dark environment uses the existing ink-green and signal-green identity with a restrained cobalt coordinate accent. It does not use a literal galaxy, stock space imagery, astronaut imagery, neon cyberpunk, glassmorphism, or the reference site's blue-on-navy star-field treatment.
 
-Spatial objects are tied to the research:
+Spatial objects are tied to the work:
 
-- Language: Bengali glyph fragments and token-like connections.
-- Security: fingerprint-ridge arcs and restrained perturbation markers.
-- Systems: inference nodes and deployment paths.
+- Projects: connected product and deployment nodes.
+- AI/ML: Bengali glyph fragments and token-like connections.
+- Research: an EEG trace above two separated subject groups, representing leakage-safe validation.
 - Identity: a quiet origin signal.
 - Contact: the three research paths converging into one channel.
 
@@ -84,8 +84,9 @@ Particles provide depth and orientation rather than decoration. The renderer cap
 Remains a server component. It loads publishable papers and passes serializable, verified station content to the client experience. It renders:
 
 1. `ResearchFlight`
-2. the existing Selected Research or honest empty state
-3. the existing Profile section
+2. Selected Projects or its honest empty state
+3. Selected Research or its honest empty state
+4. the existing Profile section
 
 ### `src/components/home/ResearchFlight.tsx`
 
@@ -196,8 +197,8 @@ Browser verification:
 
 The redesign is complete when:
 
-- homepage scrolling feels like travelling along a curved research path rather than content zooming toward the viewer;
-- Language, Security, and Systems are represented through research-specific spatial objects;
+- homepage scrolling feels like travelling along a curved professional path rather than content zooming toward the viewer;
+- Projects, AI/ML, and Research are represented through work-specific spatial objects;
 - HTML copy remains stable, readable, and factual;
 - the scene degrades to a complete static sequence without motion or canvas;
 - non-home routes retain their existing editorial behavior;

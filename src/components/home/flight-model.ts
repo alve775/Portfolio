@@ -1,15 +1,15 @@
 export type FlightStationId =
   | 'identity'
-  | 'language'
-  | 'security'
-  | 'systems'
+  | 'projects'
+  | 'ai'
+  | 'research'
   | 'contact';
 
 export type FlightVisual =
   | 'origin'
-  | 'language'
-  | 'security'
-  | 'systems'
+  | 'projects'
+  | 'ai'
+  | 'research'
   | 'contact';
 
 export type FlightPoint = Readonly<{
@@ -78,20 +78,20 @@ export const FLIGHT_GEOMETRY = [
     camera: { x: 0, y: 0, z: 44 },
   },
   {
-    id: 'language',
-    visual: 'language',
+    id: 'projects',
+    visual: 'projects',
     anchor: { x: -18, y: -4, z: -72 },
     camera: { x: -18, y: -4, z: -28 },
   },
   {
-    id: 'security',
-    visual: 'security',
+    id: 'ai',
+    visual: 'ai',
     anchor: { x: 15, y: 7, z: -144 },
     camera: { x: 15, y: 7, z: -100 },
   },
   {
-    id: 'systems',
-    visual: 'systems',
+    id: 'research',
+    visual: 'research',
     anchor: { x: -12, y: -8, z: -216 },
     camera: { x: -12, y: -8, z: -172 },
   },

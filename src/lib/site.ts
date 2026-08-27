@@ -28,11 +28,11 @@ export const productionOrigin = resolveProductionOrigin(process.env.NEXT_PUBLIC_
  *      engineering that gets a model into production.
  */
 const POSITIONING =
-  'I work on low-resource Bangla NLP and the security of biometric models, and I ship the deployment code as well as the papers.';
+  'I build software, develop AI systems, and conduct research in Bangla NLP and ADHD EEG analysis.';
 
-/** Home-page bio, third person, as supplied by the owner. Do not rewrite. */
+/** Home-page bio, third person, reflecting the owner's verified research areas. */
 const BIO =
-  'Kamruzzaman Khan Alve is a final-semester Computer Science and Engineering student at Rajshahi University of Engineering and Technology, Bangladesh. His research sits at the intersection of low-resource language modeling and the security of learned systems: comparative work on monolingual and multilingual transformers for Bangla, and an undergraduate thesis on adversarial robustness in fingerprint presentation attack detection. Alongside research he builds and deploys the inference systems that put these models in front of users.';
+  'Kamruzzaman Khan Alve is a final-semester Computer Science and Engineering student at Rajshahi University of Engineering and Technology, Bangladesh. His research spans low-resource language modeling, leakage-safe EEG analysis for ADHD, and the security of learned systems. His undergraduate thesis develops a leakage-safe ADHD EEG framework centered on subject-level validation. Alongside research he builds and deploys the inference systems that put these models in front of users.';
 
 export const site = {
   /** Canonical name string. Byte-identical everywhere on the site. */
