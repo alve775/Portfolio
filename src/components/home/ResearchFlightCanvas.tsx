@@ -39,12 +39,12 @@ type DrawEnvironment = Readonly<{
 }>;
 
 const PALETTE = {
-  background: '#07110d',
-  signal: '#69e4bd',
-  signalSoft: '#baffea',
-  cobalt: '#7395ff',
-  quiet: '#6c8c7f',
-  text: '#eaf8f1',
+  background: '#0e1412',
+  signal: '#94c4b1',
+  signalSoft: '#d3ebe1',
+  cobalt: '#e8a98f',
+  quiet: '#6c7f77',
+  text: '#eef4f1',
 } as const;
 
 function createParticles(): readonly Particle[] {

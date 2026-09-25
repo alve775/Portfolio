@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --canvas: #f6f7f4;
+  --canvas: #f5f7f6;
   --surface: #ffffff;
-  --ink: #141a17;
-  --muted: #5f6963;
-  --line: #d9dfda;
-  --signal: #0d6b57;
-  --signal-soft: #dcede7;
+  --ink: #1a211e;
+  --muted: #5f6b66;
+  --line: #d9e0dc;
+  --signal: #3f6f5e;
+  --signal-soft: #e1ece7;
   --mark: #f1df94;
-  --mark-ink: #141a17;
+  --mark-ink: #1a211e;
   --font-sans: var(--font-instrument-sans), var(--font-bengali), Inter,
     "Avenir Next", "Helvetica Neue", Arial, sans-serif;
   --font-utility: var(--font-fira-mono), ui-monospace, SFMono-Regular, Menlo,
@@ -18,15 +18,15 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --canvas: #0f1411;
-    --surface: #151c18;
-    --ink: #eef3ef;
-    --muted: #a7b1aa;
-    --line: #2a342e;
-    --signal: #73d5bb;
-    --signal-soft: #18362e;
+    --canvas: #0e1412;
+    --surface: #151d1a;
+    --ink: #eef4f1;
+    --muted: #a7b6af;
+    --line: #26302c;
+    --signal: #94c4b1;
+    --signal-soft: #1c2b26;
     --mark: #514b2b;
-    --mark-ink: #eef3ef;
+    --mark-ink: #eef4f1;
   }
 }
 
@@ -166,33 +166,33 @@
   }
 
   body[data-flight-active="true"] .site-header {
-    border-color: rgb(190 255 229 / 14%);
-    background: rgb(6 18 14 / 88%);
-    color: #effbf5;
+    border-color: rgb(200 225 215 / 14%);
+    background: rgb(14 20 18 / 88%);
+    color: #eef4f1;
     backdrop-filter: blur(14px);
   }
 
   body[data-flight-active="true"] .site-header .nav-link {
-    color: #a7bdb3;
+    color: #a7b6af;
   }
 
   body[data-flight-active="true"] .site-header .nav-link:hover,
   body[data-flight-active="true"] .site-header .nav-link[data-active="true"] {
-    color: #effbf5;
+    color: #eef4f1;
   }
 
   body[data-flight-active="true"] .site-header .header-contact {
-    border-color: rgb(190 255 229 / 18%);
-    color: #69e4bd;
+    border-color: rgb(200 225 215 / 18%);
+    color: #94c4b1;
   }
 
   body[data-flight-active="true"] .site-header .brand-signal {
-    background: #69e4bd;
-    box-shadow: 0 0 0 0.28rem rgb(105 228 189 / 17%);
+    background: #94c4b1;
+    box-shadow: 0 0 0 0.28rem rgb(148 196 177 / 17%);
   }
 
   body[data-flight-active="true"] .site-header :focus-visible {
-    outline-color: #69e4bd;
+    outline-color: #94c4b1;
   }
 
   .site-header-inner {

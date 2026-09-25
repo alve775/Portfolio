@@ -10,8 +10,10 @@ test('uses the approved self-hosted quiet-technical foundation', () => {
   assert.match(fonts, /export const instrumentSans/);
   assert.match(fonts, /instrument-sans-variable\.ttf/);
   assert.doesNotMatch(fonts, /export const charis/);
-  assert.match(css, /--canvas:\s*#f6f7f4/i);
-  assert.match(css, /--signal:\s*#0d6b57/i);
+  assert.match(css, /--canvas:\s*#f5f7f6/i);
+  assert.match(css, /--signal:\s*#3f6f5e/i);
+  // The old mint must not survive in any hardcoded homepage override.
+  assert.doesNotMatch(css, /#69e4bd/i);
   assert.match(css, /font-family:\s*var\(--font-sans\)/);
 });
 

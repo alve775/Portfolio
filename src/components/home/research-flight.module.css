@@ -1,11 +1,11 @@
 .root {
-  --flight-background: #07110d;
-  --flight-surface: #0d1b15;
-  --flight-ink: #edf9f3;
-  --flight-muted: #9cb5aa;
-  --flight-line: rgb(190 255 229 / 17%);
-  --flight-signal: #69e4bd;
-  --flight-cobalt: #8ba3ff;
+  --flight-background: #0e1412;
+  --flight-surface: #151d1a;
+  --flight-ink: #eef4f1;
+  --flight-muted: #a7b6af;
+  --flight-line: rgb(200 225 215 / 15%);
+  --flight-signal: #94c4b1;
+  --flight-cobalt: #e8a98f;
   --flight-header-height: 0px;
   position: relative;
   left: 50%;
@@ -122,7 +122,7 @@
 .stationButton:hover,
 .stationButton[aria-pressed="true"] {
   border-color: var(--flight-signal);
-  background: rgb(105 228 189 / 8%);
+  background: rgb(148 196 177 / 8%);
   color: var(--flight-ink);
 }
 
