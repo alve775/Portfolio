@@ -1,13 +1,14 @@
 ---
-title: 'One Pipeline, Three L1s: A Unified Language-Agnostic System for the BEA 2026 Shared Task on Vocabulary Difficulty Prediction'
-authors:
-  - '{{TODO: exact author list, in publication order}}'
-venue: 'BEA 2026 Shared Task at ACL'
+title: "Failure at BEA 2026 Shared Task 1: One Pipeline, Three L1s: A Unified Language-Agnostic System for Vocabulary Difficulty Prediction"
+authors: ["Abid Al Hossain", "Kamruzzaman Khan Alve"]
+venue: "BEA 2026 · ACL"
 year: 2026
-status: 'accepted'
-role: 'co-author'
-abstract: '{{TODO: abstract, as submitted}}'
-takeaway: 'A single language-agnostic pipeline can predict vocabulary difficulty across three different first-language backgrounds without per-language modeling, which matters because per-L1 systems do not scale to the long tail of learner populations. {{TODO: add the result and the shared-task placement, and state honestly what the unified approach cost relative to a tuned per-language system}}'
-draft: true
+status: "published"
+role: "co-author"
+abstract: "We present a unified, language-agnostic system for the BEA 2026 Shared Task on vocabulary difficulty prediction. The system uses a single training pipeline across Spanish, German, and Mandarin Chinese without any language-specific adaptation. Input features include serialized text fields and four scalar length-based features, processed using an XLM-RoBERTa encoder with attention-mask-weighted mean pooling. Hyperparameters are tuned with Optuna under reduced cross-validation, followed by full 5-fold training and checkpoint-based ensembling. Our approach improves over the official closed-track baseline across all three L1 conditions, demonstrating that a shared architecture and training strategy can yield consistent gains without language-specific engineering. Error analysis shows higher prediction error at difficulty extremes, suggesting a regression-to-the-mean tendency."
+takeaway: "One shared pipeline improved over the official closed-track baseline for Spanish, German, and Mandarin Chinese L1 groups without language-specific adaptation. Prediction errors were larger at the difficulty extremes, showing a limitation of the unified regression approach."
+pdfUrl: "https://aclanthology.org/2026.bea-1.73.pdf"
+bibtex: "@inproceedings{hossain-alve-2026-failure,\n    title = \"Failure at {BEA} 2026 Shared Task 1: One Pipeline, Three L1s: A Unified Language-Agnostic System for Vocabulary Difficulty Prediction\",\n    author = \"Hossain, Abid Al  and\n      Alve, Kamruzzaman Khan\",\n    editor = \"Kochmar, Ekaterina  and\n      Alhafni, Bashar  and\n      Bann{\\`o}, Stefano  and\n      Bexte, Marie  and\n      Burstein, Jill  and\n      Horbach, Andrea  and\n      Laarmann-Quante, Ronja  and\n      Tack, Anais  and\n      Yaneva, Victoria  and\n      Yuan, Zheng\",\n    booktitle = \"Proceedings of the 21st Workshop on Innovative Use of {NLP} for Building Educational Applications ({BEA} 2026)\",\n    month = jul,\n    year = \"2026\",\n    address = \"San Diego, California, USA\",\n    publisher = \"Association for Computational Linguistics\",\n    url = \"https://aclanthology.org/2026.bea-1.73/\",\n    doi = \"10.18653/v1/2026.bea-1.73\",\n    pages = \"1041--1046\",\n    ISBN = \"979-8-89176-409-5\"\n}"
+draft: false
 order: 2
 ---

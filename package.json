@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build --webpack && node scripts/prune-empty-routes.mjs",
-    "start": "next start",
+    "start": "python3 -m http.server 4173 --directory out --bind 127.0.0.1",
     "lint": "eslint",
     "test:unit": "node --disable-warning=ExperimentalWarning --test tests/unit/*.test.mjs",
     "test:export": "npm run build && node --test --test-concurrency=1 tests/export.test.mjs",

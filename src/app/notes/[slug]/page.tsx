@@ -4,6 +4,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 
 import { Field } from '@/components/Field';
 import { PageHeader } from '@/components/PageHeader';
+import { formatIsoDate } from '@/lib/format';
 import { getNote, getNotes } from '@/lib/content';
 import { routeMetadata } from '@/lib/seo';
 
@@ -35,7 +36,7 @@ export default async function NotePage({ params }: NotePageProps) {
   return (
     <article className="note-detail" data-note-detail>
       <PageHeader
-        eyebrow={note.frontmatter.date}
+        eyebrow={formatIsoDate(note.frontmatter.date)}
         title={note.frontmatter.title}
         size="compact"
       />

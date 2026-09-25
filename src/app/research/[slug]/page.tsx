@@ -36,7 +36,9 @@ export async function generateMetadata({ params }: PaperPageProps): Promise<Meta
       citation_title: paper.frontmatter.title,
       citation_author: paper.frontmatter.authors,
       citation_publication_date: String(paper.frontmatter.year),
-      ...(paper.frontmatter.status === 'in-progress'
+      ...(paper.frontmatter.status === 'thesis'
+        ? { citation_dissertation_institution: paper.frontmatter.venue }
+        : paper.frontmatter.status === 'in-progress'
         ? {}
         : { citation_conference_title: paper.frontmatter.venue }),
     },
@@ -65,7 +67,7 @@ export default async function PaperPage({ params }: PaperPageProps) {
       </PageHeader>
 
       <div className="detail-fields">
-        <Field label="Abstract" note="as submitted">
+        <Field label={frontmatter.abstractLabel === 'summary' ? 'Overview' : 'Abstract'} note={frontmatter.abstractLabel}>
           <p>{frontmatter.abstract}</p>
         </Field>
         {frontmatter.pdfUrl || frontmatter.codeUrl ? (

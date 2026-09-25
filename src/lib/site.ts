@@ -30,9 +30,9 @@ export const productionOrigin = resolveProductionOrigin(process.env.NEXT_PUBLIC_
 const POSITIONING =
   'I build software, develop AI systems, and conduct research in Bangla NLP and ADHD EEG analysis.';
 
-/** Home-page bio, third person, reflecting the owner's verified research areas. */
+/** Updated from the owner-supplied September 2026 CV. */
 const BIO =
-  'Kamruzzaman Khan Alve is a final-semester Computer Science and Engineering student at Rajshahi University of Engineering and Technology, Bangladesh. His research spans low-resource language modeling, leakage-safe EEG analysis for ADHD, and the security of learned systems. His undergraduate thesis develops a leakage-safe ADHD EEG framework centered on subject-level validation. Alongside research he builds and deploys the inference systems that put these models in front of users.';
+  "Kamruzzaman Khan Alve is a Computer Science and Engineering graduate from Rajshahi University of Engineering and Technology, Bangladesh. His work connects Bangla and multilingual NLP, reproducible machine learning, and software development. He has two peer-reviewed NLP publications and is a research member of RUET's Young Learners' Research Lab. His undergraduate thesis develops a leakage-safe ADHD EEG framework centered on subject-level validation. Alongside research, he builds tools for document review, local retrieval, and everyday workflows.";
 
 export const site = {
   /** Canonical name string. Byte-identical everywhere on the site. */
@@ -42,24 +42,22 @@ export const site = {
   bio: BIO,
   affiliation: 'Rajshahi University of Engineering and Technology',
   affiliationShort: 'RUET',
-  location: 'Bangladesh',
+  location: 'Rajshahi, Bangladesh',
   /** Swap for an institutional address if you would rather publish that one. */
   email: 'kamruzzamanalve@gmail.com',
   socials: {
-    /** {{TODO: GitHub profile URL}} */
-    github: '{{TODO: GitHub profile URL}}',
-    /** {{TODO: Google Scholar profile URL}} */
-    scholar: '{{TODO: Google Scholar profile URL}}',
-    /** {{TODO: HuggingFace profile URL}} */
-    huggingface: '{{TODO: HuggingFace profile URL}}',
-    /** {{TODO: ORCID URL}} */
-    orcid: '{{TODO: ORCID URL}}',
-    /** {{TODO: LinkedIn profile URL}} */
-    linkedin: '{{TODO: LinkedIn profile URL}}',
+    github: 'https://github.com/alve775',
+    scholar: 'https://scholar.google.com/citations?user=Zr2KjyMAAAAJ&hl=en',
+    huggingface: 'https://huggingface.co/alveKamruzzaman',
+    orcid: null, // Optional; add a verified profile if one becomes available.
+    linkedin: 'https://www.linkedin.com/in/kamruzzaman-khan-alve-10a055227/',
   },
 } as const;
 
 export const publicEmail = asPublicEmail(site.email);
+export const emailHref = publicEmail
+  ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(publicEmail)}`
+  : null;
 
 export const publicProfiles = [
   ['GitHub', site.socials.github],

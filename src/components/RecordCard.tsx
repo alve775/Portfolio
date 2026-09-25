@@ -22,7 +22,7 @@ export function AuthorList({ authors }: { authors: string[] }) {
 }
 
 export function StatusBadge({ status }: { status: Paper['status'] }) {
-  const quiet = status === 'in-progress';
+  const quiet = status === 'in-progress' || status === 'thesis';
   return <span className={quiet ? 'status status-quiet' : 'status'}>{STATUS_LABEL[status]}</span>;
 }
 

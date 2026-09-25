@@ -1,0 +1,11 @@
+---
+title: "Web-RAG"
+problem: "Answering questions across saved web sources should not require sending every query to a cloud LLM."
+approach: "Use LlamaIndex to scrape and chunk webpages, embed them locally, persist vectors in ChromaDB, and retrieve context for Ollama."
+result: "A local ingestion and question-answering pipeline with persistent retrieval and source URLs in its answers."
+stack: ["Python", "LlamaIndex", "Ollama", "ChromaDB"]
+repoUrl: "https://github.com/alve775/web-rag"
+status: "complete"
+draft: false
+order: 2
+---

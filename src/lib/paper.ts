@@ -4,6 +4,7 @@ export const STATUS_LABEL: Record<Paper['status'], string> = {
   published: 'published',
   accepted: 'accepted',
   'in-progress': 'in progress',
+  thesis: 'undergraduate thesis',
 };
 
 export const ROLE_LABEL: Record<Paper['role'], string> = {
@@ -16,6 +17,7 @@ export function researchArea(frontmatter: Pick<Paper, 'title' | 'venue'>): strin
   const recordText = `${frontmatter.title} ${frontmatter.venue}`.toLowerCase();
   if (/fingerprint|biometric|presentation attack|liveness/.test(recordText)) return 'Security';
   if (/bangla|language|vocabulary|sentence|bert|nlp/.test(recordText)) return 'Language';
+  if (/eeg|adhd/.test(recordText)) return 'EEG';
   return 'Research';
 }
 
@@ -37,6 +39,7 @@ export function recordLine(frontmatter: Paper): string {
 
 /** Gutter label for an entry in a list of work. */
 export function kindLabel(frontmatter: Paper): string {
+  if (frontmatter.status === 'thesis') return 'THESIS';
   return frontmatter.status === 'in-progress' ? 'IN PROGRESS' : 'PAPER';
 }
 
@@ -54,6 +57,6 @@ export function cardHeadLine(frontmatter: Paper): string {
   if (!parts.some((part) => part.includes(String(frontmatter.year)))) {
     parts.push(String(frontmatter.year));
   }
-  parts.push(ROLE_LABEL[frontmatter.role]);
+  parts.push(frontmatter.status === 'thesis' ? 'author' : ROLE_LABEL[frontmatter.role]);
   return parts.join(' · ');
 }

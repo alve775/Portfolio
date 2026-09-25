@@ -7,10 +7,20 @@ authors:
   - 'Mohiuddin Ahmed'
 venue: 'IEEE QPAIN 2026'
 year: 2026
-status: 'accepted'
+status: 'published'
 role: 'lead-author'
 abstract: 'Transformer-based models such as BERT have significantly advanced natural language processing, yet low-resource languages like Bangla remain underexplored despite being spoken by over 230 million people. Grammatical sentence-type classification—covering assertive, interrogative, imperative, exclamatory, and optative forms—is essential for applications such as dialogue systems and machine translation but lacks a standardized benchmark in Bangla NLP. To address this gap, we introduce a balanced dataset of 25,500 manually annotated Bangla sentences and compare three monolingual models (BanglaBERT Base, BanglaBERT, SahajBERT) with three cross-lingual models (XLM-RoBERTa, mBERT, RemBERT) under identical settings. Our study evaluates both accuracy and computational efficiency, highlighting the trade-offs between language-specific pretraining and multilingual transfer learning while establishing a reproducible benchmark for Bangla sentence-type classification.'
-takeaway: 'A monolingual Bangla encoder outperforms multilingual models on grammatical sentence-type classification, which suggests that for this task the bottleneck is language-specific syntactic representation rather than model scale or cross-lingual transfer. {{TODO: the poster reports BanglaBERT 97.61% vs XLM-RoBERTa Base 97.57% — a 0.04-point gap. Decide whether the claim should stand as written, and state the metric, dataset and split alongside any number.}}'
-draft: true
+takeaway: "On the five-class Bangla sentence benchmark, the best monolingual and multilingual encoders reached similar test accuracy. This comparison supports evaluating both model families for the task; the small observed gap does not establish general monolingual superiority."
+pdfUrl: "https://doi.org/10.1109/QPAIN69676.2026.11546339"
+bibtex: |
+  @inproceedings{alve2026monolingual,
+    title = {Monolingual vs. Multilingual BERT: Analyzing Performance on Downstream Grammatical Sentence-Type Classification Task},
+    author = {Alve, Kamruzzaman Khan and Rifat, Nahid Montasir and Rahman, Mir Ashikur and Ahmed, Mohiuddin},
+    booktitle = {2026 IEEE 2nd International Conference on Quantum Photonics, Artificial Intelligence and Networking (QPAIN)},
+    year = {2026},
+    pages = {1--6},
+    doi = {10.1109/QPAIN69676.2026.11546339}
+  }
+draft: false
 order: 1
 ---

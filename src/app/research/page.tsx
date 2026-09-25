@@ -12,14 +12,17 @@ export const metadata = routeMetadata({
 
 export default function ResearchPage() {
   const papers = getPapers();
-  const finished = papers.filter(({ frontmatter }) => frontmatter.status !== 'in-progress');
+  const finished = papers.filter(({ frontmatter }) =>
+    frontmatter.status === 'published' || frontmatter.status === 'accepted',
+  ).sort((a, b) => b.frontmatter.year - a.frontmatter.year);
+  const theses = papers.filter(({ frontmatter }) => frontmatter.status === 'thesis');
   const inProgress = papers.filter(({ frontmatter }) => frontmatter.status === 'in-progress');
 
   return (
     <>
       <PageHeader
         title="Research"
-        lede="Publications first, then work that is still in progress."
+        lede="Peer-reviewed NLP publications and undergraduate research in EEG analysis."
       />
       {papers.length === 0 ? (
         <div className="empty-state" data-research-index>
@@ -28,6 +31,7 @@ export default function ResearchPage() {
       ) : (
         <>
           <PaperList label="Published and accepted" papers={finished} />
+          <PaperList label="Undergraduate thesis" papers={theses} />
           <PaperList
             label="In progress"
             papers={inProgress}

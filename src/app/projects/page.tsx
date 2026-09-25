@@ -16,7 +16,7 @@ export default function ProjectsPage() {
   return (
     <>
       <PageHeader title="Projects" />
-      <ProjectList label="Selected builds" projects={projects} />
+      <ProjectList label="Selected builds" projects={projects} detailed />
     </>
   );
 }

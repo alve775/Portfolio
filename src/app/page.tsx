@@ -3,7 +3,7 @@ import { ProjectList } from '@/components/ProjectList';
 import { ResearchFlight } from '@/components/home/ResearchFlight';
 import type { FlightStationContent } from '@/components/home/flight-model';
 import { getPapers, getProjects } from '@/lib/content';
-import { publicEmail, site } from '@/lib/site';
+import { emailHref, publicEmail, site } from '@/lib/site';
 
 const stations = [
   {
@@ -13,27 +13,34 @@ const stations = [
     title: site.name,
     meta: `${site.affiliation} · ${site.location}`,
     body: site.positioning,
+    action: { label: 'View CV', href: '/cv/' },
   },
   {
     id: 'projects',
     label: 'Projects',
     marker: 'Station 02',
     title: 'Software that reaches users',
-    body: 'I turn models and ideas into usable software, APIs, and interfaces.',
+    body: 'Resume Evaluator connects document analysis, editing, and export. Web-RAG turns a local website collection into a searchable knowledge base.',
+    action: { label: 'View projects', href: '/projects/' },
   },
   {
     id: 'ai',
     label: 'AI/ML',
     marker: 'Station 03',
-    title: 'Machine learning, end to end',
-    body: 'I work across the full workflow: data, modeling, careful evaluation, and deployed inference.',
+    title: 'From a model to a working tool',
+    body: 'My Bangla Sentence Classifier brings an XLM-R model to a public Gradio interface, identifying five grammatical sentence types.',
+    action: {
+      label: 'Open classifier',
+      href: 'https://huggingface.co/spaces/TextLabRUET/Multilingual-Sentence-Classifier',
+    },
   },
   {
     id: 'research',
     label: 'Research',
     marker: 'Station 04',
     title: 'Research with careful evaluation',
-    body: 'My work spans low-resource Bangla NLP and a leakage-safe ADHD EEG framework centered on subject-level validation.',
+    body: 'Two published NLP papers cover Bangla sentence types and multilingual vocabulary difficulty. My undergraduate thesis develops a leakage-safe ADHD EEG framework with subject-level validation.',
+    action: { label: 'Read papers', href: '/research/' },
   },
   {
     id: 'contact',
@@ -42,7 +49,7 @@ const stations = [
     title: 'Continue the conversation',
     body: 'For research, engineering, and collaboration.',
     ...(publicEmail
-      ? { action: { label: publicEmail, href: `mailto:${publicEmail}` } }
+      ? { action: { label: publicEmail, href: emailHref! } }
       : {}),
   },
 ] satisfies readonly FlightStationContent[];
@@ -55,7 +62,7 @@ export default function HomePage() {
     <>
       <ResearchFlight stations={stations} />
 
-      <div className="home-editorial">
+      <div className="home-editorial" id="selected-work" tabIndex={-1}>
         <ProjectList label="Selected projects" projects={selectedProjects} />
 
         {selectedResearch.length > 0 ? (

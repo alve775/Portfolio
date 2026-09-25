@@ -6,8 +6,9 @@ import { usePathname } from 'next/navigation';
 export type NavItem = { href: string; label: string };
 
 /**
- * The only client component on the site. It exists solely so the current
- * section can carry `aria-current` and a visible marker.
+ * Client component so the current section can carry `aria-current` and a
+ * visible marker. The homepage flight is the other client island; everything
+ * else renders on the server.
  */
 export function Nav({ items }: { items: NavItem[] }) {
   const pathname = usePathname();

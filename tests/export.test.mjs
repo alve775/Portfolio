@@ -38,8 +38,8 @@ async function collectFiles(directory, accept) {
 
 function runBuild(extraEnv = {}) {
   const env = { ...process.env, ...extraEnv };
-  if (!Object.hasOwn(extraEnv, 'PORTFOLIO_CONTENT_DIR')) {
-    delete env.PORTFOLIO_CONTENT_DIR;
+  for (const key of ['PORTFOLIO_CONTENT_DIR', 'PORTFOLIO_CV_PATH', 'PORTFOLIO_INCLUDE_DRAFTS', 'NEXT_PUBLIC_SITE_URL', 'VERCEL_ENV']) {
+    if (!Object.hasOwn(extraEnv, key)) delete env[key];
   }
 
   const result = spawnSync('npm', ['run', 'build'], {
@@ -94,6 +94,18 @@ test('exports the complete semantic research-flight fallback', async () => {
 
   assert.match(html, /data-research-index/);
   assert.match(html, /Profile/);
+  assert.match(html, /href="#selected-work"/);
+  assert.match(html, /id="selected-work" tabindex="-1"/);
+  for (const [id, href, label] of [
+    ['identity', '/cv/', 'View CV'],
+    ['projects', '/projects/', 'View projects'],
+    ['ai', 'https://huggingface.co/spaces/TextLabRUET/Multilingual-Sentence-Classifier', 'Open classifier'],
+    ['research', '/research/', 'Read papers'],
+  ]) {
+    const article = html.match(new RegExp(`<article[^>]*id="flight-station-${id}"[^>]*>([\\s\\S]*?)<\\/article>`))?.[1];
+    assert.ok(article?.includes(`href="${href}"`), `${id} must link to its destination`);
+    assert.ok(article?.includes(label), `${id} must name its action`);
+  }
 });
 
 test('presents a hybrid professional journey with projects before research', async () => {
@@ -144,6 +156,47 @@ test('exports preview-safe discovery artifacts', async () => {
   assert.deepEqual([...image.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
   assert.equal(image.readUInt32BE(16), 1200);
   assert.equal(image.readUInt32BE(20), 630);
+});
+
+test('publishes the verified portfolio content and supplied CV', async () => {
+  const projects = await readFile(path.join(out, 'projects/index.html'), 'utf8');
+  const cv = await readFile(path.join(out, 'cv/index.html'), 'utf8');
+  const paper = await readFile(path.join(out, 'research/bangla-sentence-type-classification/index.html'), 'utf8');
+  const bea = await readFile(path.join(out, 'research/vocabulary-difficulty-prediction/index.html'), 'utf8');
+  const thesis = await readFile(path.join(out, 'research/leakage-safe-adhd-eeg-framework/index.html'), 'utf8');
+  assert.equal((projects.match(/class="project-entry"/g) ?? []).length, 5);
+  for (const title of ['Resume Evaluator', 'Web-RAG', 'Bangla Sentence Classifier', 'Grocery Shopping Tracker', 'NoorTime']) {
+    assert.ok(projects.includes(title), title);
+  }
+  assert.match(projects, /My contribution/);
+  assert.match(projects, /Key decision/);
+  assert.match(projects, /Limitation/);
+  const screenshots = [...projects.matchAll(/<img[^>]+src="(\/images\/projects\/[^\"]+)"/g)];
+  assert.equal(screenshots.length, 2, 'both published project screenshots must render');
+  for (const [, src] of screenshots) {
+    await assert.doesNotReject(access(exportedTarget(src)), `missing screenshot ${src}`);
+  }
+  assert.match(cv, /href="\/cv.pdf" download/);
+  assert.match(cv, /3.71\/4.00/);
+  assert.match(cv, /Code Studio/);
+  assert.doesNotMatch(cv, /final-semester/);
+  assert.match(cv, /https:\/\/mail.google.com\/mail\//);
+  assert.doesNotMatch(cv, /href="mailto:/);
+  assert.deepEqual(
+    await readFile(path.join(out, 'cv.pdf')),
+    await readFile(path.join(root, 'public/cv.pdf')),
+  );
+  assert.deepEqual(
+    [...paper.matchAll(/<meta name="citation_author" content="([^"]+)"/g)].map((m) => m[1]),
+    ['Kamruzzaman Khan Alve', 'Nahid Montasir Rifat', 'Mir Ashikur Rahman', 'Mohiuddin Ahmed'],
+  );
+  assert.deepEqual(
+    [...bea.matchAll(/<meta name="citation_author" content="([^"]+)"/g)].map((m) => m[1]),
+    ['Abid Al Hossain', 'Kamruzzaman Khan Alve'],
+  );
+  assert.match(thesis, /undergraduate thesis/);
+  assert.match(thesis, /citation_dissertation_institution/);
+  assert.doesNotMatch(thesis, /citation_conference_title/);
 });
 
 test('exports base routes and resolves every rendered internal link', async () => {
@@ -200,6 +253,7 @@ test('exports complete fixture paper and note details', { timeout: 60_000 }, asy
     runBuild({
       PORTFOLIO_CONTENT_DIR: path.join(root, 'tests/fixtures/content'),
       NEXT_PUBLIC_SITE_URL: 'https://portfolio.rfc-editor.org',
+      VERCEL_ENV: 'production',
     });
     const rootHtml = await readFile(path.join(out, 'index.html'), 'utf8');
     const paperHtml = await readFile(
@@ -226,9 +280,9 @@ test('exports complete fixture paper and note details', { timeout: 60_000 }, asy
       paperHtml,
       /<meta property="og:image" content="https:\/\/portfolio\.rfc-editor\.org\/opengraph-image\.png"/,
     );
-    assert.match(rootHtml, /<meta name="robots" content="noindex, nofollow"/);
-    assert.match(fixtureRobots, /Disallow: \/(?:\r?\n|$)/);
-    assert.doesNotMatch(fixtureSitemap, /<url>/);
+    assert.match(rootHtml, /<meta name="robots" content="index, follow"/);
+    assert.match(fixtureRobots, /Allow: \/(?:\r?\n|$)/);
+    assert.match(fixtureSitemap, /<url>/);
     assert.match(paperHtml, /Fixture Study/);
     assert.match(paperHtml, /This paper body verifies optional MDX rendering\./);
     assert.match(noteHtml, /This note verifies static MDX rendering\./);
@@ -251,6 +305,23 @@ test('exports complete fixture paper and note details', { timeout: 60_000 }, asy
       ),
       ['Kamruzzaman Khan Alve', 'Fixture Collaborator'],
     );
+  } finally {
+    runBuild();
+  }
+});
+
+test('blocks preview deployments even with a valid production origin', { timeout: 60_000 }, async () => {
+  try {
+    runBuild({
+      NEXT_PUBLIC_SITE_URL: 'https://portfolio.rfc-editor.org',
+      VERCEL_ENV: 'preview',
+    });
+    const html = await readFile(path.join(out, 'index.html'), 'utf8');
+    const robots = await readFile(path.join(out, 'robots.txt'), 'utf8');
+    const sitemap = await readFile(path.join(out, 'sitemap.xml'), 'utf8');
+    assert.match(html, /<meta name="robots" content="noindex, nofollow"/);
+    assert.match(robots, /Disallow: \/(?:\r?\n|$)/);
+    assert.doesNotMatch(sitemap, /<url>/);
   } finally {
     runBuild();
   }

@@ -1,0 +1,22 @@
+---
+title: "Resume Evaluator"
+problem: "Resume feedback is hard to act on when analysis, editing, and export happen in separate tools."
+approach: "Parse PDF and DOCX resumes, combine structured scoring with LLM-assisted suggestions, and let users review changes in the browser."
+result: "A deployed review-to-export workflow with editable previews and both PDF and DOCX downloads."
+stack: ["Next.js", "React", "TypeScript", "LLM integration"]
+repoUrl: "https://github.com/alve775/Resume-Evaluator"
+liveUrl: "https://resume-evaluator-v2.vercel.app"
+image:
+  src: "/images/projects/resume-evaluator.jpg"
+  alt: "Resume Evaluator's upload interface beside an illustrative score breakdown."
+  caption: "The deployed application’s landing page. The score shown is its illustrative example."
+  width: 1440
+  height: 960
+caseStudy:
+  contribution: "Built the resume workflow from PDF/DOCX ingestion and structured analysis to editable previews and document exports."
+  decision: "Keep deterministic scoring separate from LLM-assisted suggestions, and flag new numerical claims before users accept a rewrite."
+  limitation: "Document extraction can lose structure, so users need to review parsed content and suggested edits. The score reflects this app’s checks, not a specific employer’s ATS."
+status: "live"
+draft: false
+order: 1
+---

@@ -12,6 +12,7 @@ export function getLaunchReadiness() {
     profileCount: usableProfiles.length,
     paperCount: getPapers().length,
     hasCv: hasCvPdf(),
+    isPreview: process.env.VERCEL_ENV === 'preview',
   });
 
   return { isReady, origin: productionOrigin };

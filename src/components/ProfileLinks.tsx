@@ -1,4 +1,4 @@
-import { publicEmail, usableProfiles } from '@/lib/site';
+import { emailHref, publicEmail, usableProfiles } from '@/lib/site';
 
 /**
  * The one contact row. There is no contact page: this renders on the home page
@@ -12,7 +12,7 @@ export function ProfileLinks({
   className?: string;
 }) {
   const links: Array<{ label: string; href: string }> = [...usableProfiles];
-  if (publicEmail) links.push({ label: 'Email', href: `mailto:${publicEmail}` });
+  if (publicEmail) links.push({ label: 'Email', href: emailHref! });
   if (links.length === 0) return null;
 
   if (variant === 'inline') {

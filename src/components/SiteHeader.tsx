@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { Nav, type NavItem } from '@/components/Nav';
 import { getNotes } from '@/lib/content';
-import { publicEmail, site } from '@/lib/site';
+import { emailHref, publicEmail, site } from '@/lib/site';
 
 export function SiteHeader() {
   // Per the brief: if there are no published notes, the section is not linked.
@@ -25,7 +25,7 @@ export function SiteHeader() {
         <div className="site-header-actions">
           <Nav items={items} />
           {publicEmail ? (
-            <a className="header-contact" href={`mailto:${publicEmail}`}>
+            <a className="header-contact" href={emailHref!}>
               Email <span aria-hidden="true">↗</span>
             </a>
           ) : null}

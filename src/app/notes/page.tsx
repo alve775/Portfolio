@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { PageHeader } from '@/components/PageHeader';
+import { formatIsoDate } from '@/lib/format';
 import { getNotes } from '@/lib/content';
 import { routeMetadata } from '@/lib/seo';
 import { site } from '@/lib/site';
@@ -27,7 +28,7 @@ export default function NotesPage() {
               <li key={slug}>
                 <Link className="note-link" href={`/notes/${slug}/`}>
                   <time className="meta" dateTime={frontmatter.date}>
-                    {frontmatter.date}
+                    {formatIsoDate(frontmatter.date)}
                   </time>
                   <span className="note-copy">
                     <span className="note-title">{frontmatter.title}</span>

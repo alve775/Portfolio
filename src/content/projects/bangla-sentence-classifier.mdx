@@ -1,0 +1,22 @@
+---
+title: "Bangla Sentence Classifier"
+problem: "Bangla grammatical sentence classification needs a usable interface alongside the research benchmark."
+approach: "Fine-tune XLM-R with PyTorch and Transformers, then expose sentence-type predictions through a Gradio interface."
+result: "A public Hugging Face Space for five sentence types: assertive, interrogative, imperative, exclamatory, and optative."
+stack: ["Python", "PyTorch", "Transformers", "Gradio"]
+repoUrl: "https://huggingface.co/spaces/TextLabRUET/Multilingual-Sentence-Classifier/tree/main"
+liveUrl: "https://huggingface.co/spaces/TextLabRUET/Multilingual-Sentence-Classifier"
+image:
+  src: "/images/projects/bangla-sentence-classifier.jpg"
+  alt: "The Gradio classifier labels the Bangla question তুমি কেমন আছো? as an interrogative sentence."
+  caption: "A live Bangla prediction from the deployed Space. One example illustrates the interface, not benchmark accuracy."
+  width: 1440
+  height: 700
+caseStudy:
+  contribution: "Worked on Bangla sentence-type classification research and brought the trained XLM-R classifier into a public Gradio interface with TextLabRUET."
+  decision: "Reuse a pretrained multilingual encoder for five grammatical classes, and keep the prediction interface separate from model training."
+  limitation: "The research evaluates Bangla sentence types; accepting another language in the interface does not establish accuracy for that language. The hosted Space may need time to wake from inactivity."
+status: "live"
+draft: false
+order: 3
+---

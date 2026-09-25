@@ -51,6 +51,7 @@
 
 .sceneLabel {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
   padding-bottom: 1rem;
@@ -58,6 +59,21 @@
   color: var(--flight-muted);
   font-size: 0.625rem;
   letter-spacing: 0.11em;
+}
+
+.skipWork {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--flight-signal);
+  text-align: right;
+  text-decoration: none;
+}
+
+.skipWork:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
 }
 
 .instructions {
@@ -111,6 +127,7 @@
 }
 
 .stationButton:focus-visible,
+.skipWork:focus-visible,
 .action:focus-visible {
   outline: 2px solid var(--flight-signal);
   outline-offset: 3px;
@@ -167,6 +184,8 @@
 
 .action {
   display: inline-flex;
+  align-self: flex-start;
+  gap: 0.35rem;
   min-height: 2.75rem;
   align-items: center;
   margin-top: 1.75rem;
@@ -181,8 +200,8 @@
 }
 
 .root[data-enhanced="true"] {
-  height: 500svh;
-  min-height: 210rem;
+  height: 300svh;
+  min-height: 0;
 }
 
 .root[data-enhanced="true"] .viewport {
@@ -223,7 +242,7 @@
   z-index: 4;
   top: 50%;
   left: 0;
-  width: 6.5rem;
+  width: 9rem;
   margin: 0;
   translate: 0 -50%;
 }
@@ -239,21 +258,11 @@
   padding-inline: 0.75rem;
 }
 
-.root[data-enhanced="true"] .buttonLabel {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
 .root[data-enhanced="true"] .copyDeck {
   position: absolute;
   top: 50%;
-  left: clamp(5rem, 9vw, 8.5rem);
-  width: min(43vw, 35rem);
+  left: clamp(10.5rem, 16vw, 13rem);
+  width: min(46vw, 36rem);
   height: min(55vh, 32rem);
   margin: 0;
   translate: 0 -45%;
@@ -274,7 +283,7 @@
   transition:
     opacity 320ms ease,
     translate 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    visibility 0s linear 420ms;
+    visibility 0s linear;
 }
 
 .root[data-enhanced="true"] .station[data-active="true"] {
@@ -287,7 +296,7 @@
 
 .root[data-enhanced="true"] .title {
   max-width: 12ch;
-  font-size: clamp(2.5rem, 5.2vw, 5.2rem);
+  font-size: clamp(2.5rem, 4.8vw, 4.7rem);
 }
 
 .root[data-enhanced="true"] .body {
@@ -333,22 +342,16 @@
     overflow-x: auto;
   }
 
-  .buttonLabel {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    white-space: nowrap;
+  .stationButton {
+    min-height: 3.5rem;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.5625rem;
+    letter-spacing: 0;
   }
 
   .title {
     font-size: clamp(2.25rem, 12vw, 4.4rem);
-  }
-
-  .root[data-enhanced="true"] .sceneLabel span:last-child {
-    display: none;
   }
 
   .root[data-enhanced="true"] .instructions {
@@ -380,7 +383,7 @@
   .root[data-enhanced="true"] .copyDeck {
     top: auto;
     right: 0;
-    bottom: 7.8rem;
+    bottom: 8.6rem;
     left: 0;
     width: auto;
     height: min(40vh, 22rem);

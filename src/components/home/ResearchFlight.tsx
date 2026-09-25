@@ -215,13 +215,15 @@ export function ResearchFlight({ stations }: ResearchFlightProps) {
         />
 
         <div className={styles.frame}>
-          <div className={styles.sceneLabel} aria-hidden="true">
+          <div className={styles.sceneLabel}>
             <span>Work constellation</span>
-            <span>Path 01 / 05 stations</span>
+            <a className={styles.skipWork} href="#selected-work">
+              Skip to selected work <span aria-hidden="true">↓</span>
+            </a>
           </div>
 
           <p id="flight-instructions" className={styles.instructions}>
-            Scroll to travel through the work, or choose a station.
+            Scroll, or choose a station.
           </p>
 
           <nav
