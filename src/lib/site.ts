@@ -28,7 +28,7 @@ export const productionOrigin = resolveProductionOrigin(process.env.NEXT_PUBLIC_
  *      engineering that gets a model into production.
  */
 const POSITIONING =
-  'I build software, develop AI systems, and conduct research in Bangla NLP and ADHD EEG analysis.';
+  'I do research in Bangla and multilingual NLP, and I build the software that puts it to use.';
 
 /** Updated from the owner-supplied September 2026 CV. */
 const BIO =

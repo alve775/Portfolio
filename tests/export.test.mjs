@@ -99,8 +99,8 @@ test('exports the complete semantic research-flight fallback', async () => {
   for (const [id, href, label] of [
     ['identity', '/cv/', 'View CV'],
     ['projects', '/projects/', 'View projects'],
-    ['ai', 'https://huggingface.co/spaces/TextLabRUET/Multilingual-Sentence-Classifier', 'Open classifier'],
-    ['research', '/research/', 'Read papers'],
+    ['ai', 'https://huggingface.co/spaces/TextLabRUET/Multilingual-Sentence-Classifier', 'Try the classifier'],
+    ['research', '/research/', 'Read the research'],
   ]) {
     const article = html.match(new RegExp(`<article[^>]*id="flight-station-${id}"[^>]*>([\\s\\S]*?)<\\/article>`))?.[1];
     assert.ok(article?.includes(`href="${href}"`), `${id} must link to its destination`);
