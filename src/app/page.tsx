@@ -3,7 +3,24 @@ import { ProjectList } from '@/components/ProjectList';
 import { ResearchFlight } from '@/components/home/ResearchFlight';
 import type { FlightStationContent } from '@/components/home/flight-model';
 import { getPapers, getProjects } from '@/lib/content';
-import { emailHref, publicEmail, site } from '@/lib/site';
+import { emailHref, publicEmail, site, usableProfiles } from '@/lib/site';
+
+/**
+ * Validated destinations only: a missing or malformed profile is simply omitted.
+ * Scholar leads because research readers look for it first.
+ */
+const IDENTITY_PROFILES = [
+  { label: 'Google Scholar', shortLabel: 'Scholar' },
+  { label: 'GitHub' },
+] as const;
+
+const identityLinks = [
+  ...IDENTITY_PROFILES.flatMap((profile) => {
+    const match = usableProfiles.find(({ label }) => label === profile.label);
+    return match ? [{ ...profile, href: match.href }] : [];
+  }),
+  ...(emailHref ? [{ label: 'Email', href: emailHref }] : []),
+];
 
 const stations = [
   {
@@ -13,7 +30,8 @@ const stations = [
     title: site.name,
     meta: `${site.affiliation} · ${site.location}`,
     body: site.positioning,
-    action: { label: 'View CV', href: '/cv/' },
+    action: { label: 'View CV', shortLabel: 'CV', href: '/cv/' },
+    links: identityLinks,
   },
   {
     id: 'projects',

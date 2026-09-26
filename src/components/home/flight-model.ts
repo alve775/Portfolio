@@ -27,8 +27,18 @@ export type FlightStationContent = Readonly<{
   meta?: string;
   action?: Readonly<{
     label: string;
+    /** Compact label used on narrow screens, where the link row must fit on one line. */
+    shortLabel?: string;
     href: string;
   }>;
+  /** Secondary links shown beside the action, e.g. profile destinations. */
+  links?: ReadonlyArray<
+    Readonly<{
+      label: string;
+      shortLabel?: string;
+      href: string;
+    }>
+  >;
 }>;
 
 export type FlightStationGeometry = Readonly<{

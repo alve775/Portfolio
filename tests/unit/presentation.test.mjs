@@ -17,6 +17,12 @@ test('uses the approved self-hosted quiet-technical foundation', () => {
   assert.match(css, /font-family:\s*var\(--font-sans\)/);
 });
 
+test('keeps the research flight short enough to reach selected work quickly', async () => {
+  const flightCss = await readFile('src/components/home/research-flight.module.css', 'utf8');
+  assert.match(flightCss, /\.root\[data-enhanced="true"\]\s*\{\s*height:\s*220svh/);
+  assert.doesNotMatch(flightCss, /300svh/);
+});
+
 test('keeps the spatial homepage on built-in browser primitives', () => {
   const dependencies = {
     ...packageJson.dependencies,

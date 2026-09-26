@@ -78,35 +78,41 @@ export function ResearchFlight({ stations }: ResearchFlightProps) {
     const section = sectionRef.current;
     if (!section || !('IntersectionObserver' in window)) return;
 
-    const setHeaderOffset = () => {
-      const header = document.querySelector<HTMLElement>('.site-header');
-      section.style.setProperty(
-        '--flight-header-height',
-        `${header?.getBoundingClientRect().height ?? 0}px`,
+    const header = document.querySelector<HTMLElement>('.site-header');
+    let observer: IntersectionObserver | null = null;
+    let headerHeight = -1;
+
+    // The flight counts as on screen only below the sticky header, so the header
+    // turns light as soon as the flight slides beneath it rather than after it
+    // leaves the viewport entirely.
+    const observeBelowHeader = () => {
+      const nextHeight = Math.round(header?.getBoundingClientRect().height ?? 0);
+      if (nextHeight === headerHeight) return;
+      headerHeight = nextHeight;
+      section.style.setProperty('--flight-header-height', `${nextHeight}px`);
+
+      observer?.disconnect();
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          const isVisible = entry.isIntersecting;
+          setVisible(isVisible);
+          if (isVisible) {
+            document.body.dataset.flightActive = 'true';
+          } else {
+            delete document.body.dataset.flightActive;
+          }
+        },
+        { threshold: 0, rootMargin: `-${nextHeight}px 0px 0px 0px` },
       );
+      observer.observe(section);
     };
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const isVisible = entry.isIntersecting;
-        setVisible(isVisible);
-        if (isVisible) {
-          document.body.dataset.flightActive = 'true';
-        } else {
-          delete document.body.dataset.flightActive;
-        }
-      },
-      { threshold: 0 },
-    );
-    const header = document.querySelector<HTMLElement>('.site-header');
-    const headerObserver = new ResizeObserver(setHeaderOffset);
-
-    observer.observe(section);
+    const headerObserver = new ResizeObserver(observeBelowHeader);
     if (header) headerObserver.observe(header);
-    setHeaderOffset();
+    observeBelowHeader();
 
     return () => {
-      observer.disconnect();
+      observer?.disconnect();
       headerObserver.disconnect();
       delete document.body.dataset.flightActive;
     };
@@ -196,116 +202,158 @@ export function ResearchFlight({ stations }: ResearchFlightProps) {
   };
 
   return (
-    <section
-      ref={sectionRef}
-      className={styles.root}
-      data-research-flight
-      data-enhanced={enhanced ? 'true' : 'false'}
-      data-reduced-motion={reducedMotion ? 'true' : 'false'}
-      aria-label="Professional journey"
-    >
-      <div className={styles.viewport}>
-        <ResearchFlightCanvas
-          progressRef={progressRef}
-          enabled={capable && !canvasFailed}
-          visible={visible}
-          lateralScale={lateralScale}
-          onReady={handleCanvasReady}
-          onFailure={handleCanvasFailure}
-        />
+    <>
+      <section
+        ref={sectionRef}
+        className={styles.root}
+        data-research-flight
+        data-enhanced={enhanced ? 'true' : 'false'}
+        data-reduced-motion={reducedMotion ? 'true' : 'false'}
+        aria-label="Professional journey"
+      >
+        <div className={styles.viewport}>
+          <ResearchFlightCanvas
+            progressRef={progressRef}
+            enabled={capable && !canvasFailed}
+            visible={visible}
+            lateralScale={lateralScale}
+            onReady={handleCanvasReady}
+            onFailure={handleCanvasFailure}
+          />
 
-        <div className={styles.frame}>
-          <div className={styles.sceneLabel}>
-            <span>Work constellation</span>
-            <a className={styles.skipWork} href="#selected-work">
-              Skip to selected work <span aria-hidden="true">↓</span>
-            </a>
-          </div>
+          <div className={styles.frame}>
+            <div className={styles.sceneLabel}>
+              <span>Work constellation</span>
+              <a className={styles.skipWork} href="#selected-work">
+                Skip to selected work <span aria-hidden="true">↓</span>
+              </a>
+            </div>
 
-          <p id="flight-instructions" className={styles.instructions}>
-            Scroll, or choose a station.
-          </p>
+            <p id="flight-instructions" className={styles.instructions}>
+              Scroll, or choose a station.
+            </p>
 
-          <nav
-            className={styles.controls}
-            aria-label="Portfolio stations"
-            aria-describedby="flight-instructions"
-          >
-            <ol>
-              {stations.map((station, index) => (
-                <li key={station.id}>
-                  <button
-                    type="button"
-                    className={styles.stationButton}
-                    aria-label={`Go to ${station.label} station`}
-                    aria-controls={`flight-station-${station.id}`}
-                    aria-pressed={displayedActiveIndex === index}
-                    onClick={() => scrollToStation(index)}
-                  >
-                    <span aria-hidden="true">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <span className={styles.buttonLabel}>{station.label}</span>
-                  </button>
-                </li>
-              ))}
-            </ol>
-          </nav>
-
-          <div className={styles.copyDeck}>
-            {stations.map((station, index) => {
-              const inactive = enhanced && displayedActiveIndex !== index;
-
-              return (
-                <article
-                  key={station.id}
-                  ref={(node) => {
-                    stationRefs.current[index] = node;
-                  }}
-                  id={`flight-station-${station.id}`}
-                  className={styles.station}
-                  data-active={displayedActiveIndex === index ? 'true' : 'false'}
-                  aria-hidden={inactive ? true : undefined}
-                  inert={inactive ? true : undefined}
-                >
-                  <p className={styles.marker}>
-                    {station.marker} / {station.label}
-                  </p>
-                  {index === 0 ? (
-                    <h1 id="home-title" className={styles.title}>
-                      {station.title}
-                    </h1>
-                  ) : (
-                    <h2 className={styles.title}>{station.title}</h2>
-                  )}
-                  {station.meta ? <p className={styles.meta}>{station.meta}</p> : null}
-                  <p className={styles.body}>{station.body}</p>
-                  {station.action ? (
-                    <a
-                      className={styles.action}
-                      href={station.action.href}
-                      tabIndex={inactive ? -1 : undefined}
+            <nav
+              className={styles.controls}
+              aria-label="Portfolio stations"
+              aria-describedby="flight-instructions"
+            >
+              <ol>
+                {stations.map((station, index) => (
+                  <li key={station.id}>
+                    <button
+                      type="button"
+                      className={styles.stationButton}
+                      aria-label={`Go to ${station.label} station`}
+                      aria-controls={`flight-station-${station.id}`}
+                      aria-pressed={displayedActiveIndex === index}
+                      onClick={() => scrollToStation(index)}
                     >
-                      {station.action.label}
-                      <span aria-hidden="true"> ↗</span>
-                    </a>
-                  ) : null}
-                </article>
-              );
-            })}
-          </div>
+                      <span aria-hidden="true">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <span className={styles.buttonLabel}>{station.label}</span>
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            </nav>
 
-          <div className={styles.progress} aria-hidden="true">
-            <span>
-              {String(displayedActiveIndex + 1).padStart(2, '0')} /{' '}
-              {String(stations.length).padStart(2, '0')}
-            </span>
-            <span ref={progressBarRef} className={styles.progressTrack}>
-              <span />
-            </span>
+            <div className={styles.copyDeck}>
+              {stations.map((station, index) => {
+                const inactive = enhanced && displayedActiveIndex !== index;
+
+                return (
+                  <article
+                    key={station.id}
+                    ref={(node) => {
+                      stationRefs.current[index] = node;
+                    }}
+                    id={`flight-station-${station.id}`}
+                    className={styles.station}
+                    data-active={displayedActiveIndex === index ? 'true' : 'false'}
+                    aria-hidden={inactive ? true : undefined}
+                    inert={inactive ? true : undefined}
+                  >
+                    <p className={styles.marker}>
+                      {station.marker} / {station.label}
+                    </p>
+                    {index === 0 ? (
+                      <h1 id="home-title" className={styles.title}>
+                        {station.title}
+                      </h1>
+                    ) : (
+                      <h2 className={styles.title}>{station.title}</h2>
+                    )}
+                    {station.meta ? <p className={styles.meta}>{station.meta}</p> : null}
+                    <p className={styles.body}>{station.body}</p>
+                    {station.links?.length ? (
+                      <div className={styles.links}>
+                        {station.action ? (
+                          <a
+                            className={`${styles.pill} ${styles.pillPrimary}`}
+                            href={station.action.href}
+                            tabIndex={inactive ? -1 : undefined}
+                          >
+                            <PillLabel {...station.action} />
+                          </a>
+                        ) : null}
+                        {station.links.map((link) => (
+                          <a
+                            key={link.href}
+                            className={styles.pill}
+                            href={link.href}
+                            tabIndex={inactive ? -1 : undefined}
+                          >
+                            <PillLabel {...link} />
+                          </a>
+                        ))}
+                      </div>
+                    ) : station.action ? (
+                      <a
+                        className={styles.action}
+                        href={station.action.href}
+                        tabIndex={inactive ? -1 : undefined}
+                      >
+                        {station.action.label}
+                        <span aria-hidden="true"> ↗</span>
+                      </a>
+                    ) : null}
+                  </article>
+                );
+              })}
+            </div>
+
+            <div className={styles.progress} aria-hidden="true">
+              <span>
+                {String(displayedActiveIndex + 1).padStart(2, '0')} /{' '}
+                {String(stations.length).padStart(2, '0')}
+              </span>
+              <span ref={progressBarRef} className={styles.progressTrack}>
+                <span />
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      {/* Outside the section, whose overflow clips: blends the dark flight into the page. */}
+      <div className={styles.fade} data-flight-fade aria-hidden="true" />
+    </>
+  );
+}
+
+function PillLabel({ label, shortLabel }: Readonly<{ label: string; shortLabel?: string }>) {
+  return (
+    <>
+      {shortLabel ? (
+        <>
+          <span className={styles.labelLong}>{label}</span>
+          <span className={styles.labelShort}>{shortLabel}</span>
+        </>
+      ) : (
+        label
+      )}
+      <span aria-hidden="true"> ↗</span>
+    </>
   );
 }

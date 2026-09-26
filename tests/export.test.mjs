@@ -106,6 +106,18 @@ test('exports the complete semantic research-flight fallback', async () => {
     assert.ok(article?.includes(`href="${href}"`), `${id} must link to its destination`);
     assert.ok(article?.includes(label), `${id} must name its action`);
   }
+
+  const identity = html.match(/<article[^>]*id="flight-station-identity"[^>]*>([\s\S]*?)<\/article>/)?.[1] ?? '';
+  for (const href of [
+    'https://scholar.google.com/citations?user=Zr2KjyMAAAAJ&amp;hl=en',
+    'https://github.com/alve775',
+    'https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=kamruzzamanalve%40gmail.com',
+  ]) {
+    assert.ok(identity.includes(`href="${href}"`), `identity station must link to ${href}`);
+  }
+  const research = html.match(/<article[^>]*id="flight-station-research"[^>]*>([\s\S]*?)<\/article>/)?.[1] ?? '';
+  assert.ok(!research.includes('github.com'), 'profile links belong only to the identity station');
+  assert.match(html, /data-flight-fade/);
 });
 
 test('presents a hybrid professional journey with projects before research', async () => {
