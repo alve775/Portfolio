@@ -32,7 +32,7 @@ const POSITIONING =
 
 /** Updated from the owner-supplied September 2026 CV. */
 const BIO =
-  "Kamruzzaman Khan Alve is a Computer Science and Engineering graduate from Rajshahi University of Engineering and Technology, Bangladesh. His work connects Bangla and multilingual NLP, reproducible machine learning, and software development. He has two peer-reviewed NLP publications and is a research member of RUET's Young Learners' Research Lab. His undergraduate thesis develops a leakage-safe ADHD EEG framework centered on subject-level validation. Alongside research, he builds tools for document review, local retrieval, and everyday workflows.";
+  "I'm a Computer Science and Engineering graduate from Rajshahi University of Engineering and Technology in Bangladesh. My research focuses on Bangla and multilingual NLP: I have two peer-reviewed papers, and I'm a research member of RUET's Young Learners' Research Lab. My undergraduate thesis develops a leakage-safe ADHD EEG framework built on subject-level validation, so the same participant never appears in both training and testing. Outside research, I build web apps, mobile apps, and local AI tools, from resume review to private search over saved websites.";
 
 export const site = {
   /** Canonical name string. Byte-identical everywhere on the site. */
