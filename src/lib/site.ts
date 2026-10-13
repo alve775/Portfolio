@@ -43,6 +43,17 @@ export const site = {
   affiliation: 'Rajshahi University of Engineering and Technology',
   affiliationShort: 'RUET',
   location: 'Rajshahi, Bangladesh',
+  chrome: {
+    skipToContent: 'Skip to content',
+    navigationLabel: 'Sections',
+    emailLabel: 'Email',
+    navigation: [
+      { href: '/projects/', label: 'Projects' },
+      { href: '/research/', label: 'Research' },
+      { href: '/notes/', label: 'Notes' },
+      { href: '/cv/', label: 'CV' },
+    ],
+  },
   /** Swap for an institutional address if you would rather publish that one. */
   email: 'kamruzzamanalve@gmail.com',
   socials: {

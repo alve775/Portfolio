@@ -1,4 +1,4 @@
-import { emailHref, publicEmail, usableProfiles } from '@/lib/site';
+import { emailHref, publicEmail, site, usableProfiles } from '@/lib/site';
 
 /**
  * The one contact row. There is no contact page: this renders on the home page
@@ -12,7 +12,7 @@ export function ProfileLinks({
   className?: string;
 }) {
   const links: Array<{ label: string; href: string }> = [...usableProfiles];
-  if (publicEmail) links.push({ label: 'Email', href: emailHref! });
+  if (publicEmail && emailHref) links.push({ label: site.chrome.emailLabel, href: emailHref });
   if (links.length === 0) return null;
 
   if (variant === 'inline') {
@@ -20,8 +20,8 @@ export function ProfileLinks({
       <ul className={`profile-links profile-links-inline ${className}`}>
         {links.map(({ label, href }) => (
           <li key={label}>
-            <a className="profile-link" href={href} rel="me noopener">
-              {label}
+            <a className="profile-link" href={href} target="_blank" rel="me noopener noreferrer">
+              {label} <span aria-hidden="true">↗</span>
             </a>
           </li>
         ))}

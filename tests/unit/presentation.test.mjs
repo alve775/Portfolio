@@ -6,14 +6,16 @@ const fonts = await readFile('src/lib/fonts.ts', 'utf8');
 const css = await readFile('src/app/globals.css', 'utf8');
 const packageJson = JSON.parse(await readFile('package.json', 'utf8'));
 
-test('uses the approved self-hosted quiet-technical foundation', () => {
-  assert.match(fonts, /export const instrumentSans/);
-  assert.match(fonts, /instrument-sans-variable\.ttf/);
-  assert.doesNotMatch(fonts, /export const charis/);
-  assert.match(css, /--canvas:\s*#f5f7f6/i);
-  assert.match(css, /--signal:\s*#3f6f5e/i);
-  // The old mint must not survive in any hardcoded homepage override.
-  assert.doesNotMatch(css, /#69e4bd/i);
+test('uses the approved constellation theme and build-time self-hosted fonts', () => {
+  assert.match(fonts, /import.*IBM_Plex_Mono.*Manrope.*from 'next\/font\/google'/);
+  assert.match(fonts, /export const manrope = Manrope/);
+  assert.match(fonts, /export const ibmPlexMono = IBM_Plex_Mono/);
+  assert.match(fonts, /notoSerifBengali/);
+  assert.match(fonts, /preload: false/);
+  assert.match(css, /@theme static/);
+  assert.match(css, /--color-bg:\s*#121715/i);
+  assert.match(css, /--color-accent:\s*#a9d9c6/i);
+  assert.doesNotMatch(css, /prefers-color-scheme/);
   assert.match(css, /font-family:\s*var\(--font-sans\)/);
 });
 

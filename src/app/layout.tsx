@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { PersonJsonLd } from '@/components/PersonJsonLd';
 import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
+import { Starfield } from '@/components/Starfield';
 import { fontVariables } from '@/lib/fonts';
 import { getLaunchReadiness } from '@/lib/readiness';
 import { site } from '@/lib/site';
@@ -50,15 +51,16 @@ export function generateMetadata(): Metadata {
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={fontVariables}>
-      <body data-design="quiet-technical" className="site-body">
+      <body data-design="constellation" className="site-body">
+        <Starfield />
         <a
           href="#main"
           className="skip-link"
         >
-          Skip to content
+          {site.chrome.skipToContent}
         </a>
         <SiteHeader />
-        <main id="main" className="site-shell main-content">
+        <main id="main" tabIndex={-1} className="site-shell main-content">
           {children}
         </main>
         <SiteFooter />

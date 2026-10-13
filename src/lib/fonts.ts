@@ -1,27 +1,23 @@
+import { IBM_Plex_Mono, Manrope } from 'next/font/google';
 import localFont from 'next/font/local';
 
-/** Self-hosted variable sans. No third-party font request is made at runtime. */
-export const instrumentSans = localFont({
-  src: '../../public/fonts/instrument-sans-variable.ttf',
-  variable: '--font-instrument-sans',
+/** Downloaded at build time and self-hosted in the static export. */
+export const manrope = Manrope({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-manrope',
   display: 'swap',
-  weight: '400 700',
-  style: 'normal',
-  fallback: ['Inter', 'Avenir Next', 'Helvetica Neue', 'Arial', 'sans-serif'],
 });
 
-export const firaMono = localFont({
-  src: [
-    { path: '../../public/fonts/fira-mono-latin-400-normal.woff2', weight: '400', style: 'normal' },
-  ],
-  variable: '--font-fira-mono',
+export const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-ibm-plex-mono',
   display: 'swap',
-  adjustFontFallback: false,
-  fallback: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
 });
 
 /**
- * Bangla coverage. Instrument Sans has no Bengali glyphs, so a Bangla paper
+ * Bangla coverage. Manrope has no Bengali glyphs, so a Bangla paper
  * title or dataset name needs an explicit fallback on this Bangla NLP site.
  *
  * The `unicode-range` descriptor means this file is only downloaded when Bengali
@@ -53,4 +49,4 @@ export const notoSerifBengali = localFont({
 });
 
 /** Applied once, on <html>, in the root layout. */
-export const fontVariables = `${instrumentSans.variable} ${firaMono.variable} ${notoSerifBengali.variable}`;
+export const fontVariables = `${manrope.variable} ${ibmPlexMono.variable} ${notoSerifBengali.variable}`;

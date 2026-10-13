@@ -10,11 +10,11 @@ export type NavItem = { href: string; label: string };
  * visible marker. The homepage flight is the other client island; everything
  * else renders on the server.
  */
-export function Nav({ items }: { items: NavItem[] }) {
+export function Nav({ items, label }: { items: NavItem[]; label: string }) {
   const pathname = usePathname();
 
   return (
-    <nav className="site-nav" aria-label="Sections">
+    <nav className="site-nav" aria-label={label}>
       <ul>
         {items.map(({ href, label }) => {
           const active = pathname === href || pathname.startsWith(href);

@@ -170,6 +170,33 @@ test('exports preview-safe discovery artifacts', async () => {
   assert.equal(image.readUInt32BE(20), 630);
 });
 
+test('exports a shared decorative starfield and content-backed navigation on every page', async () => {
+  let firstField;
+  for (const relative of [...requiredPages, '404.html', 'research/bangla-sentence-type-classification/index.html']) {
+    const html = await readFile(path.join(out, relative), 'utf8');
+    const fields = [...html.matchAll(/<div class="starfield starfield-soft" aria-hidden="true">([\s\S]*?)<\/div>/g)];
+    assert.equal(fields.length, 1, `${relative} must contain exactly one shared field`);
+    const field = fields[0][1];
+    assert.equal((field.match(/class="starfield-star"/g) ?? []).length, 40);
+    firstField ??= field;
+    assert.equal(field, firstField, `${relative} must use the same deterministic positions`);
+    assert.match(html, /href="#main" class="skip-link">Skip to content<\/a>/);
+    assert.match(html, /<main id="main" tabindex="-1"/);
+    const header = html.match(/<header class="site-header">([\s\S]*?)<\/header>/)?.[1] ?? '';
+    assert.doesNotMatch(header, /href="\/notes\/"/, 'empty notes stay out of navigation');
+    assert.match(header, /<a(?=[^>]*class="site-brand")(?=[^>]*href="\/")/);
+    if (relative.startsWith('research/')) {
+      assert.match(header, /<a(?=[^>]*href="\/research\/")(?=[^>]*aria-current="page")/);
+    }
+    const footer = html.match(/<footer class="site-footer">([\s\S]*?)<\/footer>/)?.[1] ?? '';
+    assert.match(footer, /Kamruzzaman Khan Alve/);
+    assert.match(footer, /RUET.*Rajshahi, Bangladesh/);
+    assert.equal((footer.match(/target="_blank"/g) ?? []).length, 5);
+    assert.equal((footer.match(/rel="me noopener noreferrer"/g) ?? []).length, 5);
+    assert.doesNotMatch(html, /<link[^>]+href="https:\/\/fonts\.(googleapis|gstatic)\.com/);
+  }
+});
+
 test('publishes the verified portfolio content and supplied CV', async () => {
   const projects = await readFile(path.join(out, 'projects/index.html'), 'utf8');
   const cv = await readFile(path.join(out, 'cv/index.html'), 'utf8');
@@ -302,7 +329,7 @@ test('exports complete fixture paper and note details', { timeout: 60_000 }, asy
     assert.match(rootHtml, /Fixture Project/);
     assert.match(researchHtml, /href="\/research\/fixture-study\/"/);
     assert.match(notesHtml, /href="\/notes\/fixture-note\/"/);
-    assert.match(rootHtml, /data-design="quiet-technical"/);
+    assert.match(rootHtml, /data-design="constellation"/);
     assert.match(rootHtml, /data-research-flight/);
     assert.match(rootHtml, /data-research-index/);
     assert.match(researchHtml, /data-research-index/);
