@@ -21,6 +21,15 @@ bibtex: |
     pages = {1--6},
     doi = {10.1109/QPAIN69676.2026.11546339}
   }
+metric: '97.61%'
+metricNote: 'best test accuracy (BanglaBERT) · 6 encoders · 5,100-sentence test split'
+results:
+  - { model: 'BanglaBERT', group: 'monolingual', accuracy: 97.61 }
+  - { model: 'SahajBERT', group: 'monolingual', accuracy: 97.55 }
+  - { model: 'BanglaBERT Base', group: 'monolingual', accuracy: 96.86 }
+  - { model: 'XLM-RoBERTa Base', group: 'multilingual', accuracy: 97.57 }
+  - { model: 'RemBERT Base', group: 'multilingual', accuracy: 97.53 }
+  - { model: 'mBERT Base', group: 'multilingual', accuracy: 96.43 }
 draft: false
 order: 1
 ---

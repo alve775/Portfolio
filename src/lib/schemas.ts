@@ -34,6 +34,13 @@ export const paperSchema = z.object({
   bibtex: z.string().optional(),
   /** The owner's plain statement of what the work shows. Never generated. */
   takeaway: z.string().min(1),
+  metric: z.string().trim().min(1).optional(),
+  metricNote: z.string().trim().min(1).optional(),
+  results: z.array(z.object({
+    model: z.string().trim().min(1),
+    group: z.enum(['monolingual', 'multilingual']),
+    accuracy: z.number().min(0).max(100),
+  })).optional(),
   draft: z.boolean(),
   order: z.number().int(),
 });
@@ -59,6 +66,9 @@ export const projectSchema = z.object({
     limitation: z.string().min(1),
   }).optional(),
   status: z.enum(['live', 'complete', 'archived', 'wip']),
+  metric: z.string().trim().min(1).optional(),
+  metricNote: z.string().trim().min(1).optional(),
+  tags: z.array(z.enum(['ai', 'web', 'mobile'])).optional(),
   draft: z.boolean(),
   order: z.number().int(),
 });
