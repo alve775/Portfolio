@@ -30,7 +30,7 @@ export default function HomePage() {
       <section data-research-index><div className="redesign-section-heading"><div><p className="label">{homeCopy.station} 04 → {copy.selectedResearch}</p><h2>{copy.selectedResearch}</h2></div><span className="label">{papers.filter(p=>p.frontmatter.status==='published').length} {copy.published} · {papers.filter(p=>p.frontmatter.status==='thesis').length} {copy.thesis}</span></div>
         {papers.length?<div className="research-card-list">{papers.slice(0,3).map(p=><Reveal key={p.slug}><ResearchCard paper={p} /></Reveal>)}</div>:<p>{copy.emptyResearch}</p>}
       </section>
-      <Reveal><section className="home-profile"><div><p className="label">{copy.profile}</p><h2>{homeCopy.contactTitle}</h2>{emailHref&&publicEmail&&<a className="accent contact-email" href={emailHref} target="_blank" rel="noopener noreferrer">{publicEmail} ↗</a>}</div><p>{site.bio}</p></section></Reveal>
+      <Reveal><section className="home-profile"><div><p className="label">{copy.profile}</p><h2>{homeCopy.contactTitle}</h2>{emailHref&&publicEmail&&<a className="accent contact-email" href={emailHref} rel="noopener noreferrer">{publicEmail} ↗</a>}</div><p>{site.bio}</p></section></Reveal>
     </div>
   </>;
 }

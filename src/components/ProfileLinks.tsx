@@ -22,7 +22,7 @@ export function ProfileLinks({
       <ul className={`profile-links profile-links-inline ${className}`}>
         {links.map(({ label, href }) => (
           <li key={label}>
-            <a className="profile-link" href={href} target="_blank" rel="me noopener noreferrer">
+            <a className="profile-link" href={href} target={href.startsWith('https:') ? '_blank' : undefined} rel="me noopener noreferrer">
               {label} <span aria-hidden="true">↗</span>
             </a>
           </li>
@@ -35,7 +35,7 @@ export function ProfileLinks({
     <ul className={`profile-links profile-links-grid ${className}`}>
       {links.map(({ label, href }) => (
         <li key={label}>
-          <a className="profile-link profile-link-primary" href={href} target="_blank" rel="me noopener noreferrer">
+          <a className="profile-link profile-link-primary" href={href} target={href.startsWith('https:') ? '_blank' : undefined} rel="me noopener noreferrer">
             <span>{label}</span>
             <span aria-hidden="true">↗</span>
           </a>

@@ -156,9 +156,22 @@ test('exports a shared decorative starfield and content-backed navigation on eve
     const footer = html.match(/<footer class="site-footer">([\s\S]*?)<\/footer>/)?.[1] ?? '';
     assert.match(footer, /Kamruzzaman Khan Alve/);
     assert.match(footer, /RUET.*Rajshahi, Bangladesh/);
-    assert.equal((footer.match(/target="_blank"/g) ?? []).length, 5);
+    assert.equal((footer.match(/target="_blank"/g) ?? []).length, 4);
     assert.equal((footer.match(/rel="me noopener noreferrer"/g) ?? []).length, 5);
     assert.doesNotMatch(html, /<link[^>]+href="https:\/\/fonts\.(googleapis|gstatic)\.com/);
+  }
+});
+
+test('uses validated mailto destinations throughout the static export', async () => {
+  for (const relative of [...requiredPages, '404.html', 'research/bangla-sentence-type-classification/index.html', 'research/vocabulary-difficulty-prediction/index.html', 'research/leakage-safe-adhd-eeg-framework/index.html']) {
+    const html = await readFile(path.join(out, relative), 'utf8');
+    const anchors = [...html.matchAll(/<a\b[^>]*href="mailto:[^"]+"[^>]*>/g)].map((match) => match[0]);
+    assert.ok(anchors.length >= 2, `${relative} must expose the shared email links`);
+    for (const anchor of anchors) {
+      assert.match(anchor, /href="mailto:kamruzzamanalve@gmail.com"/);
+      assert.doesNotMatch(anchor, /target="_blank"/);
+    }
+    assert.doesNotMatch(html, /https:\/\/mail.google.com\/mail\//);
   }
 });
 
@@ -184,8 +197,8 @@ test('publishes the verified portfolio content and supplied CV', async () => {
   assert.match(cv, /3.71\/4.00/);
   assert.match(cv, /Code Studio/);
   assert.doesNotMatch(cv, /final-semester/);
-  assert.match(cv, /https:\/\/mail.google.com\/mail\//);
-  assert.doesNotMatch(cv, /href="mailto:/);
+  assert.match(cv, /href="mailto:kamruzzamanalve@gmail.com"/);
+  assert.doesNotMatch(cv, /https:\/\/mail.google.com\/mail\//);
   assert.deepEqual(
     await readFile(path.join(out, 'cv.pdf')),
     await readFile(path.join(root, 'public/cv.pdf')),

@@ -22,7 +22,7 @@ export function SiteHeader() {
         <div className="site-header-actions">
           <Nav items={items} label={site.chrome.navigationLabel} />
           {publicEmail && emailHref ? (
-            <a className="header-contact" href={emailHref} target="_blank" rel="noopener noreferrer">
+            <a className="header-contact" href={emailHref} rel="noopener noreferrer">
               {site.chrome.emailLabel} <span aria-hidden="true">↗</span>
             </a>
           ) : null}

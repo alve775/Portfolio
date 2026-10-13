@@ -53,7 +53,7 @@ export function StationHero({ stations, nodes, stars }: {stations:Station[];node
         {i===0?<h1 className="hero-heading hero-enter">{s.title}</h1>:<h2 className="hero-heading hero-enter">{s.title}</h2>}
         {s.meta && <p className="label venue hero-enter">{s.meta}</p>}
         <p className="hero-lead hero-enter">{s.body}</p>
-        <div className="hero-actions hero-enter">{s.links.map(link=>link.href.startsWith('/')?<Link className={`button ${link.primary?'button-primary':'button-secondary'}`} href={link.href} key={link.href}>{link.label}</Link>:<a className={`button ${link.primary?'button-primary':'button-secondary'}`} href={link.href} key={link.href} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}</div>
+        <div className="hero-actions hero-enter">{s.links.map(link=>link.href.startsWith('/')?<Link className={`button ${link.primary?'button-primary':'button-secondary'}`} href={link.href} key={link.href}>{link.label}</Link>:<a className={`button ${link.primary?'button-primary':'button-secondary'}`} href={link.href} key={link.href} target={link.href.startsWith('https:') ? '_blank' : undefined} rel="noopener noreferrer">{link.label} ↗</a>)}</div>
       </article>)}</div>
       <div className="constellation" aria-hidden="true"><svg viewBox="0 0 480 420" fill="none" aria-hidden="true" focusable="false">
         {edges.map((edge,i)=><line key={`${i}-${edge.on}`} x1={edge.a.x} y1={edge.a.y} x2={edge.b.x} y2={edge.b.y} className={edge.on?'constellation-edge lit':'constellation-edge'} pathLength="1" />)}

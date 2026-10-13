@@ -67,7 +67,7 @@ export const site = {
 
 export const publicEmail = asPublicEmail(site.email);
 export const emailHref = publicEmail
-  ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(publicEmail)}`
+  ? `mailto:${publicEmail}`
   : null;
 
 export const publicProfiles = [
