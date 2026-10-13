@@ -7,6 +7,7 @@ import { PageHeader } from '@/components/PageHeader';
 import { formatIsoDate } from '@/lib/format';
 import { getNote, getNotes } from '@/lib/content';
 import { routeMetadata } from '@/lib/seo';
+import { copy } from '@/lib/site';
 
 type NotePageProps = {
   params: Promise<{ slug: string }>;
@@ -41,10 +42,10 @@ export default async function NotePage({ params }: NotePageProps) {
         size="compact"
       />
       <div className="detail-fields">
-        <Field label="Summary">
+        <Field label={copy.summary}>
           <p>{note.frontmatter.summary}</p>
         </Field>
-        <Field label="Note">
+        <Field label={copy.note}>
           <div className="prose-content">
             <MDXRemote source={note.body} />
           </div>

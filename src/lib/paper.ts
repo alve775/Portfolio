@@ -1,24 +1,17 @@
 import type { Paper } from '@/lib/schemas';
+import { paperCopy } from './site.ts';
 
-export const STATUS_LABEL: Record<Paper['status'], string> = {
-  published: 'published',
-  accepted: 'accepted',
-  'in-progress': 'in progress',
-  thesis: 'undergraduate thesis',
-};
+export const STATUS_LABEL: Record<Paper['status'], string> = paperCopy.status;
 
-export const ROLE_LABEL: Record<Paper['role'], string> = {
-  'lead-author': 'lead author',
-  'co-author': 'co-author',
-};
+export const ROLE_LABEL: Record<Paper['role'], string> = paperCopy.role;
 
 /** A short visual-index label derived only from public title and venue text. */
 export function researchArea(frontmatter: Pick<Paper, 'title' | 'venue'>): string {
   const recordText = `${frontmatter.title} ${frontmatter.venue}`.toLowerCase();
-  if (/fingerprint|biometric|presentation attack|liveness/.test(recordText)) return 'Security';
-  if (/bangla|language|vocabulary|sentence|bert|nlp/.test(recordText)) return 'Language';
-  if (/eeg|adhd/.test(recordText)) return 'EEG';
-  return 'Research';
+  if (/fingerprint|biometric|presentation attack|liveness/.test(recordText)) return paperCopy.area.security;
+  if (/bangla|language|vocabulary|sentence|bert|nlp/.test(recordText)) return paperCopy.area.language;
+  if (/eeg|adhd/.test(recordText)) return paperCopy.area.eeg;
+  return paperCopy.area.research;
 }
 
 /**
@@ -39,8 +32,8 @@ export function recordLine(frontmatter: Paper): string {
 
 /** Gutter label for an entry in a list of work. */
 export function kindLabel(frontmatter: Paper): string {
-  if (frontmatter.status === 'thesis') return 'THESIS';
-  return frontmatter.status === 'in-progress' ? 'IN PROGRESS' : 'PAPER';
+  if (frontmatter.status === 'thesis') return paperCopy.kind.thesis;
+  return frontmatter.status === 'in-progress' ? paperCopy.kind.inProgress : paperCopy.kind.paper;
 }
 
 /**
@@ -57,6 +50,6 @@ export function cardHeadLine(frontmatter: Paper): string {
   if (!parts.some((part) => part.includes(String(frontmatter.year)))) {
     parts.push(String(frontmatter.year));
   }
-  parts.push(frontmatter.status === 'thesis' ? 'author' : ROLE_LABEL[frontmatter.role]);
+  parts.push(frontmatter.status === 'thesis' ? paperCopy.author : ROLE_LABEL[frontmatter.role]);
   return parts.join(' · ');
 }

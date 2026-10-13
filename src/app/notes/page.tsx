@@ -1,14 +1,14 @@
 import Link from 'next/link';
 
-import { PageHeader } from '@/components/PageHeader';
+import { RedesignHeader } from '@/components/RedesignHeader';
 import { formatIsoDate } from '@/lib/format';
 import { getNotes } from '@/lib/content';
 import { routeMetadata } from '@/lib/seo';
-import { site } from '@/lib/site';
+import { copy } from '@/lib/site';
 
 export const metadata = routeMetadata({
-  title: 'Notes',
-  description: `Research and engineering notes by ${site.name}.`,
+  title: copy.notes,
+  description: copy.notesDescription,
   pathname: '/notes/',
 });
 
@@ -17,11 +17,11 @@ export default function NotesPage() {
 
   return (
     <>
-      <PageHeader title="Notes" />
+      <RedesignHeader label={copy.notes} title={copy.notes} />
 
-      <section className="notes-section" data-note-index aria-label="Published notes">
+      <section className="notes-section" data-note-index aria-label={copy.publishedNotes}>
         {notes.length === 0 ? (
-          <p className="empty-state">No notes are published yet.</p>
+          <p className="empty-state">{copy.emptyNotes}</p>
         ) : (
           <ul className="note-index">
             {notes.map(({ slug, frontmatter }) => (

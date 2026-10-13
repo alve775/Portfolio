@@ -7,12 +7,14 @@ import { emailHref, publicEmail, site, usableProfiles } from '@/lib/site';
 export function ProfileLinks({
   variant = 'table',
   className = '',
+  emailAddress = false,
 }: {
   variant?: 'table' | 'inline';
   className?: string;
+  emailAddress?: boolean;
 }) {
   const links: Array<{ label: string; href: string }> = [...usableProfiles];
-  if (publicEmail && emailHref) links.push({ label: site.chrome.emailLabel, href: emailHref });
+  if (publicEmail && emailHref) links.push({ label: emailAddress ? publicEmail : site.chrome.emailLabel, href: emailHref });
   if (links.length === 0) return null;
 
   if (variant === 'inline') {
@@ -33,7 +35,7 @@ export function ProfileLinks({
     <ul className={`profile-links profile-links-grid ${className}`}>
       {links.map(({ label, href }) => (
         <li key={label}>
-          <a className="profile-link profile-link-primary" href={href} rel="me noopener">
+          <a className="profile-link profile-link-primary" href={href} target="_blank" rel="me noopener noreferrer">
             <span>{label}</span>
             <span aria-hidden="true">↗</span>
           </a>

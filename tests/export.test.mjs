@@ -168,7 +168,7 @@ test('publishes the verified portfolio content and supplied CV', async () => {
   const paper = await readFile(path.join(out, 'research/bangla-sentence-type-classification/index.html'), 'utf8');
   const bea = await readFile(path.join(out, 'research/vocabulary-difficulty-prediction/index.html'), 'utf8');
   const thesis = await readFile(path.join(out, 'research/leakage-safe-adhd-eeg-framework/index.html'), 'utf8');
-  assert.equal((projects.match(/class="project-entry"/g) ?? []).length, 5);
+  assert.equal((projects.match(/<article[^>]+data-project-card/g) ?? []).length, 5);
   for (const title of ['Resume Evaluator', 'Web-RAG', 'Bangla Sentence Classifier', 'Grocery Shopping Tracker', 'NoorTime']) {
     assert.ok(projects.includes(title), title);
   }
@@ -201,6 +201,24 @@ test('publishes the verified portfolio content and supplied CV', async () => {
   assert.match(thesis, /undergraduate thesis/);
   assert.match(thesis, /citation_dissertation_institution/);
   assert.doesNotMatch(thesis, /citation_conference_title/);
+});
+
+test('exports filter controls, exact model results, and thesis-specific details', async () => {
+  const projects = await readFile(path.join(out, 'projects/index.html'), 'utf8');
+  const paper = await readFile(path.join(out, 'research/bangla-sentence-type-classification/index.html'), 'utf8');
+  const thesis = await readFile(path.join(out, 'research/leakage-safe-adhd-eeg-framework/index.html'), 'utf8');
+  assert.match(projects, /aria-label="Filter projects"/);
+  assert.match(projects, /aria-pressed="true"/);
+  assert.match(projects, /<details[^>]+class="engineering-notes"/);
+  assert.match(paper, /Copy BibTeX/);
+  assert.match(paper, /role="status"/);
+  assert.match(paper, /97.57%/);
+  assert.match(paper, /5,100-sentence test split/);
+  assert.match(paper, /Previous record/);
+  assert.match(thesis, /Overview/);
+  assert.match(thesis, /Md. Azmain Yakin Srizon/);
+  assert.doesNotMatch(thesis, /class="detail-metric-panel"/);
+  assert.doesNotMatch(thesis, /Read the paper/);
 });
 
 test('exports base routes and resolves every rendered internal link', async () => {

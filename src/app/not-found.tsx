@@ -1,21 +1,4 @@
 import Link from 'next/link';
-
-import { PageHeader } from '@/components/PageHeader';
-import { site } from '@/lib/site';
-
-export default function NotFound() {
-  return (
-    <>
-      <PageHeader
-        eyebrow="Error 404"
-        title="This route is off the map"
-        lede={`The page you tried to reach does not exist. It may have been renamed, or it was never published. Everything public is reachable from the ${site.name} homepage.`}
-      />
-      <p className="page-action">
-        <Link className="primary-link" href="/">
-          Back to the homepage
-        </Link>
-      </p>
-    </>
-  );
-}
+import { Starfield } from '@/components/Starfield';
+import { copy, notFoundCopy } from '@/lib/site';
+export default function NotFound(){return <section className="not-found-redesign"><Starfield intensity="strong" /><div><p className="label venue">{notFoundCopy.label}</p><h1>{notFoundCopy.title}</h1><p className="redesign-page-lead">{notFoundCopy.body}</p><div className="header-links"><Link className="button button-primary" href="/">{notFoundCopy.action}</Link><Link className="button button-secondary" href="/projects/">{copy.projects}</Link><Link className="button button-secondary" href="/research/">{copy.research}</Link></div></div><svg aria-hidden="true" focusable="false" viewBox="0 0 440 340" fill="none"><text className="lost-code" x="20" y="300">404</text>{[[80,80],[70,190],[190,220]].map(([x,y])=><g key={x}><line x1="150" y1="140" x2={x} y2={y} /><circle cx={x} cy={y} r="5" /></g>)}<circle className="lost-ring" cx="150" cy="140" r="20" /><circle cx="150" cy="140" r="7" /><line className="stray-line" x1="150" y1="140" x2="370" y2="70" /><g className="stray-node"><circle cx="370" cy="70" r="14" fill="none" /><circle cx="370" cy="70" r="6" /><text x="352" y="104">{notFoundCopy.stray}</text></g></svg></section>;}
