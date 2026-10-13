@@ -66,58 +66,23 @@ test('preview root contains no unresolved public values and is not indexable', a
   }
 });
 
-test('exports the complete semantic research-flight fallback', async () => {
+test('exports the accessible station hero and real selected-work destinations', async () => {
   const html = await readFile(path.join(out, 'index.html'), 'utf8');
-  const stationIds = ['identity', 'projects', 'ai', 'research', 'contact'];
-  const stationPositions = stationIds.map((id) =>
-    html.indexOf(`id="flight-station-${id}"`),
-  );
-
-  assert.match(html, /data-research-flight/);
-  assert.match(html, /<canvas[^>]+aria-hidden="true"/);
-  assert.deepEqual(
-    stationPositions.every((position) => position >= 0),
-    true,
-    'every research station should be present in exported HTML',
-  );
-  assert.deepEqual(
-    [...stationPositions].sort((a, b) => a - b),
-    stationPositions,
-    'research stations should retain logical document order',
-  );
+  const ids = ['identity', 'projects', 'ai', 'research', 'contact'];
+  const positions = ids.map(id => html.indexOf(`id="station-${id}"`));
+  assert.ok(positions.every(position => position >= 0));
+  assert.deepEqual([...positions].sort((a,b)=>a-b), positions);
+  assert.match(html, /data-station-hero/);
+  assert.match(html, /starfield-strong/);
   assert.equal((html.match(/<h1(?:\s|>)/g) ?? []).length, 1);
-  assert.equal((html.match(/aria-pressed="true"/g) ?? []).length, 1);
-
-  for (const id of stationIds) {
-    assert.match(html, new RegExp(`aria-controls="flight-station-${id}"`));
-  }
-
-  assert.match(html, /data-research-index/);
-  assert.match(html, /Profile/);
-  assert.match(html, /href="#selected-work"/);
+  assert.match(html, /Pause automatic station changes/);
+  assert.match(html, /<noscript>/);
   assert.match(html, /id="selected-work" tabindex="-1"/);
-  for (const [id, href, label] of [
-    ['identity', '/cv/', 'View CV'],
-    ['projects', '/projects/', 'View projects'],
-    ['ai', 'https://huggingface.co/spaces/TextLabRUET/Multilingual-Sentence-Classifier', 'Try the classifier'],
-    ['research', '/research/', 'Read the research'],
-  ]) {
-    const article = html.match(new RegExp(`<article[^>]*id="flight-station-${id}"[^>]*>([\\s\\S]*?)<\\/article>`))?.[1];
-    assert.ok(article?.includes(`href="${href}"`), `${id} must link to its destination`);
-    assert.ok(article?.includes(label), `${id} must name its action`);
-  }
-
-  const identity = html.match(/<article[^>]*id="flight-station-identity"[^>]*>([\s\S]*?)<\/article>/)?.[1] ?? '';
-  for (const href of [
-    'https://scholar.google.com/citations?user=Zr2KjyMAAAAJ&amp;hl=en',
-    'https://github.com/alve775',
-    'https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=kamruzzamanalve%40gmail.com',
-  ]) {
-    assert.ok(identity.includes(`href="${href}"`), `identity station must link to ${href}`);
-  }
-  const research = html.match(/<article[^>]*id="flight-station-research"[^>]*>([\s\S]*?)<\/article>/)?.[1] ?? '';
-  assert.ok(!research.includes('github.com'), 'profile links belong only to the identity station');
-  assert.match(html, /data-flight-fade/);
+  for (const id of ids) assert.ok(html.includes(`aria-controls="station-${id}"`));
+  for (const href of ['/cv/', '/projects/', '/research/', '#selected-work']) assert.ok(html.includes(`href="${href}"`));
+  assert.match(html, /Try the classifier/);
+  assert.match(html, /97.61%/);
+  assert.match(html, /5,100-sentence test split/);
 });
 
 test('presents a hybrid professional journey with projects before research', async () => {
@@ -127,9 +92,9 @@ test('presents a hybrid professional journey with projects before research', asy
   const projectsNavPosition = html.indexOf('href="/projects/"');
   const researchNavPosition = html.indexOf('href="/research/"');
 
-  assert.match(html, /Go to Projects station/);
-  assert.match(html, /Go to AI\/ML station/);
-  assert.match(html, /Go to Research station/);
+  assert.match(html, /aria-controls="station-projects"/);
+  assert.match(html, /aria-controls="station-ai"/);
+  assert.match(html, /aria-controls="station-research"/);
   assert.deepEqual(projectsPosition >= 0, true, 'the landing page should include projects');
   assert.deepEqual(researchPosition >= 0, true, 'the landing page should include research');
   assert.deepEqual(
@@ -330,7 +295,7 @@ test('exports complete fixture paper and note details', { timeout: 60_000 }, asy
     assert.match(researchHtml, /href="\/research\/fixture-study\/"/);
     assert.match(notesHtml, /href="\/notes\/fixture-note\/"/);
     assert.match(rootHtml, /data-design="constellation"/);
-    assert.match(rootHtml, /data-research-flight/);
+    assert.match(rootHtml, /data-station-hero/);
     assert.match(rootHtml, /data-research-index/);
     assert.match(researchHtml, /data-research-index/);
     assert.match(researchHtml, /data-research-entry/);

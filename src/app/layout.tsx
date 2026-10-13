@@ -9,6 +9,7 @@ import { getLaunchReadiness } from '@/lib/readiness';
 import { site } from '@/lib/site';
 
 import './globals.css';
+import './redesign.css';
 
 export function generateMetadata(): Metadata {
   const { isReady, origin } = getLaunchReadiness();

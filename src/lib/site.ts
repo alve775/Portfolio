@@ -84,3 +84,34 @@ export const usableProfiles = publicProfiles.flatMap(([label, raw]) => {
 });
 
 export type Site = typeof site;
+
+/** Interface copy for the approved redesign, shared by server and client views. */
+export const copy = {
+  selectedProjects: 'Selected projects', selectedResearch: 'Selected research', profile: 'Profile',
+  projects: 'Projects', research: 'Research', cv: 'Curriculum vitae', notes: 'Notes',
+  emptyProjects: 'No verified projects are published yet.', emptyResearch: 'No verified research entries are published yet.', emptyNotes: 'No notes are published yet.',
+  record: 'record', records: 'records', allSource: 'All open source',
+  problem: 'Problem', approach: 'Approach', result: 'Result', repository: 'Repository', openLive: 'Open live',
+  statuses: { live: 'Live', complete: 'Complete', archived: 'Archived', wip: 'In development' },
+  engineeringNotes: 'Engineering notes', hideNotes: 'Hide engineering notes', contribution: 'My contribution', decision: 'Key decision', limitation: 'Limitation',
+  shows: 'What this shows', abstract: 'Abstract', overview: 'Overview', cite: 'Cite', bibtex: 'BibTeX',
+  copyBibtex: 'Copy BibTeX', copied: 'Copied', copyError: 'Copy failed. Select and copy the citation below.',
+  links: 'Links', paper: 'Read the paper', code: 'Code', allResearch: 'All research', allProjects: 'All projects', next: 'Next record', previous: 'Previous record',
+  published: 'Published', accepted: 'Accepted', publishedAccepted: 'Published and accepted', thesis: 'Undergraduate thesis', inProgress: 'In progress',
+  modelResults: 'Test accuracy by model', monolingual: 'Monolingual', multilingual: 'Multilingual',
+  modelCaveat: 'Same test split and hyperparameters for all six models. The top four lie within 0.08 percentage points of each other.',
+  filters: [{ id:'all', label:'All' }, { id:'live', label:'Live' }, { id:'ai', label:'AI & NLP' }, { id:'web', label:'Web' }, { id:'mobile', label:'Mobile' }],
+  of: 'of', summary: 'Summary', note: 'Note', publishedNotes: 'Published notes',
+} as const;
+
+export const homeCopy = {
+  classifierNode: 'Bangla classifier', thesisNode: 'EEG thesis',
+  constellation: 'Work constellation', skipWork: 'Skip to selected work', choose: 'Scroll, or choose a station.',
+  pause: 'Pause automatic station changes', play: 'Resume automatic station changes', station: 'Station',
+  viewCv: 'View CV', viewProjects: 'View projects', tryClassifier: 'Try the classifier', readResearch: 'Read the research',
+  stationLabels: ['Identity', 'Projects', 'AI/ML', 'Research', 'Contact'],
+  projectTitle: 'Built to be used', projectBody: 'Web apps, mobile apps and local AI tools, with the source public for every one.',
+  aiTitle: 'From benchmark to browser', aiBody: 'Six Transformer models compared on 25,500 Bangla sentences. The best-suited XLM-R classifier is online for anyone to try.',
+  researchTitle: 'Evaluation comes first', researchBody: 'Two peer-reviewed NLP papers, at IEEE QPAIN and the BEA workshop at ACL. My thesis develops a leakage-safe ADHD EEG framework using subject-level validation, so no participant appears in both training and testing.',
+  contactTitle: "Let's talk", contactBody: 'Research, engineering or collaboration: my inbox is open.',
+} as const;
