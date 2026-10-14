@@ -14,7 +14,11 @@ export function ProfileLinks({
   emailAddress?: boolean;
 }) {
   const links: Array<{ label: string; href: string }> = [...usableProfiles];
-  if (publicEmail && emailHref) links.push({ label: emailAddress ? publicEmail : site.chrome.emailLabel, href: emailHref });
+  if (publicEmail && emailHref)
+    links.push({
+      label: emailAddress ? publicEmail : site.chrome.emailLabel,
+      href: emailHref,
+    });
   if (links.length === 0) return null;
 
   if (variant === 'inline') {
@@ -22,7 +26,12 @@ export function ProfileLinks({
       <ul className={`profile-links profile-links-inline ${className}`}>
         {links.map(({ label, href }) => (
           <li key={label}>
-            <a className="profile-link" href={href} target={href.startsWith('https:') ? '_blank' : undefined} rel="me noopener noreferrer">
+            <a
+              className="profile-link"
+              href={href}
+              target={href.startsWith('https:') ? '_blank' : undefined}
+              rel="me noopener noreferrer"
+            >
               {label}
             </a>
           </li>
@@ -35,9 +44,16 @@ export function ProfileLinks({
     <ul className={`profile-links profile-links-grid ${className}`}>
       {links.map(({ label, href }) => (
         <li key={label}>
-          <a className="profile-link profile-link-primary" href={href} target={href.startsWith('https:') ? '_blank' : undefined} rel="me noopener noreferrer">
+          <a
+            className="profile-link profile-link-primary"
+            href={href}
+            target={href.startsWith('https:') ? '_blank' : undefined}
+            rel="me noopener noreferrer"
+          >
             <span>{label}</span>
-            {href.startsWith('https:') ? <span aria-hidden="true">↗</span> : null}
+            {href.startsWith('https:') ? (
+              <span aria-hidden="true">↗</span>
+            ) : null}
           </a>
         </li>
       ))}

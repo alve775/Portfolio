@@ -1243,10 +1243,12 @@ body:has([data-research-detail]) .main-content {
 .cv-title {
   font-size: 13px;
   letter-spacing: 0.06em;
+  text-transform: none;
 }
 .cv-header > .button {
   padding: 14px 22px;
   border-radius: 24px;
+  box-shadow: 0 0 24px rgb(169 217 198 / 35%);
 }
 .cv-top-cards {
   display: flex;
@@ -1254,6 +1256,7 @@ body:has([data-research-detail]) .main-content {
   gap: 16px;
 }
 .cv-top-cards > section {
+  box-sizing: content-box;
   flex: 1 1 240px;
   min-width: 0;
   border: 1px solid var(--border);
@@ -1265,6 +1268,12 @@ body:has([data-research-detail]) .main-content {
 }
 .cv-top-cards > section:first-child {
   flex: 2 1 440px;
+}
+.cv-top-cards > section:nth-child(2) {
+  flex-basis: 260px;
+}
+.cv-top-cards > section:nth-child(2) > p {
+  line-height: 1.5;
 }
 .cv-top-cards p {
   font-size: 15px;
@@ -1281,6 +1290,7 @@ body:has([data-research-detail]) .main-content {
 }
 .cv-location {
   margin-top: auto;
+  letter-spacing: 0.1em;
 }
 .cv-cgpa {
   margin-top: auto;
@@ -1297,6 +1307,7 @@ body:has([data-research-detail]) .main-content {
 .cv-cgpa span {
   font-size: 13px;
   color: var(--text-3);
+  line-height: normal;
 }
 .cv-links .profile-links-grid {
   display: flex;
@@ -1317,11 +1328,23 @@ body:has([data-research-detail]) .main-content {
 .cv-links .profile-link span:last-child {
   color: var(--accent);
 }
-.cv-redesign > section h2,
-.cv-redesign > .reveal > section h2 {
+.cv-sections {
+  display: grid;
+  gap: 56px;
+}
+.cv-section {
+  display: grid;
+  gap: 16px;
+}
+.cv-section h2 {
   font-size: 26px;
   font-weight: 500;
-  margin-bottom: 16px;
+  line-height: normal;
+}
+.cv-section .detail-section-heading {
+  margin-bottom: 0;
+  align-items: baseline;
+  gap: 8px;
 }
 .cv-skill-rows {
   margin: 0;
@@ -1353,6 +1376,7 @@ body:has([data-research-detail]) .main-content {
   font-size: 13px;
   color: var(--text-2);
   background: var(--surface);
+  line-height: normal;
 }
 .cv-timeline {
   position: relative;
@@ -1386,9 +1410,12 @@ body:has([data-research-detail]) .main-content {
 .cv-timeline h3 {
   font-size: 18px;
   font-weight: 600;
+  line-height: normal;
 }
 .cv-timeline .card-topline {
   justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
 }
 .cv-timeline p {
   font-size: 15px;
@@ -1398,6 +1425,7 @@ body:has([data-research-detail]) .main-content {
 .cv-timeline .cv-org {
   font-size: 14px;
   color: var(--text-3);
+  line-height: normal;
 }
 .cv-publication-rows {
   border-top: 1px solid var(--border-subtle);
@@ -1410,6 +1438,7 @@ body:has([data-research-detail]) .main-content {
   border-bottom: 1px solid var(--border-subtle);
 }
 .cv-publication-rows a {
+  display: block;
   text-decoration: none;
   font-size: 16px;
   line-height: 1.4;
@@ -1421,6 +1450,7 @@ body:has([data-research-detail]) .main-content {
   font-size: 13px;
   color: var(--text-3);
   margin-top: 6px;
+  line-height: normal;
 }
 .cv-project-cards {
   display: grid;
@@ -1437,6 +1467,7 @@ body:has([data-research-detail]) .main-content {
 .cv-project-cards h3 {
   font-size: 16px;
   font-weight: 600;
+  line-height: normal;
 }
 .cv-project-cards p {
   font-size: 14px;
@@ -1574,16 +1605,6 @@ body:has(.not-found-redesign) > .starfield-soft .starfield-star {
   .engineering-notes {
     grid-template-columns: minmax(0, 1fr);
   }
-  .cv-redesign {
-    gap: 36px;
-  }
-  .cv-header h1 {
-    font-size: clamp(32px, 8.5vw, 43px);
-    overflow-wrap: normal;
-  }
-  .cv-top-cards > section {
-    padding: 18px;
-  }
   .cv-skill-rows dt {
     flex-basis: 100%;
   }
@@ -1592,15 +1613,6 @@ body:has(.not-found-redesign) > .starfield-soft .starfield-star {
   }
   .not-found-redesign {
     gap: 32px;
-  }
-  .cv-timeline {
-    padding-left: 24px;
-  }
-  .cv-timeline .timeline-node {
-    left: -25px;
-  }
-  .cv-timeline article {
-    padding: 18px;
   }
 }
 

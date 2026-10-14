@@ -44,7 +44,7 @@
   --text-page--line-height: 1.02;
   --text-page--letter-spacing: -0.025em;
   --text-page--font-weight: 500;
-  --text-cv: clamp(2.4375rem, 4.7vw, 3.75rem);
+  --text-cv: clamp(2.125rem, 9vw, 3.75rem);
   --text-cv--line-height: 1.02;
   --text-cv--letter-spacing: -0.025em;
   --text-cv--font-weight: 500;

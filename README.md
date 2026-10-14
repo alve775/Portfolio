@@ -89,7 +89,7 @@ NEXT_PUBLIC_SITE_URL="$YOUR_FINAL_HTTPS_ORIGIN" npm run build
 The configured value must be an absolute HTTPS URL with a public hostname. A missing value creates a safe preview. An invalid configured value fails the build.
 
 Place the owner-supplied PDF at `public/cv.pdf`. The HTML CV always exists; its download action appears only when that file exists.
-The HTML CV reads publications and its selected projects from the MDX records, so their titles and project descriptions have one website source. The selected project slugs in `src/app/cv/page.tsx` preserve the CV's ordering. Education, experience, and skills in that page and the owner-supplied PDF are maintained separately. When those facts change, review both the HTML CV and `public/cv.pdf` in the same update; the PDF is not generated from the website.
+The HTML CV reads publications and its selected projects from the MDX records, so their titles and project descriptions have one website source. `cvContent.projectSlugs` in `src/lib/site.ts` preserves the CV's ordering. Education, experience, and skills also live in `cvContent` and are maintained separately from the owner-supplied PDF. When those facts change, review both the HTML CV and `public/cv.pdf` in the same update; the PDF is not generated from the website.
 
 The site becomes indexable only when all five launch conditions pass:
 
