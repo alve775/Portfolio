@@ -240,6 +240,11 @@ body:has(.station-hero:not([data-in-view='false']))
   height: auto;
   overflow: visible;
 }
+@media (min-width: 900px) {
+  .station-hero :is(.constellation, .hero-controls) {
+    translate: 0 var(--hero-visual-offset, 0px);
+  }
+}
 .constellation-edge {
   stroke: var(--edge-dim);
   stroke-width: 1;
