@@ -6,13 +6,23 @@ import { copy } from '@/lib/site';
 import { Metric } from './Metric';
 
 /** `compact` is the home-page version: the takeaway without its label, as in the design. */
-export function ResearchCard({ paper, compact = false }: { paper: Entry<Paper>; compact?: boolean }) {
+export function ResearchCard({
+  paper,
+  compact = false,
+}: {
+  paper: Entry<Paper>;
+  compact?: boolean;
+}) {
   const p = paper.frontmatter;
   return (
     <article className="research-card" data-research-entry>
       <div className="research-card-copy">
         <div className="card-topline">
-          <span className={`field-tag${p.status === 'thesis' ? ' field-tag-warm' : ''}`}>{researchArea(p)}</span>
+          <span
+            className={`field-tag${p.status === 'thesis' ? ' field-tag-warm' : ''}`}
+          >
+            {researchArea(p)}
+          </span>
           <span className="label venue">{cardHeadLine(p)}</span>
           <span className="label">{STATUS_LABEL[p.status]}</span>
         </div>
