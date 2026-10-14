@@ -1,4 +1,61 @@
 import Link from 'next/link';
+
 import { Starfield } from '@/components/Starfield';
 import { copy, notFoundCopy } from '@/lib/site';
-export default function NotFound(){return <section className="not-found-redesign"><Starfield intensity="strong" /><div><p className="label venue">{notFoundCopy.label}</p><h1>{notFoundCopy.title}</h1><p className="redesign-page-lead">{notFoundCopy.body}</p><div className="header-links"><Link className="button button-primary" href="/">{notFoundCopy.action}</Link><Link className="button button-secondary" href="/projects/">{copy.projects}</Link><Link className="button button-secondary" href="/research/">{copy.research}</Link></div></div><svg aria-hidden="true" focusable="false" viewBox="0 0 440 340" fill="none"><text className="lost-code" x="20" y="300">404</text>{[[80,80],[70,190],[190,220]].map(([x,y])=><g key={x}><line x1="150" y1="140" x2={x} y2={y} /><circle cx={x} cy={y} r="5" /></g>)}<circle className="lost-ring" cx="150" cy="140" r="20" /><circle cx="150" cy="140" r="7" /><line className="stray-line" x1="150" y1="140" x2="370" y2="70" /><g className="stray-node"><circle cx="370" cy="70" r="14" fill="none" /><circle cx="370" cy="70" r="6" /><text x="352" y="104">{notFoundCopy.stray}</text></g></svg></section>;}
+
+export default function NotFound() {
+  return (
+    <section className="not-found-redesign">
+      <Starfield intensity="strong" />
+      <div className="lost-copy">
+        <p className="label venue">{notFoundCopy.label}</p>
+        <h1>{notFoundCopy.title}</h1>
+        <p className="redesign-page-lead">{notFoundCopy.body}</p>
+        <div className="header-links">
+          <Link className="button button-primary" href="/">
+            {notFoundCopy.action}
+          </Link>
+          <Link className="button button-secondary" href="/projects/">
+            {copy.projects}
+          </Link>
+          <Link className="button button-secondary" href="/research/">
+            {copy.research}
+          </Link>
+        </div>
+      </div>
+      <div className="lost-illustration">
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          viewBox="0 0 440 340"
+          fill="none"
+        >
+          <text className="lost-code" x="20" y="300">
+            404
+          </text>
+          {[
+            [80, 80],
+            [70, 190],
+            [190, 220],
+          ].map(([x, y]) => (
+            <g key={x}>
+              <line x1="150" y1="140" x2={x} y2={y} />
+              <circle cx={x} cy={y} r="5" />
+            </g>
+          ))}
+          <line className="lost-connection" x1="80" y1="80" x2="70" y2="190" />
+          <circle className="lost-ring" cx="150" cy="140" r="20" />
+          <circle className="lost-core" cx="150" cy="140" r="7" />
+          <line className="stray-line" x1="150" y1="140" x2="370" y2="70" />
+          <g className="stray-node">
+            <circle cx="370" cy="70" r="14" fill="none" />
+            <circle cx="370" cy="70" r="6" />
+            <text x="352" y="104">
+              {notFoundCopy.stray}
+            </text>
+          </g>
+        </svg>
+      </div>
+    </section>
+  );
+}

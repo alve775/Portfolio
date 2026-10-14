@@ -843,7 +843,22 @@ h2.hero-heading {
   transform-origin: 50% 0;
 }
 .main-content {
-  padding-block: 64px 56px;
+  padding-block: 64px 48px;
+}
+.site-footer {
+  padding-bottom: 56px;
+}
+body:has(.station-hero) .main-content {
+  padding-bottom: 112px;
+}
+body:has(.station-hero) .site-footer {
+  padding-bottom: 48px;
+}
+body:has(.research-page) .main-content {
+  padding-bottom: 56px;
+}
+body:has([data-research-detail]) .main-content {
+  padding-bottom: 44px;
 }
 .inner-page {
   display: grid;
@@ -1539,9 +1554,10 @@ body:has([data-research-detail]) .main-content {
   flex-wrap: wrap;
   gap: 48px;
   align-items: center;
-  min-height: 65dvh;
+  flex: 1;
+  width: 100%;
 }
-.not-found-redesign > div:not(.starfield) {
+.lost-copy {
   flex: 1 1 460px;
   min-width: 0;
   display: grid;
@@ -1552,11 +1568,28 @@ body:has([data-research-detail]) .main-content {
   font-weight: 500;
   line-height: 1.02;
   letter-spacing: -0.025em;
+  max-width: 10ch;
+  text-wrap: wrap;
 }
-.not-found-redesign svg {
+.not-found-redesign .redesign-page-lead {
+  font-size: 19px;
+  line-height: 1.55;
+  max-width: 500px;
+  text-wrap: wrap;
+}
+.not-found-redesign .button-primary {
+  box-shadow: 0 0 24px rgb(169 217 198 / 35%);
+}
+.lost-illustration {
   flex: 1 1 420px;
   min-width: 0;
-  max-width: 440px;
+  display: flex;
+  justify-content: center;
+}
+.not-found-redesign svg {
+  width: 440px;
+  min-width: 0;
+  max-width: 100%;
   display: block;
   height: auto;
 }
@@ -1566,6 +1599,12 @@ body:has([data-research-detail]) .main-content {
 }
 .not-found-redesign svg circle {
   fill: var(--accent);
+}
+.not-found-redesign svg .lost-core {
+  fill: var(--text);
+}
+.not-found-redesign svg .lost-connection {
+  stroke-opacity: 0.35;
 }
 .not-found-redesign .lost-code {
   font: 150px var(--font-mono);
@@ -1605,6 +1644,19 @@ body:has([data-research-detail]) .main-content {
 body:has(.not-found-redesign) > .starfield-soft .starfield-star {
   animation: none;
 }
+.site-body:has(.not-found-redesign) {
+  min-height: max(100dvh, 960px);
+}
+.site-body:has(.not-found-redesign) :is(.main-content, .site-footer-inner) {
+  max-width: calc(var(--container-site) - 2 * var(--spacing-gutter));
+}
+.main-content:has(.not-found-redesign) {
+  display: flex;
+  padding-block: 56px;
+}
+body:has(.not-found-redesign) .site-footer {
+  padding-bottom: 40px;
+}
 @keyframes stray {
   0%,
   100% {
@@ -1642,9 +1694,6 @@ body:has(.not-found-redesign) > .starfield-soft .starfield-star {
   }
   .cv-skill-rows dd {
     flex-basis: 100%;
-  }
-  .not-found-redesign {
-    gap: 32px;
   }
 }
 
