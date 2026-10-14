@@ -395,7 +395,6 @@ body:has(.station-hero) .site-header {
   display: grid;
   gap: 28px;
   position: relative;
-  padding-left: 36px;
 }
 .reading-timeline {
   --reading-axis: 6.5px;
