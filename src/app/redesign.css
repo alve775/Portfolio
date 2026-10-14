@@ -240,11 +240,6 @@ body:has(.station-hero:not([data-in-view='false']))
   height: auto;
   overflow: visible;
 }
-@media (min-width: 900px) {
-  .station-hero :is(.constellation, .hero-controls) {
-    translate: 0 var(--hero-visual-offset, 0px);
-  }
-}
 .constellation-edge {
   stroke: var(--edge-dim);
   stroke-width: 1;
@@ -908,13 +903,31 @@ h2.hero-heading {
     display: none;
   }
 }
-/* Pinned stage: top-aligned like the design, scaled down from the top when the window is too short. */
+/* Phones keep the copy at the top; wider screens center the copy and figure together. */
 .station-hero[data-scroll-driven='true'] .hero-stage {
   justify-content: flex-start;
 }
 .station-hero[data-scroll-driven='true'] .hero-content {
+  flex-shrink: 0;
   transform: scale(var(--hero-scale, 1));
   transform-origin: 50% 0;
+}
+@media (min-width: 720px) {
+  .hero-grid {
+    align-items: center;
+  }
+  .hero-stations {
+    align-self: start;
+  }
+  .hero-panel {
+    justify-content: center;
+  }
+  .station-hero[data-scroll-driven='true'] .hero-stage {
+    justify-content: center;
+  }
+  .station-hero[data-scroll-driven='true'] .hero-content {
+    transform-origin: 50% 50%;
+  }
 }
 .main-content {
   padding-block: 64px 48px;
