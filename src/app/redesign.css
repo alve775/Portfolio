@@ -929,6 +929,11 @@ h2.hero-heading {
     transform-origin: 50% 50%;
   }
 }
+@media (min-width: 900px) {
+  .station-hero[data-scroll-driven='true'] .hero-stations {
+    translate: 0 var(--hero-stations-offset, 0px);
+  }
+}
 .main-content {
   padding-block: 64px 48px;
 }

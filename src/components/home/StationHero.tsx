@@ -96,6 +96,33 @@ export function StationHero({
         window.innerHeight - headerHeight - content.offsetHeight * scale,
       );
       section.style.setProperty('--hero-free-space', `${freeSpace}px`);
+      const label = content.querySelector<HTMLElement>(
+        '.hero-panel[data-active="true"] > .hero-station-label',
+      );
+      const menu = stationsRef.current;
+      const buttonLabel = menu?.querySelector<HTMLElement>('button > span');
+      if (label && menu && buttonLabel) {
+        const contentTransform = getComputedStyle(content).transform;
+        const renderedScale =
+          contentTransform === 'none'
+            ? 1
+            : new DOMMatrixReadOnly(contentTransform).a;
+        const menuTranslate = getComputedStyle(menu).translate;
+        const currentOffset =
+          menuTranslate === 'none'
+            ? 0
+            : parseFloat(menuTranslate.split(' ').at(-1) ?? '0');
+        const labelBounds = label.getBoundingClientRect();
+        const buttonBounds = buttonLabel.getBoundingClientRect();
+        const offset =
+          currentOffset +
+          (labelBounds.top +
+            labelBounds.height / 2 -
+            buttonBounds.top -
+            buttonBounds.height / 2) /
+            renderedScale;
+        section.style.setProperty('--hero-stations-offset', `${offset}px`);
+      }
       setReducedMotion(motionQuery.matches);
       setScrollDriven(scale >= MIN_SCALE);
     };
@@ -112,7 +139,7 @@ export function StationHero({
       motionQuery.removeEventListener('change', update);
       window.removeEventListener('resize', update);
     };
-  }, []);
+  }, [active, scrollDriven]);
 
   // Map scroll position to the active station while pinned.
   useEffect(() => {
@@ -263,9 +290,11 @@ export function StationHero({
                     className="hero-panel"
                     data-active={isActive ? 'true' : 'false'}
                   >
-                    <p className="label hero-enter">
-                      {homeCopy.station} {counter(index + 1)} / {station.label}
-                    </p>
+                    <div className="hero-station-label">
+                      <p className="label hero-enter">
+                        {homeCopy.station} {counter(index + 1)} / {station.label}
+                      </p>
+                    </div>
                     {index === 0 ? (
                       <h1 className="hero-heading hero-enter">
                         {station.title}
