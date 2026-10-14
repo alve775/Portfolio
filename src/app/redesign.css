@@ -70,18 +70,9 @@ body:has(.station-hero:not([data-in-view='false']))
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 12px;
   padding-top: 24px;
-}
-.hero-topline a {
-  position: absolute;
-  right: 0;
-  top: 9px;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
 }
 .hero-grid {
   display: grid;
@@ -192,14 +183,12 @@ body:has(.station-hero:not([data-in-view='false']))
 }
 .hero-controls {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-end;
-  gap: 14px;
+  justify-content: center;
 }
 .counter-line {
-  width: 120px;
-  height: 1px;
+  width: min(240px, 60vw);
+  height: 2px;
   background: var(--border);
   overflow: hidden;
 }
@@ -214,20 +203,6 @@ body:has(.station-hero:not([data-in-view='false']))
 }
 .station-hero[data-scroll-driven='true'] .counter-line i {
   transition: none;
-}
-.hero-scan {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 120px;
-  pointer-events: none;
-  background: linear-gradient(
-    transparent,
-    rgb(169 217 198 / 3.5%),
-    transparent
-  );
-  animation: var(--animate-scan);
 }
 .constellation {
   width: 100%;
@@ -316,7 +291,7 @@ body:has(.station-hero) .site-header {
   top: 0;
   backdrop-filter: blur(12px);
 }
-/* Strong stars and the scan band span the full viewport width and fade out at the top and bottom, so the hero reads as part of the page, not a box. */
+/* Strong stars span the full viewport width and fade at the top and bottom. */
 .site-body {
   overflow-x: clip;
 }
@@ -793,12 +768,6 @@ body:has(.station-hero) .site-header {
     padding-top: 24px;
     gap: 28px;
   }
-  .hero-controls {
-    justify-content: flex-start;
-  }
-  .hero-controls > span:last-child {
-    flex-basis: 100%;
-  }
 }
 @media (prefers-reduced-motion: reduce) {
   .reveal,
@@ -806,7 +775,6 @@ body:has(.station-hero) .site-header {
     opacity: 1;
     transform: none;
   }
-  .hero-scan,
   .core-pulse {
     display: none;
   }
@@ -882,9 +850,6 @@ h2.hero-heading {
     max-width: 326px;
   }
   .constellation text {
-    display: none;
-  }
-  .hero-controls > span:last-child {
     display: none;
   }
   h1.hero-heading {

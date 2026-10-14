@@ -16,7 +16,6 @@ export function SiteHeader() {
     <header className="site-header">
       <div className="site-shell site-header-inner">
         <Link href="/" className="site-brand">
-          <span className="brand-signal" aria-hidden="true" />
           <span>{site.name}</span>
         </Link>
         <div className="site-header-actions">

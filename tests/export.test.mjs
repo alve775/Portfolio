@@ -76,7 +76,7 @@ test('exports the accessible station hero and real selected-work destinations', 
   assert.match(html, /starfield-strong/);
   assert.equal((html.match(/<h1(?:\s|>)/g) ?? []).length, 1);
   // Scroll chooses the station (no timer), so there is no automatic change to pause.
-  assert.match(html, /Scroll, or choose a station\./);
+  assert.doesNotMatch(html, /Scroll, or choose a station\./);
   assert.doesNotMatch(html, /automatic station changes/);
   assert.match(html, /data-scroll-driven="false"/, 'the exported hero must start unpinned for no-JS visitors');
   assert.match(html, /<noscript>/);

@@ -88,7 +88,6 @@
   --animate-blip: blip 1.6s ease-in-out infinite;
   --animate-twinkle: twinkle 4s ease-in-out infinite;
   --animate-twinkle-soft: twinkleSoft 4.5s ease-in-out infinite;
-  --animate-scan: scan 9s linear infinite;
   --animate-open: open 350ms ease-out both;
   --animate-pop: pop 250ms ease-out both;
 }
@@ -251,15 +250,6 @@
   }
   50% {
     opacity: 0.5;
-  }
-}
-
-@keyframes scan {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(900%);
   }
 }
 
@@ -451,26 +441,6 @@
     font-weight: 600;
     text-decoration: none;
     white-space: nowrap;
-  }
-
-  .brand-signal {
-    position: relative;
-    flex-shrink: 0;
-    width: 0.625rem;
-    height: 0.625rem;
-    border-radius: 50%;
-    background: var(--signal);
-  }
-
-  .brand-signal::before {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    box-shadow:
-      0 0 0 6px rgb(169 217 198 / 12%),
-      0 0 18px var(--accent);
-    content: '';
-    animation: var(--animate-glow);
   }
 
   .site-header-actions,

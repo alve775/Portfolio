@@ -200,8 +200,6 @@ export function StationHero({
     const to = nodes.find((node) => node.id === toId);
     if (from && to) edges.push({ a: from, b: to, on: lit(from) && lit(to) });
   }
-  const counter = (value: number) => String(value).padStart(2, '0');
-
   return (
     <section
       ref={sectionRef}
@@ -213,13 +211,13 @@ export function StationHero({
       <div className="hero-stage">
         <div className="hero-backdrop" aria-hidden="true">
           {stars}
-          <div className="hero-scan" />
         </div>
 
         <div ref={contentRef} className="hero-content">
-          <div className="hero-topline label">
-            <span>{homeCopy.constellation}</span>
-            <a href="#selected-work">{homeCopy.skipWork} ↓</a>
+          <div className="hero-topline">
+            <a className="button button-secondary" href="#selected-work">
+              {homeCopy.skipWork} <span aria-hidden="true">↓</span>
+            </a>
           </div>
 
           <div className="hero-grid">
@@ -233,15 +231,12 @@ export function StationHero({
                 <button
                   key={station.id}
                   type="button"
-                  aria-label={`${counter(index + 1)} ${station.label}`}
+                  aria-label={station.label}
                   aria-current={active === index ? 'true' : undefined}
                   aria-controls={`station-${station.id}`}
                   onClick={() => goTo(index)}
                 >
-                  <span>
-                    {counter(index + 1)}{' '}
-                    <span className="station-name">{station.label}</span>
-                  </span>
+                  <span className="station-name">{station.label}</span>
                   {active === index ? (
                     <span aria-hidden="true" className="station-progress" />
                   ) : null}
@@ -263,9 +258,6 @@ export function StationHero({
                     className="hero-panel"
                     data-active={isActive ? 'true' : 'false'}
                   >
-                    <p className="label hero-enter">
-                      {homeCopy.station} {counter(index + 1)} / {station.label}
-                    </p>
                     {index === 0 ? (
                       <h1 className="hero-heading hero-enter">
                         {station.title}
@@ -412,10 +404,7 @@ export function StationHero({
             </div>
           </div>
 
-          <div className="hero-controls label" aria-hidden="true">
-            <span>
-              {counter(active + 1)} / {counter(stations.length)}
-            </span>
+          <div className="hero-controls" aria-hidden="true">
             <span className="counter-line">
               <i
                 style={
@@ -425,7 +414,6 @@ export function StationHero({
                 }
               />
             </span>
-            <span>{homeCopy.choose}</span>
           </div>
         </div>
       </div>
