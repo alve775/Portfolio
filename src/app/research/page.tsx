@@ -1,6 +1,7 @@
 import { RedesignHeader } from '@/components/RedesignHeader';
 import { ResearchCard } from '@/components/ResearchCard';
 import { Reveal } from '@/components/Reveal';
+import { ReadingStation, ReadingTimeline } from '@/components/ReadingTimeline';
 import { getPapers } from '@/lib/content';
 import { routeMetadata } from '@/lib/seo';
 import { copy, homeCopy, usableProfiles } from '@/lib/site';
@@ -84,13 +85,15 @@ export default function ResearchPage() {
                     {records.length === 1 ? copy.record : copy.records}
                   </span>
                 </div>
-                <div className="research-card-list">
+                <ReadingTimeline className="research-card-list">
                   {records.map((p) => (
-                    <Reveal key={p.slug}>
-                      <ResearchCard paper={p} />
-                    </Reveal>
+                    <ReadingStation key={p.slug}>
+                      <Reveal>
+                        <ResearchCard paper={p} />
+                      </Reveal>
+                    </ReadingStation>
                   ))}
-                </div>
+                </ReadingTimeline>
               </section>
             ),
         )

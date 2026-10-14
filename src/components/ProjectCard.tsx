@@ -22,7 +22,6 @@ export function ProjectCard({
   const Heading = notes ? 'h2' : 'h3';
   const card = (
     <article className="project-card" data-project-card>
-      <span className="timeline-node" aria-hidden="true" />
       <div className={`project-card-grid${p.image ? '' : ' no-media'}`}>
         {p.image && (
           <figure className="project-media">

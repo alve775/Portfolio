@@ -4,6 +4,8 @@ Reviewed against all 20 PNGs in `screenshots/` and the seven embedded designs in
 
 ## Captures
 
+Owner follow-up: project and paper lists now use a scroll-driven reading rail. Dots share the rail's exact axis, the line fills toward the reading position, and each station glows when reached. Earlier stations stay lit; scrolling upward reverses the progress. This explicitly replaces the original screenshots' static timeline dots. Reduced motion and no-JavaScript visits retain a static rail and readable records.
+
 Run the production export and local preview:
 
 ```sh

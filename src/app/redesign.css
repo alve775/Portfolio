@@ -397,14 +397,83 @@ body:has(.station-hero) .site-header {
   position: relative;
   padding-left: 36px;
 }
-.project-timeline::before {
-  content: '';
+.reading-timeline {
+  --reading-axis: 6.5px;
+  --reading-gutter: 36px;
+  position: relative;
+  padding-left: var(--reading-gutter);
+}
+.reading-rail {
   position: absolute;
-  left: 6px;
+  left: var(--reading-axis);
   top: 8px;
   bottom: 8px;
   width: 1px;
-  background: linear-gradient(var(--accent), var(--border));
+  transform: translateX(-50%);
+  background: var(--border);
+  pointer-events: none;
+}
+.reading-rail > span {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgb(169 217 198 / 45%);
+  transform: scaleY(var(--reading-progress, 0));
+  transform-origin: top;
+}
+.reading-station {
+  position: relative;
+  min-width: 0;
+}
+.reading-station-node {
+  position: absolute;
+  left: calc(var(--reading-axis) - var(--reading-gutter));
+  top: 37px;
+  width: 13px;
+  height: 13px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--accent);
+  pointer-events: none;
+}
+.reading-station-node::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 1px solid var(--accent);
+  border-radius: inherit;
+  opacity: 0;
+}
+.reading-timeline[data-reading-motion='scroll'] .reading-station-node {
+  background: var(--node-dim);
+  transition:
+    background-color 200ms,
+    box-shadow 200ms;
+}
+.reading-timeline[data-reading-motion='scroll']
+  [data-reading-state='passed']
+  .reading-station-node {
+  background: var(--accent);
+}
+.reading-timeline[data-reading-motion='scroll']
+  [data-reading-state='active']
+  .reading-station-node {
+  background: var(--accent);
+  box-shadow:
+    0 0 12px rgb(169 217 198 / 65%),
+    0 0 28px rgb(169 217 198 / 20%);
+}
+[data-reading-state='active'] .reading-station-node::after {
+  opacity: 0.35;
+}
+[data-reading-state='active'] :is(.project-card, .research-card) {
+  border-color: var(--border-hover);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reading-rail > span,
+  .reading-station-node::after {
+    display: none;
+  }
 }
 .project-card,
 .research-card {

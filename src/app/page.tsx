@@ -7,6 +7,7 @@ import { Starfield } from '@/components/Starfield';
 import { ProjectCard } from '@/components/ProjectCard';
 import { ResearchCard } from '@/components/ResearchCard';
 import { Reveal } from '@/components/Reveal';
+import { ReadingStation, ReadingTimeline } from '@/components/ReadingTimeline';
 import { getPapers, getProjects } from '@/lib/content';
 import {
   copy,
@@ -166,13 +167,15 @@ export default function HomePage() {
             </span>
           </div>
           {projects.length ? (
-            <div className="project-timeline">
+            <ReadingTimeline className="project-timeline">
               {projects.slice(0, 3).map((p) => (
-                <Reveal key={p.slug}>
-                  <ProjectCard project={p} />
-                </Reveal>
+                <ReadingStation key={p.slug}>
+                  <Reveal>
+                    <ProjectCard project={p} />
+                  </Reveal>
+                </ReadingStation>
               ))}
-            </div>
+            </ReadingTimeline>
           ) : (
             <p>{copy.emptyProjects}</p>
           )}
@@ -196,13 +199,15 @@ export default function HomePage() {
             </span>
           </div>
           {papers.length ? (
-            <div className="research-card-list">
+            <ReadingTimeline className="research-card-list">
               {papers.slice(0, 3).map((p) => (
-                <Reveal key={p.slug}>
-                  <ResearchCard paper={p} compact />
-                </Reveal>
+                <ReadingStation key={p.slug}>
+                  <Reveal>
+                    <ResearchCard paper={p} compact />
+                  </Reveal>
+                </ReadingStation>
               ))}
-            </div>
+            </ReadingTimeline>
           ) : (
             <p>{copy.emptyResearch}</p>
           )}

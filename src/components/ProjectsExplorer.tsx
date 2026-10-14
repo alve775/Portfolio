@@ -3,6 +3,7 @@ import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { copy } from '@/lib/site';
 import { matchesProject, type ProjectFilter } from '@/lib/project-filters';
+import { ReadingStation, ReadingTimeline } from './ReadingTimeline';
 type Card = { slug: string; status: string; tags?: string[]; view: ReactNode };
 export function ProjectsExplorer({ cards }: { cards: Card[] }) {
   const [filter, setFilter] = useState<ProjectFilter>('all');
@@ -33,20 +34,23 @@ export function ProjectsExplorer({ cards }: { cards: Card[] }) {
         </p>
       </div>
       {cards.length ? (
-        <div className="project-timeline">
+        <ReadingTimeline className="project-timeline">
           {cards.map((card) => (
-            <div key={card.slug} hidden={!matchesProject(card, filter)}>
+            <ReadingStation
+              key={card.slug}
+              hidden={!matchesProject(card, filter)}
+            >
               {card.view}
-            </div>
+            </ReadingStation>
           ))}
-        </div>
+        </ReadingTimeline>
       ) : (
         <p>{copy.emptyProjects}</p>
       )}
       <noscript>
         <style>
           {
-          '.project-filters,.notes-toggle{display:none}@layer base{.engineering-notes[hidden]{display:grid!important}}'
+            '.project-filters,.notes-toggle{display:none}@layer base{.engineering-notes[hidden]{display:grid!important}}'
           }
         </style>
       </noscript>
