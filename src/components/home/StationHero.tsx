@@ -4,7 +4,10 @@ import { useEffect, useId, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 import Link from 'next/link';
 
-import { getScrollProgress, getStationScrollTop } from '@/components/home/flight-model';
+import {
+  getScrollProgress,
+  getStationScrollTop,
+} from '@/components/home/flight-model';
 import { homeCopy } from '@/lib/site';
 
 export type Station = {
@@ -13,7 +16,14 @@ export type Station = {
   title: string;
   body: string;
   meta?: string;
-  links: { label: string; href: string; primary?: boolean }[];
+  records?: { label: string; status: string }[];
+  links: {
+    label: string;
+    href: string;
+    primary?: boolean;
+    arrow?: boolean;
+    text?: boolean;
+  }[];
 };
 
 export type ConstellationNode = {
@@ -73,7 +83,9 @@ export function StationHero({
     const header = document.querySelector<HTMLElement>('.site-header');
 
     const update = () => {
-      const headerHeight = Math.round(header?.getBoundingClientRect().height ?? 0);
+      const headerHeight = Math.round(
+        header?.getBoundingClientRect().height ?? 0,
+      );
       section.style.setProperty('--hero-header-height', `${headerHeight}px`);
       // offsetHeight ignores the transform, so this is always the natural height.
       const available = window.innerHeight - headerHeight - STAGE_MARGIN;
@@ -115,7 +127,10 @@ export function StationHero({
         viewportHeight: window.innerHeight,
       });
       const position = progress * (stations.length - 1);
-      section.style.setProperty('--hero-fill', ((position + 1) / stations.length).toFixed(4));
+      section.style.setProperty(
+        '--hero-fill',
+        ((position + 1) / stations.length).toFixed(4),
+      );
       setActive(Math.round(position));
     };
     const schedule = () => {
@@ -203,7 +218,12 @@ export function StationHero({
           </div>
 
           <div className="hero-grid">
-            <div ref={stationsRef} className="hero-stations" role="group" aria-label={homeCopy.constellation}>
+            <div
+              ref={stationsRef}
+              className="hero-stations"
+              role="group"
+              aria-label={homeCopy.constellation}
+            >
               {stations.map((station, index) => (
                 <button
                   key={station.id}
@@ -214,7 +234,8 @@ export function StationHero({
                   onClick={() => goTo(index)}
                 >
                   <span>
-                    {counter(index + 1)} <span className="station-name">{station.label}</span>
+                    {counter(index + 1)}{' '}
+                    <span className="station-name">{station.label}</span>
                   </span>
                   {active === index ? (
                     <span aria-hidden="true" className="station-progress" />
@@ -223,7 +244,10 @@ export function StationHero({
               ))}
             </div>
 
-            <div className="hero-panels" aria-live={scrollDriven ? undefined : 'polite'}>
+            <div
+              className="hero-panels"
+              aria-live={scrollDriven ? undefined : 'polite'}
+            >
               {stations.map((station, index) => {
                 const isActive = index === active;
                 return (
@@ -238,28 +262,56 @@ export function StationHero({
                       {homeCopy.station} {counter(index + 1)} / {station.label}
                     </p>
                     {index === 0 ? (
-                      <h1 className="hero-heading hero-enter">{station.title}</h1>
+                      <h1 className="hero-heading hero-enter">
+                        {station.title}
+                      </h1>
                     ) : (
-                      <h2 className="hero-heading hero-enter">{station.title}</h2>
+                      <h2 className="hero-heading hero-enter">
+                        {station.title}
+                      </h2>
                     )}
-                    {station.meta ? <p className="label venue hero-enter">{station.meta}</p> : null}
+                    {station.meta ? (
+                      <p className="label venue hero-enter">{station.meta}</p>
+                    ) : null}
                     <p className="hero-lead hero-enter">{station.body}</p>
+                    {station.records ? (
+                      <ul className="hero-records hero-enter">
+                        {station.records.map((record) => (
+                          <li key={record.label}>
+                            {record.label} <span>· {record.status}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
                     <div className="hero-actions hero-enter">
                       {station.links.map((link) => {
-                        const className = `button ${link.primary ? 'button-primary' : 'button-secondary'}`;
+                        const className = link.text
+                          ? 'hero-contact-link'
+                          : `button ${link.primary ? 'button-primary' : 'button-secondary'}`;
                         return link.href.startsWith('/') ? (
-                          <Link className={className} href={link.href} key={link.href}>
+                          <Link
+                            className={className}
+                            href={link.href}
+                            key={link.href}
+                          >
                             {link.label}
+                            {link.arrow ? (
+                              <span aria-hidden="true">↗</span>
+                            ) : null}
                           </Link>
                         ) : (
                           <a
                             className={className}
                             href={link.href}
                             key={link.href}
-                            target={link.href.startsWith('https:') ? '_blank' : undefined}
+                            target={
+                              link.href.startsWith('https:')
+                                ? '_blank'
+                                : undefined
+                            }
                             rel="noopener noreferrer"
                           >
-                            {link.label} ↗
+                            {link.label} <span aria-hidden="true">↗</span>
                           </a>
                         );
                       })}
@@ -270,7 +322,12 @@ export function StationHero({
             </div>
 
             <div className="constellation" aria-hidden="true">
-              <svg viewBox="0 0 480 420" fill="none" aria-hidden="true" focusable="false">
+              <svg
+                viewBox="0 0 480 420"
+                fill="none"
+                aria-hidden="true"
+                focusable="false"
+              >
                 <defs>
                   {/* Bright at the origin, fading toward the node, like the design's gradient lines. */}
                   {edges.map((edge, index) => (
@@ -284,7 +341,13 @@ export function StationHero({
                       y2={edge.b.y}
                     >
                       <stop offset="0" style={{ stopColor: 'var(--accent)' }} />
-                      <stop offset="1" style={{ stopColor: 'var(--accent)', stopOpacity: 0.35 }} />
+                      <stop
+                        offset="1"
+                        style={{
+                          stopColor: 'var(--accent)',
+                          stopOpacity: 0.35,
+                        }}
+                      />
                     </linearGradient>
                   ))}
                 </defs>
@@ -296,11 +359,16 @@ export function StationHero({
                     y1={edge.a.y}
                     x2={edge.b.x}
                     y2={edge.b.y}
-                    className={edge.on ? 'constellation-edge lit' : 'constellation-edge'}
+                    className={
+                      edge.on ? 'constellation-edge lit' : 'constellation-edge'
+                    }
                     style={
                       edge.on
                         ? ({
-                            '--len': Math.hypot(edge.b.x - edge.a.x, edge.b.y - edge.a.y).toFixed(1),
+                            '--len': Math.hypot(
+                              edge.b.x - edge.a.x,
+                              edge.b.y - edge.a.y,
+                            ).toFixed(1),
                             '--edge-gradient': `url(#${gradientId}-${index})`,
                           } as CSSProperties)
                         : undefined
@@ -324,7 +392,12 @@ export function StationHero({
                 <circle cx={CORE.x} cy={CORE.y} r="7" className="core-dot" />
                 {nodes.map((node) => (
                   <g key={node.id} data-lit={lit(node)}>
-                    <circle cx={node.x} cy={node.y} r={lit(node) ? 6 : 4} className="constellation-node" />
+                    <circle
+                      cx={node.x}
+                      cy={node.y}
+                      r={lit(node) ? 6 : 4}
+                      className="constellation-node"
+                    />
                     <text x={node.x} y={node.y + 26} textAnchor="middle">
                       {node.label}
                     </text>
@@ -354,7 +427,9 @@ export function StationHero({
 
       <noscript>
         <style>
-          {'.hero-panels{gap:48px}.hero-panel{grid-area:auto!important;visibility:visible!important}.hero-stations,.hero-controls{display:none}.hero-enter{animation:none!important}'}
+          {
+            '.hero-panels{gap:48px}.hero-panel{grid-area:auto!important;visibility:visible!important}.hero-stations,.hero-controls{display:none}.hero-enter{animation:none!important}'
+          }
         </style>
       </noscript>
     </section>

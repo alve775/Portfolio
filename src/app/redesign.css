@@ -67,6 +67,7 @@ body:has(.station-hero:not([data-in-view='false']))
   animation-play-state: paused !important;
 }
 .hero-topline {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -74,6 +75,9 @@ body:has(.station-hero:not([data-in-view='false']))
   padding-top: 24px;
 }
 .hero-topline a {
+  position: absolute;
+  right: 0;
+  top: 9px;
   min-height: 44px;
   display: inline-flex;
   align-items: center;
@@ -84,7 +88,7 @@ body:has(.station-hero:not([data-in-view='false']))
   grid-template-columns: 150px minmax(0, 1fr) minmax(300px, 480px);
   align-items: start;
   gap: 28px;
-  padding-block: 40px 32px;
+  padding-block: 44px 36px;
 }
 .hero-stations {
   display: grid;
@@ -141,6 +145,35 @@ body:has(.station-hero:not([data-in-view='false']))
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+.hero-records {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+.hero-records li {
+  padding: 8px 12px;
+  border: 1px solid var(--border-strong);
+  font: 12px var(--font-mono);
+  color: var(--text-2);
+}
+.hero-records span {
+  text-transform: lowercase;
+}
+.hero-contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  max-width: 100%;
+  font: 18px var(--font-mono);
+  color: var(--accent);
+  overflow-wrap: anywhere;
+  text-underline-offset: 3px;
+}
+#station-identity .button-primary {
+  box-shadow: 0 0 24px rgb(169 217 198 / 35%);
 }
 .hero-enter {
   animation: var(--animate-rise);
@@ -218,9 +251,9 @@ body:has(.station-hero:not([data-in-view='false']))
   fill: var(--accent);
 }
 .constellation text {
-  font: 10px var(--font-mono);
-  letter-spacing: 0.04em;
-  fill: var(--text-3);
+  font: 11px var(--font-mono);
+  letter-spacing: 0.08em;
+  fill: var(--color-text-4);
   text-transform: uppercase;
 }
 .constellation [data-lit='true'] text {
@@ -352,6 +385,7 @@ body:has(.station-hero) .site-header {
 .redesign-section-heading h2 {
   font-size: var(--text-section);
   font-weight: 500;
+  line-height: normal;
   letter-spacing: -0.02em;
 }
 .redesign-section-heading .label + h2 {
@@ -493,7 +527,7 @@ body:has(.station-hero) .site-header {
 }
 .status-live {
   color: var(--accent);
-  border-color: var(--border-hover);
+  border-color: var(--color-border-callout);
 }
 .status-live i {
   width: 6px;
@@ -630,18 +664,31 @@ body:has(.station-hero) .site-header {
   color: var(--text-2);
 }
 .home-profile {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
+  display: flex;
+  flex-wrap: wrap;
   gap: 40px;
   border-top: 1px solid var(--border-subtle);
   padding-top: 48px;
 }
+.home-profile > div {
+  flex: 1 1 260px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.home-sections .project-media {
+  flex-basis: 380px;
+}
 .home-profile h2 {
   font-size: 36px;
+  line-height: normal;
   letter-spacing: -0.02em;
-  margin-block: 10px;
+  margin: 0;
 }
 .home-profile > p {
+  flex: 999 1 520px;
+  min-width: 0;
   font-size: 18px;
   line-height: 1.6;
   color: var(--text-2);
@@ -672,36 +719,17 @@ body:has(.station-hero) .site-header {
 .hero-heading {
   overflow-wrap: normal;
 }
-@media (min-width: 1100px) {
-  .station-hero .hero-heading {
-    font-size: clamp(43px, 4.4vw, 66px);
-  }
-}
 @media (max-width: 639px) {
   .hero-grid {
     grid-template-columns: minmax(0, 1fr);
     padding-top: 24px;
     gap: 28px;
   }
-  .hero-lead {
-    font-size: 18px;
-  }
   .hero-controls {
     justify-content: flex-start;
   }
   .hero-controls > span:last-child {
     flex-basis: 100%;
-  }
-  .home-sections {
-    gap: 64px;
-    padding-top: 48px;
-  }
-  .home-profile {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
-  }
-  .hero-actions .button {
-    font-size: 14px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -728,8 +756,11 @@ body:has(.station-hero) .site-header {
   padding-top: 44px;
 }
 h2.hero-heading {
-  font-size: clamp(36px, 4vw, 60px);
+  font-size: clamp(36px, 9vw, 60px);
   line-height: 1.04;
+  max-width: none;
+  white-space: pre-line;
+  text-wrap: wrap;
 }
 /* Medium widths keep the constellation beside the copy, so the stage stays short enough to pin. */
 @media (max-width: 1100px) {
@@ -759,11 +790,12 @@ h2.hero-heading {
 @media (max-width: 719px) {
   .hero-grid {
     grid-template-columns: minmax(0, 1fr);
-    gap: 28px;
-    padding-block: 28px 20px;
+    gap: 36px;
+    padding-block: 44px 36px;
   }
   .hero-stations {
     gap: 10px;
+    padding-bottom: 4px;
     overflow-x: auto;
     scrollbar-width: none;
     scroll-snap-type: x proximity;

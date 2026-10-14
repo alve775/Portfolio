@@ -310,10 +310,11 @@ export const homeCopy = {
   projectTitle: 'Built to be used',
   projectBody:
     'Web apps, mobile apps and local AI tools, with the source public for every one.',
-  aiTitle: 'From benchmark to browser',
+  aiTitle: 'From benchmark\nto browser',
   aiBody:
     'Six Transformer models compared on 25,500 Bangla sentences. The best-suited XLM-R classifier is online for anyone to try.',
   researchTitle: 'Evaluation comes first',
+  researchHeroTitle: 'Evaluation\ncomes first',
   researchBody:
     'Two peer-reviewed NLP papers, at IEEE QPAIN and the BEA workshop at ACL. My thesis develops a leakage-safe ADHD EEG framework using subject-level validation, so no participant appears in both training and testing.',
   contactTitle: "Let's talk",

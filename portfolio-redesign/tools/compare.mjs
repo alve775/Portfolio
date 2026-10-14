@@ -62,6 +62,35 @@ for (const s of sizes) {
       path: path.join(out, `${name}--${s.name}.png`),
       fullPage: true,
     });
+    if (route === '/') {
+      if (s.name === 'desktop') {
+        const stations = page.locator('.hero-stations button');
+        for (let index = 0; index < (await stations.count()); index += 1) {
+          await stations.nth(index).click();
+          await page.waitForTimeout(1800);
+          await page.screenshot({
+            path: path.join(out, `01-home-hero--station-0${index + 1}.png`),
+          });
+        }
+      }
+      // The board shows the sections as their own design, without the hero.
+      // Isolate that comparison only after capturing the actual pinned hero.
+      await page.addStyleTag({
+        content: '.site-header,.station-hero{display:none!important}',
+      });
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.screenshot({
+        path: path.join(out, `02-home-sections--${s.name}.png`),
+        fullPage: true,
+      });
+    }
+    if (route === '/projects/' && s.name === 'desktop') {
+      await page.getByRole('button', { name: /^Mobile/ }).click();
+      await page.screenshot({
+        path: path.join(out, '03-projects--filter-mobile.png'),
+        fullPage: true,
+      });
+    }
     report.push(
       `${name} [${s.name}]` +
         (overflowPx > 0 ? ` HORIZONTAL OVERFLOW ${overflowPx}px` : '') +
