@@ -81,8 +81,8 @@ export function CvView({
           <div className="cv-timeline">
             {cvContent.experience.map((experience) => (
               <Reveal key={experience.role}>
+                <span className="timeline-node" aria-hidden="true" />
                 <article>
-                  <span className="timeline-node" aria-hidden="true" />
                   <div className="card-topline">
                     <h3>{experience.role}</h3>
                     <span className="label venue cv-dates">

@@ -1513,15 +1513,18 @@ body:has([data-research-detail]) .main-content {
   line-height: normal;
 }
 .cv-timeline {
+  --timeline-axis: 5.5px;
+  --timeline-gutter: 32px;
   position: relative;
-  padding-left: 32px;
+  padding-left: var(--timeline-gutter);
   display: grid;
   gap: 14px;
 }
 .cv-timeline::before {
   content: '';
   position: absolute;
-  left: 5px;
+  left: var(--timeline-axis);
+  translate: -50% 0;
   top: 8px;
   bottom: 8px;
   width: 1px;
@@ -1535,9 +1538,13 @@ body:has([data-research-detail]) .main-content {
   display: grid;
   gap: 8px;
 }
+.cv-timeline > .reveal {
+  position: relative;
+}
 .cv-timeline .timeline-node {
-  left: -32px;
-  top: 24px;
+  left: calc(var(--timeline-axis) - var(--timeline-gutter));
+  top: 25px;
+  translate: -50% 0;
   width: 11px;
   height: 11px;
 }
