@@ -401,14 +401,15 @@ body:has(.station-hero) .site-header {
   box-shadow: 0 0 12px rgb(169 217 198 / 40%);
 }
 .project-card-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 28px;
 }
-.project-card-grid.no-media {
-  grid-template-columns: minmax(0, 1fr);
+.project-card-grid.no-media .project-card-copy {
+  flex-basis: 100%;
 }
 .project-media {
+  flex: 1 1 360px;
   margin: 0;
   min-width: 0;
 }
@@ -455,6 +456,7 @@ body:has(.station-hero) .site-header {
   margin-top: 8px;
 }
 .project-card-copy {
+  flex: 1 1 460px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -469,10 +471,11 @@ body:has(.station-hero) .site-header {
 .project-card .card-topline {
   justify-content: space-between;
 }
+.project-card h2,
 .project-card h3 {
   font-size: 30px;
   font-weight: 500;
-  line-height: 1.25;
+  line-height: normal;
   letter-spacing: -0.015em;
 }
 .status-badge {
@@ -517,13 +520,21 @@ body:has(.station-hero) .site-header {
   line-height: 1.5;
   color: var(--text-2);
 }
+.project-facts-new dt,
+.engineering-notes dt {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
 .card-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  align-items: center;
+  padding-top: 4px;
 }
 .card-actions .button {
   font-size: 14px;
+  padding: 10px 16px;
 }
 .metric-block {
   display: flex;
@@ -657,11 +668,6 @@ body:has(.station-hero) .site-header {
     font-size: clamp(43px, 4.4vw, 66px);
   }
 }
-@media (max-width: 860px) {
-  .project-card-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
 @media (max-width: 639px) {
   .hero-grid {
     grid-template-columns: minmax(0, 1fr);
@@ -681,23 +687,8 @@ body:has(.station-hero) .site-header {
     gap: 64px;
     padding-top: 48px;
   }
-  .project-timeline {
-    padding-left: 20px;
-  }
-  .project-timeline::before {
-    left: 3px;
-  }
-  .timeline-node {
-    width: 9px;
-    height: 9px;
-    left: -22px;
-  }
-  .project-card,
   .research-card {
     padding: 18px;
-  }
-  .project-card h3 {
-    font-size: 26px;
   }
   .home-profile {
     grid-template-columns: minmax(0, 1fr);
@@ -926,7 +917,7 @@ h2.hero-heading {
   align-items: center;
   gap: 14px;
   padding-block: 14px;
-  margin-bottom: 28px;
+  margin-bottom: 48px;
   border-block: 1px solid var(--border-subtle);
 }
 .project-filters {
@@ -938,6 +929,8 @@ h2.hero-heading {
   font: 12px var(--font-mono);
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  padding: 8px 16px;
+  color: var(--text-2);
 }
 .project-filters [aria-pressed='true'] {
   background: var(--accent);
@@ -946,7 +939,7 @@ h2.hero-heading {
 }
 .engineering-notes {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
   gap: 16px;
   margin: 22px 0 0;
   border-top: 1px dashed var(--border);

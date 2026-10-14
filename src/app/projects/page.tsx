@@ -7,10 +7,36 @@ import { getProjects } from '@/lib/content';
 import { routeMetadata } from '@/lib/seo';
 import { copy, homeCopy } from '@/lib/site';
 
-export const metadata=routeMetadata({title:copy.projects,description:copy.projectDescription,pathname:'/projects/'});
-export default function ProjectsPage(){
-  const projects=getProjects().slice(0,5);
-  return <div className="inner-page"><RedesignHeader label={`${homeCopy.station} 02 / ${copy.projects}`} title={homeCopy.projectTitle} lead={copy.projectsLead} decoration={<MiniConstellation />} />
-    <ProjectsExplorer cards={projects.map(p=>({slug:p.slug,status:p.frontmatter.status,tags:p.frontmatter.tags,view:<Reveal><ProjectCard project={p} notes={{initialOpen:p.slug==='resume-evaluator'}} /></Reveal>}))} />
-  </div>;
+export const metadata = routeMetadata({
+  title: copy.projects,
+  description: copy.projectDescription,
+  pathname: '/projects/',
+});
+export default function ProjectsPage() {
+  const projects = getProjects().slice(0, 5);
+  return (
+    <div className="inner-page">
+      <RedesignHeader
+        label={`${homeCopy.station} 02 / ${copy.projects}`}
+        title={homeCopy.projectTitle}
+        lead={copy.projectsLead}
+        decoration={<MiniConstellation />}
+      />
+      <ProjectsExplorer
+        cards={projects.map((p) => ({
+          slug: p.slug,
+          status: p.frontmatter.status,
+          tags: p.frontmatter.tags,
+          view: (
+            <Reveal>
+              <ProjectCard
+                project={p}
+                notes={{ initialOpen: p.slug === 'resume-evaluator' }}
+              />
+            </Reveal>
+          ),
+        }))}
+      />
+    </div>
+  );
 }
