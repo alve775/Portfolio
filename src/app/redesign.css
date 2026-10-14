@@ -537,6 +537,8 @@ body:has(.station-hero) .site-header {
   padding: 10px 16px;
 }
 .metric-block {
+  /* The prototype's flex bases describe the inner content, before its divider. */
+  box-sizing: content-box;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -1022,6 +1024,13 @@ h2.hero-heading {
   display: grid;
   gap: 44px;
 }
+body:has([data-research-detail]) .main-content {
+  padding-top: 48px;
+}
+.research-detail-new > .back-link {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
 .research-detail-header {
   display: flex;
   flex-wrap: wrap;
@@ -1044,12 +1053,15 @@ h2.hero-heading {
   margin: 0;
   line-height: 1.5;
   color: var(--text-2);
+  font-size: 16px;
+  max-width: none;
 }
 .research-detail-header .self {
   font-weight: 600;
   text-decoration: none;
 }
 .detail-metric-panel {
+  box-sizing: content-box;
   flex: 1 1 260px;
   min-width: 0;
   border: 1px solid var(--border);
@@ -1057,7 +1069,10 @@ h2.hero-heading {
   padding: 22px;
 }
 .detail-metric-panel .metric-value {
-  font-size: 40px;
+  font-size: clamp(32px, 8vw, 40px);
+}
+.detail-metric-panel .metric-note {
+  font-size: 14px;
 }
 .supporting-stats {
   display: grid;
@@ -1093,9 +1108,10 @@ h2.hero-heading {
 .research-detail-body h2 {
   font-size: 24px;
   font-weight: 500;
+  line-height: normal;
 }
 .takeaway-panel {
-  border: 1px solid var(--border-hover);
+  border: 1px solid var(--color-border-callout);
   background: var(--color-accent-soft);
   padding: 24px;
   display: grid;
@@ -1134,6 +1150,9 @@ h2.hero-heading {
   font-size: 13px;
   color: var(--accent);
 }
+.copy-bibtex.is-copied {
+  animation: var(--animate-pop);
+}
 .research-sidebar {
   flex: 1 1 260px;
   min-width: 0;
@@ -1152,6 +1171,7 @@ h2.hero-heading {
 }
 .result-group {
   margin-top: 10px;
+  margin-bottom: 6px;
 }
 .model-results {
   margin: 0;
@@ -1186,6 +1206,7 @@ h2.hero-heading {
   padding-block: 8px;
   text-decoration: none;
   font-size: 15px;
+  min-height: 44px;
 }
 .record-navigation a:last-child {
   text-align: right;
@@ -1553,21 +1574,6 @@ body:has(.not-found-redesign) > .starfield-soft .starfield-star {
   .engineering-notes {
     grid-template-columns: minmax(0, 1fr);
   }
-  .research-detail-new {
-    gap: 32px;
-  }
-  .research-detail-header h1 {
-    font-size: clamp(26px, 7vw, 36px);
-  }
-  .research-detail-columns {
-    gap: 28px;
-  }
-  .sidebar-panel {
-    padding: 18px;
-  }
-  .takeaway-panel {
-    padding: 18px;
-  }
   .cv-redesign {
     gap: 36px;
   }
@@ -1583,10 +1589,6 @@ body:has(.not-found-redesign) > .starfield-soft .starfield-star {
   }
   .cv-skill-rows dd {
     flex-basis: 100%;
-  }
-  .record-navigation a:last-child {
-    align-items: flex-start;
-    text-align: left;
   }
   .not-found-redesign {
     gap: 32px;

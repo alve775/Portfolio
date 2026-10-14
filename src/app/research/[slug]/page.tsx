@@ -16,7 +16,9 @@ export function generateStaticParams() {
   return params.length > 0 ? params : [{ slug: '__empty__' }];
 }
 
-export async function generateMetadata({ params }: PaperPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PaperPageProps): Promise<Metadata> {
   const { slug } = await params;
   const paper = getPaper(slug);
   if (!paper) notFound();
@@ -34,14 +36,22 @@ export async function generateMetadata({ params }: PaperPageProps): Promise<Meta
       ...(paper.frontmatter.status === 'thesis'
         ? { citation_dissertation_institution: paper.frontmatter.venue }
         : paper.frontmatter.status === 'in-progress'
-        ? {}
-        : { citation_conference_title: paper.frontmatter.venue }),
+          ? {}
+          : { citation_conference_title: paper.frontmatter.venue }),
     },
   };
 }
 
-export default async function PaperPage({params}:PaperPageProps){
-  const paper=getPaper((await params).slug);
-  if(!paper)notFound();
-  return <ResearchDetail paper={paper} papers={getPapers()} classifier={getProjects().find(p=>p.slug==='bangla-sentence-classifier')} />;
+export default async function PaperPage({ params }: PaperPageProps) {
+  const paper = getPaper((await params).slug);
+  if (!paper) notFound();
+  return (
+    <ResearchDetail
+      paper={paper}
+      papers={getPapers()}
+      classifier={getProjects().find(
+        (p) => p.slug === 'bangla-sentence-classifier',
+      )}
+    />
+  );
 }
