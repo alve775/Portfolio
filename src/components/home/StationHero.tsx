@@ -200,6 +200,8 @@ export function StationHero({
     const to = nodes.find((node) => node.id === toId);
     if (from && to) edges.push({ a: from, b: to, on: lit(from) && lit(to) });
   }
+  const counter = (value: number) => String(value).padStart(2, '0');
+
   return (
     <section
       ref={sectionRef}
@@ -402,18 +404,20 @@ export function StationHero({
                 ))}
               </svg>
             </div>
-          </div>
-
-          <div className="hero-controls" aria-hidden="true">
-            <span className="counter-line">
-              <i
-                style={
-                  scrollDriven
-                    ? undefined
-                    : { transform: `scaleX(${(active + 1) / stations.length})` }
-                }
-              />
-            </span>
+            <div className="hero-controls label" aria-hidden="true">
+              <span className="hero-counter">
+                {counter(active + 1)} / {counter(stations.length)}
+              </span>
+              <span className="counter-line">
+                <i
+                  style={
+                    scrollDriven
+                      ? undefined
+                      : { transform: `scaleX(${(active + 1) / stations.length})` }
+                  }
+                />
+              </span>
+            </div>
           </div>
         </div>
       </div>

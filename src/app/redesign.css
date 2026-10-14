@@ -79,7 +79,7 @@ body:has(.station-hero:not([data-in-view='false']))
   grid-template-columns: 150px minmax(0, 1fr) minmax(300px, 480px);
   align-items: start;
   gap: 28px;
-  padding-block: 44px 36px;
+  padding-block: 44px 0;
 }
 .hero-stations {
   display: grid;
@@ -182,9 +182,15 @@ body:has(.station-hero:not([data-in-view='false']))
   animation-delay: 450ms;
 }
 .hero-controls {
+  grid-column: -2/-1;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 14px;
+}
+.hero-counter {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .counter-line {
   width: min(240px, 60vw);
@@ -827,7 +833,7 @@ h2.hero-heading {
   .hero-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 36px;
-    padding-block: 44px 36px;
+    padding-block: 44px 0;
   }
   .hero-stations {
     gap: 10px;
