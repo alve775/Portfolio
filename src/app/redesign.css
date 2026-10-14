@@ -926,6 +926,7 @@ h2.hero-heading {
     justify-content: center;
   }
   .station-hero[data-scroll-driven='true'] .hero-content {
+    translate: 0 calc(-1 * min(24px, var(--hero-free-space, 0px) / 2));
     transform-origin: 50% 50%;
   }
 }

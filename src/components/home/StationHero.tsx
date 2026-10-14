@@ -91,6 +91,11 @@ export function StationHero({
       const available = window.innerHeight - headerHeight - STAGE_MARGIN;
       const scale = Math.min(1, available / content.offsetHeight);
       section.style.setProperty('--hero-scale', scale.toFixed(3));
+      const freeSpace = Math.max(
+        0,
+        window.innerHeight - headerHeight - content.offsetHeight * scale,
+      );
+      section.style.setProperty('--hero-free-space', `${freeSpace}px`);
       setReducedMotion(motionQuery.matches);
       setScrollDriven(scale >= MIN_SCALE);
     };
