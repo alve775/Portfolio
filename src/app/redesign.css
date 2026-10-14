@@ -916,7 +916,7 @@ h2.hero-heading {
     align-items: center;
   }
   .hero-stations {
-    align-self: start;
+    align-self: center;
   }
   .hero-panel {
     justify-content: center;
@@ -927,11 +927,6 @@ h2.hero-heading {
   .station-hero[data-scroll-driven='true'] .hero-content {
     translate: 0 calc(-1 * min(24px, var(--hero-free-space, 0px) / 2));
     transform-origin: 50% 50%;
-  }
-}
-@media (min-width: 900px) {
-  .station-hero[data-scroll-driven='true'] .hero-stations {
-    translate: 0 var(--hero-stations-offset, 0px);
   }
 }
 .main-content {
