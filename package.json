@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 3101",
     "build": "next build --webpack && node scripts/prune-empty-routes.mjs",
     "start": "python3 -m http.server 4173 --directory out --bind 127.0.0.1",
     "lint": "eslint",

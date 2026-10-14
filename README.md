@@ -21,7 +21,13 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`. Before committing or deploying, run:
+Open `http://localhost:3101`. The dedicated portfolio port avoids service workers
+left by other local apps on port 3000 intercepting its HTML or CSS. In particular,
+MindOS's offline worker on `localhost:3000` can serve stale assets even when this
+repository does not register a service worker. Keep the apps on separate origins;
+do not clear another app's offline data to preview the portfolio.
+
+Before committing or deploying, run:
 
 ```bash
 npm run lint
