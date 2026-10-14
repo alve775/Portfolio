@@ -22,19 +22,24 @@ const routes = {
   '04-research': '/research/',
   '05-research-detail': '/research/bangla-sentence-type-classification/',
   '06-cv': '/cv/',
-  '07-not-found': '/this-page-does-not-exist/',
+  // Python's static preview does not route missing URLs to Next's exported 404.
+  '07-not-found': '/404.html',
 };
 const sizes = [
   { name: 'desktop', width: 1440, height: 900, scale: 1 },
   { name: 'mobile', width: 390, height: 844, scale: 2 },
 ];
 // Scroll-linked reveals start hidden below the fold; show them for full-page captures.
-const settle = '[style*="animation-timeline"],.reveal{animation:none !important;opacity:1 !important;transform:none !important}';
+const settle =
+  '[style*="animation-timeline"],.reveal{animation:none !important;opacity:1 !important;transform:none !important}';
 
 const browser = await chromium.launch();
 const report = [];
 for (const s of sizes) {
-  const ctx = await browser.newContext({ viewport: { width: s.width, height: s.height }, deviceScaleFactor: s.scale });
+  const ctx = await browser.newContext({
+    viewport: { width: s.width, height: s.height },
+    deviceScaleFactor: s.scale,
+  });
   for (const [name, route] of Object.entries(routes)) {
     const page = await ctx.newPage();
     const errors = [];
@@ -43,13 +48,31 @@ for (const s of sizes) {
     await page.addStyleTag({ content: settle });
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(1800);
-    const overflowPx = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-    await page.screenshot({ path: path.join(out, `${name}--${s.name}.png`), fullPage: true });
-    report.push(`${name} [${s.name}]` + (overflowPx > 0 ? ` HORIZONTAL OVERFLOW ${overflowPx}px` : '') + (errors.length ? ` JS ERRORS: ${errors.join(' | ')}` : ''));
+    const overflowPx = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    );
+    if (route === '/') {
+      // Full-page capture can change the pinned stage and catch drawing edges.
+      // Keep a normal viewport capture for the hero's actual visible layout.
+      await page.screenshot({
+        path: path.join(out, `01-home-hero--${s.name}.png`),
+      });
+    }
+    await page.screenshot({
+      path: path.join(out, `${name}--${s.name}.png`),
+      fullPage: true,
+    });
+    report.push(
+      `${name} [${s.name}]` +
+        (overflowPx > 0 ? ` HORIZONTAL OVERFLOW ${overflowPx}px` : '') +
+        (errors.length ? ` JS ERRORS: ${errors.join(' | ')}` : ''),
+    );
     await page.close();
   }
   await ctx.close();
 }
 await browser.close();
 console.log(report.join('\n'));
-console.log(`\nScreenshots written to ${out}/. Compare each with portfolio-redesign/screenshots/.`);
+console.log(
+  `\nScreenshots written to ${out}/. Compare each with portfolio-redesign/screenshots/.`,
+);
