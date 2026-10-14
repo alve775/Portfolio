@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Current style, upgraded</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#A9D9C6}a:hover{color:#CDEDE0}
+@keyframes rise{from{opacity:0;transform:translateY(28px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes ring{0%{transform:translate(-50%,-50%) scale(0.4);opacity:0.9}100%{transform:translate(-50%,-50%) scale(2.6);opacity:0}}
+@keyframes orbit{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes twinkle{0%,100%{opacity:0.15}50%{opacity:0.9}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(169,217,198,0.0),0 0 12px rgba(169,217,198,0.55)}50%{box-shadow:0 0 0 6px rgba(169,217,198,0.12),0 0 18px rgba(169,217,198,0.8)}}
+@keyframes scan{from{transform:translateY(-100%)}to{transform:translateY(900%)}}
+@media (max-width: 720px){
+.stations{flex:1 1 100% !important;flex-direction:row !important;overflow-x:auto;padding-bottom:4px}
+.stations button{flex:0 0 auto;white-space:nowrap}
+.constellation{zoom:0.68}
+.constellation .nlabel{display:none !important}
+.counter-hint{display:none}
+}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div onMouseMove="{{onMove}}" style="position: relative; overflow: hidden; min-height: 800px; box-sizing: border-box; background-color: #121715; background-image: radial-gradient(520px circle at {{mx}}px {{my}}px, rgba(169,217,198,0.08), transparent 60%), linear-gradient(#18201D 1px, transparent 1px), linear-gradient(90deg, #18201D 1px, transparent 1px); background-size: 100% 100%, 64px 64px, 64px 64px; color: #E8ECEA; font-family: 'Manrope', sans-serif">
+
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none">
+<sc-for list="{{stars}}" as="s" hint-placeholder-count="10">
+<span style="position: absolute; left: {{s.x}}%; top: {{s.y}}%; width: {{s.r}}px; height: {{s.r}}px; border-radius: 50%; background: #CFE9DE; animation: twinkle {{s.d}}s ease-in-out {{s.delay}}s infinite"></span>
+</sc-for>
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 120px; background: linear-gradient(transparent, rgba(169,217,198,0.035), transparent); animation: scan 9s linear infinite"></div>
+</div>
+
+<nav style="position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 22px clamp(20px, 5vw, 56px); border-bottom: 1px solid #252C29; font-size: 15px; background: rgba(18,23,21,0.7)">
+<span style="display: flex; align-items: center; gap: 10px; font-weight: 600"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #A9D9C6; display: inline-block; animation: glow 2.4s ease-in-out infinite"></span>Kamruzzaman Khan Alve</span>
+<div style="display: flex; flex-wrap: wrap; gap: 26px">
+<a href="#" style="color: #B7C0BC; text-decoration: none">Projects</a>
+<a href="#" style="color: #B7C0BC; text-decoration: none">Research</a>
+<a href="#" style="color: #B7C0BC; text-decoration: none">CV</a>
+<a href="#" style="color: #A9D9C6; text-decoration: none">Email ↗</a>
+</div>
+</nav>
+
+<div style="position: relative; display: flex; justify-content: space-between; padding: 24px clamp(20px, 5vw, 56px) 0; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A9490">
+<span>WORK CONSTELLATION</span><span>SKIP TO SELECTED WORK ↓</span>
+</div>
+
+<div style="position: relative; display: flex; flex-wrap: wrap; gap: 36px; padding: 44px clamp(20px, 5vw, 56px) 36px; align-items: flex-start">
+
+<div class="stations" style="flex: 0 1 160px; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{stations}}" as="st" hint-placeholder-count="5">
+<sc-if value="{{st.active}}" hint-placeholder-val="{{false}}">
+<button type="button" onClick="{{st.go}}" aria-current="true" style="position: relative; overflow: hidden; text-align: left; min-height: 44px; padding: 12px 12px; border: 1px solid #A9D9C6; background: rgba(169,217,198,0.08); color: #E8ECEA; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.1em; cursor: pointer">{{st.num}}  {{st.name}}<span aria-hidden="true" style="position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: #A9D9C6; transform-origin: left; animation: fill {{cycle}}s linear"></span></button>
+</sc-if>
+<sc-if value="{{st.idle}}" hint-placeholder-val="{{true}}">
+<button type="button" onClick="{{st.go}}" style="text-align: left; min-height: 44px; padding: 12px 12px; border: 1px solid #2E3633; background: transparent; color: #8A9490; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.1em; cursor: pointer">{{st.num}}  {{st.name}}</button>
+</sc-if>
+</sc-for>
+</div>
+
+<div style="flex: 999 1 420px; min-width: 0; min-height: 360px">
+
+<sc-if value="{{s0}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A9490; animation: fadein 600ms ease-out both">STATION 01 / IDENTITY</div>
+<h1 style="margin: 0; font-size: clamp(40px, 10vw, 66px); line-height: 1.02; font-weight: 500; letter-spacing: -0.025em"><span style="display: block; animation: rise 800ms cubic-bezier(.2,.7,.2,1) both">Kamruzzaman</span><span style="display: block; animation: rise 800ms cubic-bezier(.2,.7,.2,1) 120ms both">Khan Alve</span></h1>
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #D9A06A; animation: fadein 700ms ease-out 350ms both">RAJSHAHI UNIVERSITY OF ENGINEERING AND TECHNOLOGY · BANGLADESH</div>
+<p style="margin: 0; font-size: 20px; line-height: 1.5; color: #B7C0BC; max-width: 540px; animation: rise 800ms ease-out 450ms both">I do research in Bangla and multilingual NLP, and I build the software that puts it to use.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; animation: rise 800ms ease-out 600ms both">
+<a href="#" style="text-decoration: none; color: #121715; background: #A9D9C6; padding: 12px 18px; border-radius: 22px; font-size: 15px; font-weight: 600; box-shadow: 0 0 24px rgba(169,217,198,0.35)">View CV</a>
+<a href="#" style="text-decoration: none; color: #E8ECEA; border: 1px solid #3A4440; padding: 11px 17px; border-radius: 22px; font-size: 15px">Google Scholar ↗</a>
+<a href="#" style="text-decoration: none; color: #E8ECEA; border: 1px solid #3A4440; padding: 11px 17px; border-radius: 22px; font-size: 15px">GitHub ↗</a>
+<a href="#" style="text-decoration: none; color: #E8ECEA; border: 1px solid #3A4440; padding: 11px 17px; border-radius: 22px; font-size: 15px">Email ↗</a>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{s1}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A9490; animation: fadein 600ms ease-out both">STATION 02 / PROJECTS</div>
+<h2 style="margin: 0; font-size: clamp(36px, 9vw, 60px); line-height: 1.04; font-weight: 500; letter-spacing: -0.025em; animation: rise 800ms cubic-bezier(.2,.7,.2,1) both">Built to be used</h2>
+<p style="margin: 0; font-size: 20px; line-height: 1.5; color: #B7C0BC; max-width: 540px; animation: rise 800ms ease-out 200ms both">Web apps, mobile apps and local AI tools, with the source public for every one.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; animation: rise 800ms ease-out 350ms both">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 8px 12px; border: 1px solid #2E3633; color: #B7C0BC">Resume Evaluator · live</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 8px 12px; border: 1px solid #2E3633; color: #B7C0BC">Web-RAG · local</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 8px 12px; border: 1px solid #2E3633; color: #B7C0BC">Bangla Classifier · live</span>
+</div>
+<div style="animation: rise 800ms ease-out 500ms both"><a href="#" style="display: inline-block; text-decoration: none; color: #121715; background: #A9D9C6; padding: 12px 18px; border-radius: 22px; font-size: 15px; font-weight: 600">View projects ↗</a></div>
+</div>
+</sc-if>
+
+<sc-if value="{{s2}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A9490; animation: fadein 600ms ease-out both">STATION 03 / AI/ML</div>
+<h2 style="margin: 0; font-size: clamp(36px, 9vw, 60px); line-height: 1.04; font-weight: 500; letter-spacing: -0.025em; animation: rise 800ms cubic-bezier(.2,.7,.2,1) both">From benchmark<br>to browser</h2>
+<p style="margin: 0; font-size: 20px; line-height: 1.5; color: #B7C0BC; max-width: 540px; animation: rise 800ms ease-out 200ms both">Six Transformer models compared on 25,500 Bangla sentences. The best-suited XLM-R classifier is online for anyone to try.</p>
+<div style="animation: rise 800ms ease-out 400ms both"><a href="#" style="display: inline-block; text-decoration: none; color: #121715; background: #A9D9C6; padding: 12px 18px; border-radius: 22px; font-size: 15px; font-weight: 600">Try the classifier ↗</a></div>
+</div>
+</sc-if>
+
+<sc-if value="{{s3}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A9490; animation: fadein 600ms ease-out both">STATION 04 / RESEARCH</div>
+<h2 style="margin: 0; font-size: clamp(36px, 9vw, 60px); line-height: 1.04; font-weight: 500; letter-spacing: -0.025em; animation: rise 800ms cubic-bezier(.2,.7,.2,1) both">Evaluation<br>comes first</h2>
+<p style="margin: 0; font-size: 20px; line-height: 1.5; color: #B7C0BC; max-width: 540px; animation: rise 800ms ease-out 200ms both">Two peer-reviewed NLP papers, at IEEE QPAIN and the BEA workshop at ACL. A thesis that keeps every participant out of both training and testing.</p>
+<div style="animation: rise 800ms ease-out 400ms both"><a href="#" style="display: inline-block; text-decoration: none; color: #121715; background: #A9D9C6; padding: 12px 18px; border-radius: 22px; font-size: 15px; font-weight: 600">Read the research ↗</a></div>
+</div>
+</sc-if>
+
+<sc-if value="{{s4}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A9490; animation: fadein 600ms ease-out both">STATION 05 / CONTACT</div>
+<h2 style="margin: 0; font-size: clamp(36px, 9vw, 60px); line-height: 1.04; font-weight: 500; letter-spacing: -0.025em; animation: rise 800ms cubic-bezier(.2,.7,.2,1) both">Let's talk</h2>
+<p style="margin: 0; font-size: 20px; line-height: 1.5; color: #B7C0BC; max-width: 540px; animation: rise 800ms ease-out 200ms both">Research, engineering or collaboration: my inbox is open.</p>
+<div style="animation: rise 800ms ease-out 400ms both"><a href="#" style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; color: #A9D9C6">kamruzzamanalve@gmail.com ↗</a></div>
+</div>
+</sc-if>
+
+</div>
+
+<div aria-hidden="true" style="flex: 1 1 480px; min-width: 0; display: flex; justify-content: center">
+<div class="constellation" style="position: relative; width: 480px; height: 420px">
+
+<sc-for list="{{edges}}" as="e" hint-placeholder-count="7">
+<div style="position: absolute; left: {{e.x}}px; top: {{e.y}}px; width: {{e.len}}px; height: 1px; transform: rotate({{e.ang}}deg); transform-origin: 0 0">
+<sc-if value="{{e.lit}}" hint-placeholder-val="{{false}}">
+<div style="width: 100%; height: 1px; background: linear-gradient(90deg, #A9D9C6, rgba(169,217,198,0.35)); transform-origin: left; animation: grow 900ms cubic-bezier(.2,.7,.2,1) both"></div>
+</sc-if>
+<sc-if value="{{e.dim}}" hint-placeholder-val="{{true}}">
+<div style="width: 100%; height: 1px; background: #27302C"></div>
+</sc-if>
+</div>
+</sc-for>
+
+<div style="position: absolute; left: {{cx}}px; top: {{cy}}px">
+<span style="position: absolute; left: 0; top: 0; width: 60px; height: 60px; border-radius: 50%; border: 1px solid #A9D9C6; animation: ring 3s ease-out infinite"></span>
+<span style="position: absolute; left: 0; top: 0; width: 60px; height: 60px; border-radius: 50%; border: 1px solid #A9D9C6; animation: ring 3s ease-out 1s infinite"></span>
+<span style="position: absolute; left: 0; top: 0; width: 60px; height: 60px; border-radius: 50%; border: 1px solid #A9D9C6; animation: ring 3s ease-out 2s infinite"></span>
+<span style="position: absolute; left: -30px; top: -30px; width: 60px; height: 60px; border-radius: 50%; border: 1px solid #3F4A46"></span>
+<span style="position: absolute; left: -48px; top: -48px; width: 96px; height: 96px; animation: orbit 7s linear infinite"><span style="position: absolute; left: 44px; top: -3px; width: 7px; height: 7px; border-radius: 50%; background: #D9A06A; box-shadow: 0 0 10px #D9A06A"></span></span>
+<span style="position: absolute; left: -7px; top: -7px; width: 14px; height: 14px; border-radius: 50%; background: #E8ECEA; animation: glow 2.4s ease-in-out infinite"></span>
+</div>
+
+<sc-for list="{{nodes}}" as="n" hint-placeholder-count="6">
+<div style="position: absolute; left: {{n.x}}px; top: {{n.top}}px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px">
+<sc-if value="{{n.lit}}" hint-placeholder-val="{{false}}">
+<span style="width: 12px; height: 12px; border-radius: 50%; background: #A9D9C6; animation: glow 2.4s ease-in-out infinite, fadein 500ms ease-out both"></span>
+<span class="nlabel" style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #E8ECEA; white-space: nowrap; animation: fadein 600ms ease-out 200ms both">{{n.label}}</span>
+</sc-if>
+<sc-if value="{{n.dim}}" hint-placeholder-val="{{true}}">
+<span style="width: 8px; height: 8px; margin: 2px; border-radius: 50%; background: #4C5A55"></span>
+<span class="nlabel" style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #6E7A75; white-space: nowrap">{{n.label}}</span>
+</sc-if>
+</div>
+</sc-for>
+
+</div>
+</div>
+
+</div>
+
+<div style="position: relative; display: flex; justify-content: flex-end; align-items: center; gap: 14px; padding: 0 clamp(20px, 5vw, 56px) 28px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A9490">
+<span>{{counter}} / 05</span>
+<span style="width: 120px; height: 1px; background: #2E3633; position: relative; overflow: hidden"><span style="position: absolute; left: 0; top: 0; height: 1px; width: {{progress}}%; background: #A9D9C6; transition: width 600ms ease"></span></span>
+<span class="counter-hint">SCROLL, OR CHOOSE A STATION.</span>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { station: 0, mx: 900, my: 300 };
+    this.cycle = 5;
+    var seed = 7;
+    function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+    this.stars = [];
+    for (var i = 0; i < 34; i++) {
+      this.stars.push({ x: (rnd() * 100).toFixed(1), y: (rnd() * 100).toFixed(1), r: rnd() < 0.8 ? 2 : 3, d: (2.5 + rnd() * 3).toFixed(1), delay: (rnd() * 4).toFixed(1) });
+    }
+    this.nodeDefs = [
+      { id: 'resume', label: 'RESUME EVALUATOR', x: 100, y: 80, on: [0, 1] },
+      { id: 'rag', label: 'WEB-RAG', x: 60, y: 240, on: [0, 1] },
+      { id: 'clf', label: 'BANGLA CLASSIFIER', x: 170, y: 360, on: [0, 1, 2] },
+      { id: 'qpain', label: 'IEEE QPAIN 2026', x: 380, y: 70, on: [0, 2, 3] },
+      { id: 'bea', label: 'BEA 2026 · ACL', x: 420, y: 230, on: [0, 3] },
+      { id: 'eeg', label: 'EEG THESIS', x: 340, y: 360, on: [0, 3] }
+    ];
+    this.cx = 240; this.cy = 210;
+  }
+  componentDidMount() {
+    var self = this;
+    var reduce = false;
+    try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (err) {}
+    this.reduce = reduce;
+    if (!reduce) this.startTimer();
+  }
+  componentWillUnmount() {
+    if (this.timer) clearInterval(this.timer);
+    if (this.raf) cancelAnimationFrame(this.raf);
+  }
+  startTimer() {
+    var self = this;
+    if (this.timer) clearInterval(this.timer);
+    this.timer = setInterval(function () {
+      self.setState({ station: (self.state.station + 1) % 5 });
+    }, this.cycle * 1000);
+  }
+  edge(a, b, lit) {
+    var dx = b.x - a.x, dy = b.y - a.y;
+    return { x: a.x, y: a.y, len: Math.sqrt(dx * dx + dy * dy).toFixed(1), ang: (Math.atan2(dy, dx) * 180 / Math.PI).toFixed(2), lit: lit, dim: !lit };
+  }
+  renderVals() {
+    var self = this;
+    var s = this.state.station;
+    var names = ['IDENTITY', 'PROJECTS', 'AI/ML', 'RESEARCH', 'CONTACT'];
+    var stations = names.map(function (n, i) {
+      return { num: '0' + (i + 1), name: n, active: i === s, idle: i !== s, go: function () { self.setState({ station: i }); if (!self.reduce) self.startTimer(); } };
+    });
+    var core = { x: this.cx, y: this.cy };
+    var lit = {};
+    var nodes = this.nodeDefs.map(function (d) {
+      var on = d.on.indexOf(s) !== -1;
+      lit[d.id] = on;
+      return { label: d.label, x: d.x, top: d.y - 6, lit: on, dim: !on };
+    });
+    var byId = {};
+    this.nodeDefs.forEach(function (d) { byId[d.id] = d; });
+    var edges = this.nodeDefs.map(function (d) { return self.edge(core, d, lit[d.id]); });
+    edges.push(this.edge(byId.clf, byId.qpain, lit.clf && lit.qpain));
+    edges.push(this.edge(byId.qpain, byId.bea, lit.qpain && lit.bea));
+    edges.push(this.edge(byId.bea, byId.eeg, lit.bea && lit.eeg));
+    return {
+      s0: s === 0, s1: s === 1, s2: s === 2, s3: s === 3, s4: s === 4,
+      stations: stations, nodes: nodes, edges: edges, stars: this.stars,
+      cx: this.cx, cy: this.cy, cycle: this.cycle,
+      counter: '0' + (s + 1), progress: ((s + 1) / 5 * 100).toFixed(0),
+      mx: this.state.mx, my: this.state.my,
+      onMove: function (ev) {
+        var r = ev.currentTarget.getBoundingClientRect();
+        var x = ev.clientX - r.left, y = ev.clientY - r.top;
+        if (self.raf) return;
+        self.raf = requestAnimationFrame(function () { self.raf = null; self.setState({ mx: Math.round(x), my: Math.round(y) }); });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -24,11 +24,11 @@ export default function HomePage() {
   return <>
     <StationHero stations={stations} nodes={nodes} stars={<Starfield intensity="strong" />} />
     <div className="home-sections" id="selected-work" tabIndex={-1}>
-      <section data-project-index><div className="redesign-section-heading"><div><p className="label">{homeCopy.station} 02 → {copy.selectedProjects}</p><h2>{copy.selectedProjects}</h2></div><span className="label">{Math.min(projects.length,3)} {copy.records} · {copy.allSource}</span></div>
+      <section data-project-index><div className="redesign-section-heading"><div><p className="label">{homeCopy.station} 02 → {copy.selectedWork}</p><h2>{copy.selectedProjects}</h2></div><span className="label">{Math.min(projects.length,3)} {copy.records} · {copy.allSource}</span></div>
         {projects.length?<div className="project-timeline">{projects.slice(0,3).map(p=><Reveal key={p.slug}><ProjectCard project={p} /></Reveal>)}</div>:<p>{copy.emptyProjects}</p>}
       </section>
-      <section data-research-index><div className="redesign-section-heading"><div><p className="label">{homeCopy.station} 04 → {copy.selectedResearch}</p><h2>{copy.selectedResearch}</h2></div><span className="label">{papers.filter(p=>p.frontmatter.status==='published').length} {copy.published} · {papers.filter(p=>p.frontmatter.status==='thesis').length} {copy.thesis}</span></div>
-        {papers.length?<div className="research-card-list">{papers.slice(0,3).map(p=><Reveal key={p.slug}><ResearchCard paper={p} /></Reveal>)}</div>:<p>{copy.emptyResearch}</p>}
+      <section data-research-index><div className="redesign-section-heading"><div><p className="label">{homeCopy.station} 04 → {copy.selectedResearch}</p><h2>{copy.selectedResearch}</h2></div><span className="label">{papers.filter(p=>p.frontmatter.status==='published').length} {copy.peerReviewed} · {papers.filter(p=>p.frontmatter.status==='thesis').length} {copy.thesisShort}</span></div>
+        {papers.length?<div className="research-card-list">{papers.slice(0,3).map(p=><Reveal key={p.slug}><ResearchCard paper={p} compact /></Reveal>)}</div>:<p>{copy.emptyResearch}</p>}
       </section>
       <Reveal><section className="home-profile"><div><p className="label">{copy.profile}</p><h2>{homeCopy.contactTitle}</h2>{emailHref&&publicEmail&&<a className="accent contact-email" href={emailHref} rel="noopener noreferrer">{publicEmail} ↗</a>}</div><p>{site.bio}</p></section></Reveal>
     </div>

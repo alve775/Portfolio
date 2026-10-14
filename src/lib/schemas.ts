@@ -34,6 +34,8 @@ export const paperSchema = z.object({
   bibtex: z.string().optional(),
   /** The owner's plain statement of what the work shows. Never generated. */
   takeaway: z.string().min(1),
+  /** Thesis supervisor, credited beside (never inside) the author list. */
+  supervisor: z.string().trim().min(1).optional(),
   metric: z.string().trim().min(1).optional(),
   metricNote: z.string().trim().min(1).optional(),
   results: z.array(z.object({

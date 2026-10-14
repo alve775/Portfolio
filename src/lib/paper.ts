@@ -1,5 +1,5 @@
 import type { Paper } from '@/lib/schemas';
-import { paperCopy } from './site.ts';
+import { paperCopy, site } from './site.ts';
 
 export const STATUS_LABEL: Record<Paper['status'], string> = paperCopy.status;
 
@@ -45,7 +45,8 @@ export function kindLabel(frontmatter: Paper): string {
 export function cardHeadLine(frontmatter: Paper): string {
   const parts: string[] = [];
   if (frontmatter.status !== 'in-progress') {
-    parts.push(frontmatter.venue);
+    // The full university name crowds the strip; the site already defines its short form.
+    parts.push(frontmatter.venue === site.affiliation ? site.affiliationShort : frontmatter.venue);
   }
   if (!parts.some((part) => part.includes(String(frontmatter.year)))) {
     parts.push(String(frontmatter.year));

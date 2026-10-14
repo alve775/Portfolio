@@ -93,7 +93,8 @@ export const copy = {
   technicalSkills: 'Technical skills', education: 'Education', experience: 'Experience', publications: 'Publications', download: 'Download PDF', cgpa: 'CGPA',
   thesisShort: 'thesis',
   sentences: 'sentences', encoders: 'encoders', peerReviewed: 'peer-reviewed', leadAuthor: 'lead author', filterProjects: 'Filter projects',
-  selectedProjects: 'Selected projects', selectedResearch: 'Selected research', profile: 'Profile',
+  selectedProjects: 'Selected projects', selectedResearch: 'Selected research', selectedWork: 'Selected work', profile: 'Profile',
+  supervisedBy: 'supervised by',
   projects: 'Projects', research: 'Research', cv: 'Curriculum vitae', notes: 'Notes',
   emptyProjects: 'No verified projects are published yet.', emptyResearch: 'No verified research entries are published yet.', emptyNotes: 'No notes are published yet.',
   record: 'record', records: 'records', allSource: 'All open source',
@@ -146,7 +147,7 @@ export const paperCopy = {
 export const homeCopy = {
   classifierNode: 'Bangla classifier', thesisNode: 'EEG thesis',
   constellation: 'Work constellation', skipWork: 'Skip to selected work', choose: 'Scroll, or choose a station.',
-  pause: 'Pause automatic station changes', play: 'Resume automatic station changes', station: 'Station',
+  station: 'Station',
   viewCv: 'View CV', viewProjects: 'View projects', tryClassifier: 'Try the classifier', readResearch: 'Read the research',
   stationLabels: ['Identity', 'Projects', 'AI/ML', 'Research', 'Contact'],
   projectTitle: 'Built to be used', projectBody: 'Web apps, mobile apps and local AI tools, with the source public for every one.',

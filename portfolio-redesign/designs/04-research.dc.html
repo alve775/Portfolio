@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Research</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#A9D9C6}a:hover{color:#CDEDE0}
+@keyframes twinkleSoft{0%,100%{opacity:0.08}50%{opacity:0.5}}
+@keyframes rise{from{opacity:0;transform:translateY(24px);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+@keyframes reveal{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes glow{0%,100%{box-shadow:0 0 8px rgba(169,217,198,0.5)}50%{box-shadow:0 0 16px rgba(169,217,198,0.9)}}
+.card{transition:border-color 300ms ease, background-color 300ms ease, transform 300ms ease}
+.card:hover{border-color:#5E7A6F;background-color:#151C19;transform:translateY(-2px)}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div style="position: relative; overflow: hidden; min-height: 1700px; box-sizing: border-box; background-color: #121715; background-image: linear-gradient(#18201D 1px, transparent 1px), linear-gradient(90deg, #18201D 1px, transparent 1px); background-size: 64px 64px; color: #E8ECEA; font-family: 'Manrope', sans-serif">
+
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none">
+<sc-for list="{{stars}}" as="s" hint-placeholder-count="10">
+<span style="position: absolute; left: {{s.x}}%; top: {{s.y}}%; width: {{s.r}}px; height: {{s.r}}px; border-radius: 50%; background: #CFE9DE; animation: twinkleSoft {{s.d}}s ease-in-out {{s.delay}}s infinite"></span>
+</sc-for>
+</div>
+
+<nav style="position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 22px clamp(20px, 5vw, 56px); border-bottom: 1px solid #252C29; font-size: 15px; background: rgba(18,23,21,0.7)">
+<a href="#" style="display: flex; align-items: center; gap: 10px; font-weight: 600; color: #E8ECEA; text-decoration: none"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #A9D9C6; display: inline-block; animation: glow 2.4s ease-in-out infinite"></span>Kamruzzaman Khan Alve</a>
+<div style="display: flex; flex-wrap: wrap; gap: 26px">
+<a href="#" style="color: #B7C0BC; text-decoration: none">Projects</a>
+<a href="#" aria-current="page" style="color: #A9D9C6; text-decoration: none; border-bottom: 1px solid #A9D9C6; padding-bottom: 2px">Research</a>
+<a href="#" style="color: #B7C0BC; text-decoration: none">CV</a>
+<a href="#" style="color: #B7C0BC; text-decoration: none">Email ↗</a>
+</div>
+</nav>
+
+<div style="position: relative; max-width: 1160px; margin: 0 auto; padding: 64px clamp(20px, 5vw, 56px) 56px; display: flex; flex-direction: column; gap: 56px">
+
+<header style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 32px">
+<div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A9490; animation: rise 600ms ease-out both">STATION 04 / RESEARCH</div>
+<h1 style="margin: 0; font-size: clamp(40px, 10vw, 64px); line-height: 1.02; font-weight: 500; letter-spacing: -0.025em; animation: rise 800ms cubic-bezier(.2,.7,.2,1) 80ms both">Evaluation comes first</h1>
+<p style="margin: 0; font-size: 20px; line-height: 1.5; color: #B7C0BC; max-width: 580px; animation: rise 800ms ease-out 200ms both">Peer-reviewed NLP publications and undergraduate research in EEG analysis. Each record leads with the result, then says what it does not show.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; animation: rise 800ms ease-out 320ms both">
+<a href="#" style="text-decoration: none; color: #E8ECEA; border: 1px solid #3A4440; padding: 10px 16px; border-radius: 22px; font-size: 14px">Google Scholar ↗</a>
+<a href="#" style="text-decoration: none; color: #E8ECEA; border: 1px solid #3A4440; padding: 10px 16px; border-radius: 22px; font-size: 14px">Hugging Face ↗</a>
+</div>
+</div>
+<div style="flex: 0 1 300px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: #2E3633; border: 1px solid #2E3633; animation: rise 900ms ease-out 300ms both">
+<div style="background: #121715; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 26px; color: #A9D9C6">2</span><span style="font-size: 12px; color: #8A9490; line-height: 1.3">peer-reviewed</span></div>
+<div style="background: #121715; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 26px; color: #A9D9C6">1</span><span style="font-size: 12px; color: #8A9490; line-height: 1.3">lead author</span></div>
+<div style="background: #121715; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 26px; color: #A9D9C6">1</span><span style="font-size: 12px; color: #8A9490; line-height: 1.3">thesis</span></div>
+</div>
+</header>
+
+<section style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1px solid #252C29; padding-bottom: 14px">
+<h2 style="margin: 0; font-size: 28px; font-weight: 500">Published</h2>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A9490">2 RECORDS</span>
+</div>
+<sc-for list="{{published}}" as="r" hint-placeholder-count="2">
+<article class="card" style="border: 1px solid #2E3633; background-color: rgba(18,23,21,0.88); border-radius: 4px; padding: 24px; display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: flex-start; animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 28%">
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em">
+<span style="color: #121715; background: #A9D9C6; padding: 4px 8px; border-radius: 2px">{{r.field}}</span>
+<span style="color: #D9A06A">{{r.venue}}</span>
+<span style="color: #8A9490">{{r.status}}</span>
+</div>
+<h3 style="margin: 0; font-size: 22px; line-height: 1.3; font-weight: 500"><a href="#" style="color: #E8ECEA; text-decoration: none">{{r.title}} →</a></h3>
+<div style="font-size: 14px; color: #8A9490">{{r.authors}}</div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding-top: 4px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #A9D9C6">WHAT THIS SHOWS</span>
+<p style="margin: 0; font-size: 15px; line-height: 1.55; color: #B7C0BC">{{r.shows}}</p>
+</div>
+</div>
+<div style="flex: 1 1 200px; min-width: 0; border-left: 1px solid #2E3633; padding-left: 20px; display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; color: #A9D9C6">{{r.metric}}</span>
+<span style="font-size: 13px; line-height: 1.45; color: #8A9490">{{r.metricNote}}</span>
+</div>
+</article>
+</sc-for>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1px solid #252C29; padding-bottom: 14px">
+<h2 style="margin: 0; font-size: 28px; font-weight: 500">Undergraduate thesis</h2>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A9490">1 RECORD</span>
+</div>
+<article class="card" style="border: 1px solid #2E3633; background-color: rgba(18,23,21,0.88); border-radius: 4px; padding: 24px; display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: flex-start; animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 28%">
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em">
+<span style="color: #121715; background: #D9A06A; padding: 4px 8px; border-radius: 2px">EEG</span>
+<span style="color: #D9A06A">RUET · 2026 · AUTHOR</span>
+<span style="color: #8A9490">UNDERGRADUATE THESIS</span>
+</div>
+<h3 style="margin: 0; font-size: 22px; line-height: 1.3; font-weight: 500"><a href="#" style="color: #E8ECEA; text-decoration: none">A Leakage-Safe Framework for Temporal and Regional EEG Biomarker Discovery for ADHD →</a></h3>
+<div style="font-size: 14px; color: #8A9490">Kamruzzaman Khan Alve · supervised by Md. Azmain Yakin Srizon, RUET CSE</div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding-top: 4px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #A9D9C6">WHAT THIS SHOWS</span>
+<p style="margin: 0; font-size: 15px; line-height: 1.55; color: #B7C0BC">Subject-level validation and fold-local processing prevent the same participant from contributing to both training and evaluation. Central–parietal coherence was the leading localized candidate after regional-power control, but its adjusted result did not establish family-wise confirmation.</p>
+</div>
+</div>
+<div style="flex: 1 1 200px; min-width: 0; border-left: 1px solid #2E3633; padding-left: 20px; display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; color: #A9D9C6">121</span>
+<span style="font-size: 13px; line-height: 1.45; color: #8A9490">children in a public cohort · participant-level nested CV</span>
+</div>
+</article>
+</section>
+
+<footer style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px 40px; border-top: 1px solid #252C29; padding-top: 36px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 20px; font-weight: 600; letter-spacing: -0.01em; color: #E8ECEA">Kamruzzaman Khan Alve</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8A9490">RUET · RAJSHAHI, BANGLADESH</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 0 28px">
+<a href="#" style="color: #A9D9C6; text-decoration: none; font-size: 16px; padding: 12px 0">GitHub</a>
+<a href="#" style="color: #A9D9C6; text-decoration: none; font-size: 16px; padding: 12px 0">Google Scholar</a>
+<a href="#" style="color: #A9D9C6; text-decoration: none; font-size: 16px; padding: 12px 0">HuggingFace</a>
+<a href="#" style="color: #A9D9C6; text-decoration: none; font-size: 16px; padding: 12px 0">LinkedIn</a>
+<a href="#" style="color: #A9D9C6; text-decoration: none; font-size: 16px; padding: 12px 0">Email</a>
+</div>
+</footer>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1700}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    var seed = 11;
+    function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+    this.stars = [];
+    for (var i = 0; i < 40; i++) {
+      this.stars.push({ x: (rnd() * 100).toFixed(1), y: (rnd() * 100).toFixed(1), r: rnd() < 0.8 ? 2 : 3, d: (3 + rnd() * 3).toFixed(1), delay: (rnd() * 4).toFixed(1) });
+    }
+  }
+  renderVals() {
+    return {
+      stars: this.stars,
+      published: [
+        { field: 'LANGUAGE', venue: 'IEEE QPAIN 2026 · LEAD AUTHOR', status: 'PUBLISHED',
+          title: 'Monolingual vs. Multilingual BERT: Analyzing Performance on Downstream Grammatical Sentence-Type Classification Task',
+          authors: 'Kamruzzaman Khan Alve, Nahid Montasir Rifat, Mir Ashikur Rahman, Mohiuddin Ahmed',
+          shows: 'On the five-class Bangla sentence benchmark, the best monolingual and multilingual encoders reached similar test accuracy. The comparison supports evaluating both families; the small gap does not establish general monolingual superiority.',
+          metric: '97.61%', metricNote: 'best test accuracy (BanglaBERT) · 6 encoders · 5,100-sentence test split' },
+        { field: 'LANGUAGE', venue: 'BEA 2026 · ACL · CO-AUTHOR', status: 'PUBLISHED',
+          title: 'Failure at BEA 2026 Shared Task 1: One Pipeline, Three L1s: A Unified Language-Agnostic System for Vocabulary Difficulty Prediction',
+          authors: 'Abid Al Hossain, Kamruzzaman Khan Alve · team “Failure”',
+          shows: 'One shared pipeline improved over the official closed-track baseline for Spanish, German and Mandarin Chinese L1 groups without language-specific adaptation. Errors were larger at the difficulty extremes.',
+          metric: '3 / 3', metricNote: 'L1 groups above the official closed-track baseline' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

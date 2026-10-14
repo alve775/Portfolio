@@ -55,3 +55,6 @@ next-env.d.ts
 
 # brainstorming mockups
 /.superpowers/
+
+# Redesign comparison screenshots (working folder, see portfolio-redesign/README.md 2.4)
+/portfolio-redesign/compare/

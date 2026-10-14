@@ -10,6 +10,6 @@ export function ProjectsExplorer({cards}:{cards:Card[]}){
   return <section data-project-index>
     <div className="project-filter-bar"><div className="project-filters" role="group" aria-label={copy.filterProjects}>{copy.filters.map(f=><button className="button button-secondary" key={f.id} type="button" aria-pressed={filter===f.id} onClick={()=>setFilter(f.id)}>{f.label} · {cards.filter(card=>matchesProject(card,f.id)).length}</button>)}</div><p className="label" aria-live="polite">{shown} {copy.of} {cards.length} {copy.records}</p></div>
     {cards.length?<div className="project-timeline">{cards.map(card=><div key={card.slug} hidden={!matchesProject(card,filter)}>{card.view}</div>)}</div>:<p>{copy.emptyProjects}</p>}
-    <noscript><style>{'.project-filters{display:none}'}</style></noscript>
+    <noscript><style>{'.project-filters,.notes-toggle{display:none}.engineering-notes[hidden]{display:grid}'}</style></noscript>
   </section>;
 }

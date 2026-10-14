@@ -23,7 +23,7 @@ export function ProfileLinks({
         {links.map(({ label, href }) => (
           <li key={label}>
             <a className="profile-link" href={href} target={href.startsWith('https:') ? '_blank' : undefined} rel="me noopener noreferrer">
-              {label} <span aria-hidden="true">↗</span>
+              {label}
             </a>
           </li>
         ))}
@@ -37,7 +37,7 @@ export function ProfileLinks({
         <li key={label}>
           <a className="profile-link profile-link-primary" href={href} target={href.startsWith('https:') ? '_blank' : undefined} rel="me noopener noreferrer">
             <span>{label}</span>
-            <span aria-hidden="true">↗</span>
+            {href.startsWith('https:') ? <span aria-hidden="true">↗</span> : null}
           </a>
         </li>
       ))}

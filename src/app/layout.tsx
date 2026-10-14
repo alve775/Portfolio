@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { CursorGlow } from '@/components/CursorGlow';
 import { PersonJsonLd } from '@/components/PersonJsonLd';
 import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
     <html lang="en" className={fontVariables}>
       <body data-design="constellation" className="site-body">
         <Starfield />
+        <CursorGlow />
         <a
           href="#main"
           className="skip-link"

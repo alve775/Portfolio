@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Design handoff package: a prototype runtime and reference files, not site code.
+    "portfolio-redesign/**",
   ]),
 ]);
 

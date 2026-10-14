@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Curriculum vitae</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#A9D9C6}a:hover{color:#CDEDE0}
+@keyframes twinkleSoft{0%,100%{opacity:0.08}50%{opacity:0.5}}
+@keyframes rise{from{opacity:0;transform:translateY(24px);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+@keyframes reveal{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:none}}
+@keyframes glow{0%,100%{box-shadow:0 0 8px rgba(169,217,198,0.5)}50%{box-shadow:0 0 16px rgba(169,217,198,0.9)}}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div style="position: relative; overflow: hidden; min-height: 2600px; box-sizing: border-box; background-color: #121715; background-image: linear-gradient(#18201D 1px, transparent 1px), linear-gradient(90deg, #18201D 1px, transparent 1px); background-size: 64px 64px; color: #E8ECEA; font-family: 'Manrope', sans-serif">
+
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none">
+<sc-for list="{{stars}}" as="s" hint-placeholder-count="10">
+<span style="position: absolute; left: {{s.x}}%; top: {{s.y}}%; width: {{s.r}}px; height: {{s.r}}px; border-radius: 50%; background: #CFE9DE; animation: twinkleSoft {{s.d}}s ease-in-out {{s.delay}}s infinite"></span>
+</sc-for>
+</div>
+
+<nav style="position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 22px clamp(20px, 5vw, 56px); border-bottom: 1px solid #252C29; font-size: 15px; background: rgba(18,23,21,0.7)">
+<a href="#" style="display: flex; align-items: center; gap: 10px; font-weight: 600; color: #E8ECEA; text-decoration: none"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #A9D9C6; display: inline-block; animation: glow 2.4s ease-in-out infinite"></span>Kamruzzaman Khan Alve</a>
+<div style="display: flex; flex-wrap: wrap; gap: 26px">
+<a href="#" style="color: #B7C0BC; text-decoration: none">Projects</a>
+<a href="#" style="color: #B7C0BC; text-decoration: none">Research</a>
+<a href="#" aria-current="page" style="color: #A9D9C6; text-decoration: none; border-bottom: 1px solid #A9D9C6; padding-bottom: 2px">CV</a>
+<a href="#" style="color: #B7C0BC; text-decoration: none">Email ↗</a>
+</div>
+</nav>
+
+<div style="position: relative; max-width: 1160px; margin: 0 auto; padding: 64px clamp(20px, 5vw, 56px) 56px; display: flex; flex-direction: column; gap: 48px">
+
+<header style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 28px; border-bottom: 1px solid #252C29; padding-bottom: 32px">
+<div style="flex: 1 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A9490; animation: rise 600ms ease-out both">CURRICULUM VITAE</div>
+<h1 style="margin: 0; font-size: clamp(34px, 9vw, 60px); line-height: 1.02; font-weight: 500; letter-spacing: -0.025em; animation: rise 800ms cubic-bezier(.2,.7,.2,1) 80ms both">Kamruzzaman Khan Alve</h1>
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.06em; color: #D9A06A; animation: rise 800ms ease-out 200ms both">Junior Machine Learning Engineer · Bangla &amp; Multilingual NLP · Transformers</div>
+</div>
+<a href="#" style="text-decoration: none; color: #121715; background: #A9D9C6; padding: 14px 22px; border-radius: 24px; font-size: 15px; font-weight: 600; box-shadow: 0 0 24px rgba(169,217,198,0.3); animation: rise 800ms ease-out 300ms both">Download PDF ↓</a>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<section style="flex: 2 1 440px; min-width: 0; border: 1px solid #2E3633; background: rgba(18,23,21,0.88); padding: 22px; display: flex; flex-direction: column; gap: 12px; animation: rise 800ms ease-out 350ms both">
+<h2 style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.14em; color: #8A9490">PROFILE</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.6; color: #B7C0BC">CSE graduate from RUET with a CGPA of 3.71/4.00, two peer-reviewed NLP publications, and hands-on experience fine-tuning and evaluating Transformer models. My work includes Bangla sentence classification, local retrieval pipelines, and leakage-safe machine learning experiments.</p>
+<span style="margin-top: auto; display: flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #8A9490"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #A9D9C6; display: inline-block"></span>RAJSHAHI, BANGLADESH</span>
+</section>
+<section style="flex: 1 1 260px; min-width: 0; border: 1px solid #2E3633; background: rgba(18,23,21,0.88); padding: 22px; display: flex; flex-direction: column; gap: 12px; animation: rise 800ms ease-out 450ms both">
+<h2 style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.14em; color: #8A9490">EDUCATION</h2>
+<span style="font-size: 17px; font-weight: 600; line-height: 1.35">B.Sc. in Computer Science and Engineering</span>
+<span style="font-size: 14px; color: #B7C0BC; line-height: 1.45">Rajshahi University of Engineering and Technology · 2022–2026</span>
+<div style="margin-top: auto; display: flex; align-items: baseline; gap: 8px; border-top: 1px solid #252C29; padding-top: 12px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; color: #A9D9C6">3.71</span><span style="font-size: 13px; color: #8A9490">/ 4.00 CGPA</span></div>
+</section>
+<section style="flex: 1 1 240px; min-width: 0; border: 1px solid #2E3633; background: rgba(18,23,21,0.88); padding: 22px; display: flex; flex-direction: column; gap: 12px; animation: rise 800ms ease-out 550ms both">
+<h2 style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.14em; color: #8A9490">LINKS</h2>
+<div style="display: flex; flex-direction: column">
+<a href="#" style="display: flex; justify-content: space-between; font-size: 15px; color: #E8ECEA; text-decoration: none; padding: 9px 0; border-bottom: 1px solid #252C29"><span>GitHub</span><span style="color: #A9D9C6">↗</span></a>
+<a href="#" style="display: flex; justify-content: space-between; font-size: 15px; color: #E8ECEA; text-decoration: none; padding: 9px 0; border-bottom: 1px solid #252C29"><span>Google Scholar</span><span style="color: #A9D9C6">↗</span></a>
+<a href="#" style="display: flex; justify-content: space-between; font-size: 15px; color: #E8ECEA; text-decoration: none; padding: 9px 0; border-bottom: 1px solid #252C29"><span>Hugging Face</span><span style="color: #A9D9C6">↗</span></a>
+<a href="#" style="display: flex; justify-content: space-between; font-size: 15px; color: #E8ECEA; text-decoration: none; padding: 9px 0; border-bottom: 1px solid #252C29"><span>LinkedIn</span><span style="color: #A9D9C6">↗</span></a>
+<a href="#" style="font-size: 14px; color: #A9D9C6; text-decoration: none; padding: 9px 0; overflow-wrap: anywhere">kamruzzamanalve@gmail.com</a>
+</div>
+</section>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 56px">
+
+<section style="display: flex; flex-direction: column; gap: 16px; animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 25%">
+<h2 style="margin: 0; font-size: 26px; font-weight: 500">Technical skills</h2>
+<div style="display: flex; flex-direction: column; border-top: 1px solid #252C29">
+<sc-for list="{{skills}}" as="g" hint-placeholder-count="4">
+<div style="display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid #252C29">
+<span style="flex: 0 0 190px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #A9D9C6">{{g.name}}</span>
+<div style="flex: 1 1 320px; min-width: 0; display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{g.items}}" as="it" hint-placeholder-count="5">
+<span style="font-size: 13px; color: #B7C0BC; border: 1px solid #2E3633; background: rgba(18,23,21,0.88); padding: 4px 10px; border-radius: 12px">{{it.t}}</span>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 26px; font-weight: 500">Experience</h2>
+<div style="position: relative; display: flex; flex-direction: column; gap: 14px; padding-left: 32px">
+<span aria-hidden="true" style="position: absolute; left: 5px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(#A9D9C6, #2E3633)"></span>
+<sc-for list="{{experience}}" as="x" hint-placeholder-count="4">
+<article style="position: relative; border: 1px solid #2E3633; background: rgba(18,23,21,0.88); padding: 20px; display: flex; flex-direction: column; gap: 8px; animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 25%">
+<span aria-hidden="true" style="position: absolute; left: -32px; top: 24px; width: 11px; height: 11px; border-radius: 50%; background: #A9D9C6; animation: glow 2.4s ease-in-out infinite"></span>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px">
+<h3 style="margin: 0; font-size: 18px; font-weight: 600">{{x.role}}</h3>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #D9A06A">{{x.when}}</span>
+</div>
+<span style="font-size: 14px; color: #8A9490">{{x.org}}</span>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #B7C0BC">{{x.body}}</p>
+</article>
+</sc-for>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 16px; animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 25%">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px">
+<h2 style="margin: 0; font-size: 26px; font-weight: 500">Publications</h2>
+<a href="#" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-decoration: none">ALL RESEARCH →</a>
+</div>
+<div style="display: flex; flex-direction: column; border-top: 1px solid #252C29">
+<a href="#" style="display: flex; flex-direction: column; gap: 6px; padding: 16px 0; border-bottom: 1px solid #252C29; text-decoration: none"><span style="font-size: 16px; line-height: 1.4; color: #E8ECEA">Monolingual vs. Multilingual BERT: Analyzing Performance on Downstream Grammatical Sentence-Type Classification Task</span><span style="font-size: 13px; color: #8A9490">Alve, Rifat, Rahman, Ahmed · <span style="color: #D9A06A">IEEE QPAIN 2026</span> · Published</span></a>
+<a href="#" style="display: flex; flex-direction: column; gap: 6px; padding: 16px 0; border-bottom: 1px solid #252C29; text-decoration: none"><span style="font-size: 16px; line-height: 1.4; color: #E8ECEA">Failure at BEA 2026 Shared Task 1: One Pipeline, Three L1s: A Unified Language-Agnostic System for Vocabulary Difficulty Prediction</span><span style="font-size: 13px; color: #8A9490">Hossain, Alve · <span style="color: #D9A06A">BEA 2026 · ACL</span> · Published</span></a>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 16px; animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 25%">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px">
+<h2 style="margin: 0; font-size: 26px; font-weight: 500">Selected projects</h2>
+<a href="#" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-decoration: none">ALL PROJECTS →</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px">
+<div style="border: 1px solid #2E3633; background: rgba(18,23,21,0.88); padding: 18px; display: flex; flex-direction: column; gap: 8px"><span style="font-size: 16px; font-weight: 600">Bangla Sentence Classifier</span><span style="font-size: 14px; line-height: 1.5; color: #B7C0BC">Fine-tuned XLM-R for five grammatical sentence types and deployed a Gradio interface on Hugging Face.</span></div>
+<div style="border: 1px solid #2E3633; background: rgba(18,23,21,0.88); padding: 18px; display: flex; flex-direction: column; gap: 8px"><span style="font-size: 16px; font-weight: 600">Web-RAG</span><span style="font-size: 14px; line-height: 1.5; color: #B7C0BC">A local webpage-retrieval and LLM question-answering pipeline with persistent vector storage.</span></div>
+<div style="border: 1px solid #2E3633; background: rgba(18,23,21,0.88); padding: 18px; display: flex; flex-direction: column; gap: 8px"><span style="font-size: 16px; font-weight: 600">Resume Evaluator</span><span style="font-size: 14px; line-height: 1.5; color: #B7C0BC">LLM-assisted resume analysis with PDF/DOCX parsing, scoring, targeted feedback, browser editing and export.</span></div>
+</div>
+</section>
+
+</div>
+
+<footer style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px 40px; border-top: 1px solid #252C29; padding-top: 36px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 20px; font-weight: 600; letter-spacing: -0.01em; color: #E8ECEA">Kamruzzaman Khan Alve</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8A9490">RUET · RAJSHAHI, BANGLADESH</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 0 28px">
+<a href="#" style="color: #A9D9C6; text-decoration: none; font-size: 16px; padding: 12px 0">GitHub</a>
+<a href="#" style="color: #A9D9C6; text-decoration: none; font-size: 16px; padding: 12px 0">Google Scholar</a>
+<a href="#" style="color: #A9D9C6; text-decoration: none; font-size: 16px; padding: 12px 0">HuggingFace</a>
+<a href="#" style="color: #A9D9C6; text-decoration: none; font-size: 16px; padding: 12px 0">LinkedIn</a>
+<a href="#" style="color: #A9D9C6; text-decoration: none; font-size: 16px; padding: 12px 0">Email</a>
+</div>
+</footer>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":2600}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    var seed = 11;
+    function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+    this.stars = [];
+    for (var i = 0; i < 40; i++) {
+      this.stars.push({ x: (rnd() * 100).toFixed(1), y: (rnd() * 100).toFixed(1), r: rnd() < 0.8 ? 2 : 3, d: (3 + rnd() * 3).toFixed(1), delay: (rnd() * 4).toFixed(1) });
+    }
+  }
+  renderVals() {
+    function g(name, list) { return { name: name, items: list.map(function (t) { return { t: t }; }) }; }
+    return {
+      stars: this.stars,
+      skills: [
+        g('MACHINE LEARNING & NLP', ['Python', 'PyTorch', 'Hugging Face Transformers', 'scikit-learn', 'XLM-R', 'BanglaBERT', 'SahajBERT', 'mBERT', 'fine-tuning', 'text classification']),
+        g('LLMS & RETRIEVAL', ['LangChain', 'Ollama', 'ChromaDB', 'embeddings', 'RAG', 'local LLM pipelines']),
+        g('EVALUATION & DATA', ['pandas', 'NumPy', 'preprocessing', 'stratified splitting', 'cross-validation', 'benchmarking', 'failure analysis', 'bootstrap & permutation testing']),
+        g('ENGINEERING', ['Git', 'Linux', 'Jupyter', 'Gradio', 'REST APIs', 'JavaScript', 'TypeScript', 'Next.js'])
+      ],
+      experience: [
+        { role: 'Independent NLP research', org: 'Bangla & multilingual NLP', when: '2024–present',
+          body: 'Benchmarked six monolingual and multilingual Transformer encoders on a 25,500-sentence, five-class Bangla dataset and deployed an XLM-R classifier on Hugging Face. Co-developed a unified vocabulary-difficulty prediction pipeline for three L1 groups in the BEA 2026 Shared Task.' },
+        { role: 'Research member', org: "Young Learners' Research Lab, RUET", when: '2024–present',
+          body: 'Collaborative AI/NLP research, seminars and experiment review under faculty supervision, spanning low-resource NLP and biomedical machine learning.' },
+        { role: 'Undergraduate thesis · ADHD EEG analysis', org: 'RUET CSE', when: '2025–2026',
+          body: 'Designed subject-level evaluation to investigate participant leakage and confounding, using nested cross-validation and statistical resampling.' },
+        { role: 'Industrial trainee', org: 'Code Studio', when: '2025',
+          body: 'Requirements analysis, debugging, Git-based collaboration, documentation and software delivery workflows.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

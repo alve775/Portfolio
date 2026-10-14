@@ -75,7 +75,10 @@ test('exports the accessible station hero and real selected-work destinations', 
   assert.match(html, /data-station-hero/);
   assert.match(html, /starfield-strong/);
   assert.equal((html.match(/<h1(?:\s|>)/g) ?? []).length, 1);
-  assert.match(html, /Pause automatic station changes/);
+  // Scroll chooses the station (no timer), so there is no automatic change to pause.
+  assert.match(html, /Scroll, or choose a station\./);
+  assert.doesNotMatch(html, /automatic station changes/);
+  assert.match(html, /data-scroll-driven="false"/, 'the exported hero must start unpinned for no-JS visitors');
   assert.match(html, /<noscript>/);
   assert.match(html, /id="selected-work" tabindex="-1"/);
   for (const id of ids) assert.ok(html.includes(`aria-controls="station-${id}"`));
@@ -222,12 +225,16 @@ test('exports filter controls, exact model results, and thesis-specific details'
   const thesis = await readFile(path.join(out, 'research/leakage-safe-adhd-eeg-framework/index.html'), 'utf8');
   assert.match(projects, /aria-label="Filter projects"/);
   assert.match(projects, /aria-pressed="true"/);
-  assert.match(projects, /<details[^>]+class="engineering-notes"/);
+  // The notes toggle sits in the card's button row (design 03), so it is a button, not <details>.
+  assert.match(projects, /<button[^>]+class="notes-toggle"[^>]+aria-expanded="true"/);
+  assert.match(projects, /<dl[^>]+class="engineering-notes"/);
   assert.match(paper, /Copy BibTeX/);
   assert.match(paper, /role="status"/);
   assert.match(paper, /97.57%/);
   assert.match(paper, /5,100-sentence test split/);
-  assert.match(paper, /Previous record/);
+  // Design 05: "← All research" on the left, the next record on the right.
+  assert.match(paper, /Next record/);
+  assert.match(paper, /href="\/research\/vocabulary-difficulty-prediction\/"/);
   assert.match(thesis, /Overview/);
   assert.match(thesis, /Md. Azmain Yakin Srizon/);
   assert.doesNotMatch(thesis, /class="detail-metric-panel"/);

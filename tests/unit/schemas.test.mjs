@@ -15,7 +15,17 @@ test('existing records remain valid without redesign fields', () => {
     assert.equal(parsed.metricNote, undefined);
     assert.equal(parsed.results, undefined);
     assert.equal(parsed.tags, undefined);
+    assert.equal(parsed.supervisor, undefined);
   }
+});
+
+test('credits an optional supervisor without touching the author list', () => {
+  const parsed = paperSchema.parse({...paper, supervisor:'Md. Azmain Yakin Srizon, RUET CSE'});
+  assert.equal(parsed.supervisor, 'Md. Azmain Yakin Srizon, RUET CSE');
+  assert.deepEqual(parsed.authors, paper.authors);
+  assert.equal(paperSchema.safeParse({...paper, supervisor:'  '}).success, false);
+  const unresolved = ['{{','TO','DO}}'].join('');
+  assert.equal(isPublishablePaper({frontmatter:paperSchema.parse({...paper, supervisor:unresolved}), body:''}), false);
 });
 
 test('retains optional metrics, project categories, and bounded model results', () => {

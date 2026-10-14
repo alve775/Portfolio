@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Projects</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#A9D9C6}a:hover{color:#CDEDE0}
+@keyframes twinkleSoft{0%,100%{opacity:0.08}50%{opacity:0.5}}
+@keyframes rise{from{opacity:0;transform:translateY(24px);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+@keyframes reveal{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes glow{0%,100%{box-shadow:0 0 8px rgba(169,217,198,0.5)}50%{box-shadow:0 0 16px rgba(169,217,198,0.9)}}
+@keyframes blip{0%,100%{opacity:1}50%{opacity:0.35}}
+@keyframes open{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.card{transition:border-color 300ms ease, background-color 300ms ease, transform 300ms ease}
+.card:hover{border-color:#5E7A6F;background-color:#151C19;transform:translateY(-2px)}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div style="position: relative; overflow: hidden; min-height: 3400px; box-sizing: border-box; background-color: #121715; background-image: linear-gradient(#18201D 1px, transparent 1px), linear-gradient(90deg, #18201D 1px, transparent 1px); background-size: 64px 64px; color: #E8ECEA; font-family: 'Manrope', sans-serif">
+
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none">
+<sc-for list="{{stars}}" as="s" hint-placeholder-count="10">
+<span style="position: absolute; left: {{s.x}}%; top: {{s.y}}%; width: {{s.r}}px; height: {{s.r}}px; border-radius: 50%; background: #CFE9DE; animation: twinkleSoft {{s.d}}s ease-in-out {{s.delay}}s infinite"></span>
+</sc-for>
+</div>
+
+<nav style="position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 22px clamp(20px, 5vw, 56px); border-bottom: 1px solid #252C29; font-size: 15px; background: rgba(18,23,21,0.7)">
+<a href="#" style="display: flex; align-items: center; gap: 10px; font-weight: 600; color: #E8ECEA; text-decoration: none"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #A9D9C6; display: inline-block; animation: glow 2.4s ease-in-out infinite"></span>Kamruzzaman Khan Alve</a>
+<div style="display: flex; flex-wrap: wrap; gap: 26px">
+<a href="#" aria-current="page" style="color: #A9D9C6; text-decoration: none; border-bottom: 1px solid #A9D9C6; padding-bottom: 2px">Projects</a>
+<a href="#" style="color: #B7C0BC; text-decoration: none">Research</a>
+<a href="#" style="color: #B7C0BC; text-decoration: none">CV</a>
+<a href="#" style="color: #B7C0BC; text-decoration: none">Email ↗</a>
+</div>
+</nav>
+
+<div style="position: relative; max-width: 1160px; margin: 0 auto; padding: 64px clamp(20px, 5vw, 56px) 56px; display: flex; flex-direction: column; gap: 48px">
+
+<header style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 32px">
+<div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A9490; animation: rise 600ms ease-out both">STATION 02 / PROJECTS</div>
+<h1 style="margin: 0; font-size: clamp(40px, 10vw, 64px); line-height: 1.02; font-weight: 500; letter-spacing: -0.025em; animation: rise 800ms cubic-bezier(.2,.7,.2,1) 80ms both">Built to be used</h1>
+<p style="margin: 0; font-size: 20px; line-height: 1.5; color: #B7C0BC; max-width: 560px; animation: rise 800ms ease-out 200ms both">Web apps, mobile apps and local AI tools. Every repository is public, and each record says what I built, the key decision, and where it falls short.</p>
+</div>
+<svg aria-hidden="true" width="260" height="170" viewBox="0 0 260 170" fill="none" style="flex: 0 0 auto; max-width: 100%; animation: rise 900ms ease-out 300ms both">
+<line x1="130" y1="85" x2="40" y2="35" stroke="#A9D9C6" stroke-opacity="0.7"></line>
+<line x1="130" y1="85" x2="25" y2="115" stroke="#A9D9C6" stroke-opacity="0.7"></line>
+<line x1="130" y1="85" x2="95" y2="150" stroke="#A9D9C6" stroke-opacity="0.7"></line>
+<line x1="130" y1="85" x2="215" y2="30" stroke="#27302C"></line>
+<line x1="130" y1="85" x2="235" y2="110" stroke="#27302C"></line>
+<line x1="130" y1="85" x2="185" y2="155" stroke="#27302C"></line>
+<circle cx="40" cy="35" r="5" fill="#A9D9C6"></circle>
+<circle cx="25" cy="115" r="5" fill="#A9D9C6"></circle>
+<circle cx="95" cy="150" r="5" fill="#A9D9C6"></circle>
+<circle cx="215" cy="30" r="3.5" fill="#4C5A55"></circle>
+<circle cx="235" cy="110" r="3.5" fill="#4C5A55"></circle>
+<circle cx="185" cy="155" r="3.5" fill="#4C5A55"></circle>
+<circle cx="130" cy="85" r="18" stroke="#3F4A46"></circle>
+<circle cx="130" cy="85" r="6" fill="#E8ECEA"></circle>
+</svg>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; border-top: 1px solid #252C29; border-bottom: 1px solid #252C29; padding: 14px 0">
+<div role="group" aria-label="Filter projects" style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{filters}}" as="f" hint-placeholder-count="5">
+<sc-if value="{{f.active}}" hint-placeholder-val="{{false}}">
+<button type="button" onClick="{{f.go}}" aria-pressed="true" style="min-height: 44px; padding: 8px 16px; border-radius: 22px; border: 1px solid #A9D9C6; background: #A9D9C6; color: #121715; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">{{f.label}} · {{f.count}}</button>
+</sc-if>
+<sc-if value="{{f.idle}}" hint-placeholder-val="{{true}}">
+<button type="button" onClick="{{f.go}}" aria-pressed="false" style="min-height: 44px; padding: 8px 16px; border-radius: 22px; border: 1px solid #3A4440; background: transparent; color: #B7C0BC; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">{{f.label}} · {{f.count}}</button>
+</sc-if>
+</sc-for>
+</div>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8A9490">{{shown}} OF 5 RECORDS</span>
+</div>
+
+<div style="position: relative; display: flex; flex-direction: column; gap: 28px; padding-left: 36px">
+<span aria-hidden="true" style="position: absolute; left: 6px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(#A9D9C6, #2E3633)"></span>
+
+<sc-for list="{{list}}" as="p" hint-placeholder-count="5">
+<article class="card" style="position: relative; border: 1px solid #2E3633; background-color: rgba(18,23,21,0.88); border-radius: 4px; padding: 24px; display: flex; flex-direction: column; gap: 22px; animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 25%">
+<span aria-hidden="true" style="position: absolute; left: -36px; top: 30px; width: 13px; height: 13px; border-radius: 50%; background: #A9D9C6; animation: glow 2.4s ease-in-out infinite"></span>
+
+<div style="display: flex; flex-wrap: wrap; gap: 28px">
+<div style="flex: 1 1 360px; min-width: 0; aspect-ratio: 16 / 10; border: 1px solid #2E3633; background: #0E1311; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; position: relative; padding: 16px; box-sizing: border-box; text-align: center">
+<span aria-hidden="true" style="position: absolute; left: 10px; top: 10px; width: 14px; height: 14px; border-left: 1px solid #A9D9C6; border-top: 1px solid #A9D9C6"></span>
+<span aria-hidden="true" style="position: absolute; right: 10px; bottom: 10px; width: 14px; height: 14px; border-right: 1px solid #A9D9C6; border-bottom: 1px solid #A9D9C6"></span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8A9490; letter-spacing: 0.06em">{{p.media}}</span>
+<span style="font-size: 12px; color: #6E7A75; max-width: 320px; line-height: 1.4">{{p.caption}}</span>
+</div>
+
+<div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #8A9490">{{p.stack}}</span>
+<sc-if value="{{p.isLive}}" hint-placeholder-val="{{true}}">
+<span style="display: flex; align-items: center; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #A9D9C6; border: 1px solid #3D5249; padding: 5px 9px; border-radius: 12px"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #A9D9C6; animation: blip 1.6s ease-in-out infinite"></span>LIVE</span>
+</sc-if>
+<sc-if value="{{p.isDone}}" hint-placeholder-val="{{false}}">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #B7C0BC; border: 1px solid #3A4440; padding: 5px 9px; border-radius: 12px">COMPLETE</span>
+</sc-if>
+<sc-if value="{{p.isDev}}" hint-placeholder-val="{{false}}">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #D9A06A; border: 1px solid #5A4630; padding: 5px 9px; border-radius: 12px">IN DEVELOPMENT</span>
+</sc-if>
+</div>
+<h2 style="margin: 0; font-size: 30px; font-weight: 500; letter-spacing: -0.015em">{{p.title}}</h2>
+<div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; color: #D9A06A">{{p.metric}}</span>
+<span style="font-size: 14px; color: #8A9490">{{p.metricNote}}</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; border-top: 1px solid #252C29; padding-top: 14px">
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #8A9490">PROBLEM</span><span style="font-size: 14px; line-height: 1.5; color: #B7C0BC">{{p.problem}}</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #8A9490">APPROACH</span><span style="font-size: 14px; line-height: 1.5; color: #B7C0BC">{{p.approach}}</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #8A9490">RESULT</span><span style="font-size: 14px; line-height: 1.5; color: #B7C0BC">{{p.result}}</span></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-top: 4px">
+<a href="#" style="text-decoration: none; color: #E8ECEA; border: 1px solid #3A4440; padding: 10px 16px; border-radius: 22px; font-size: 14px">Repository ↗</a>
+<sc-if value="{{p.isLive}}" hint-placeholder-val="{{true}}">
+<a href="#" style="text-decoration: none; color: #121715; background: #A9D9C6; padding: 10px 16px; border-radius: 22px; font-size: 14px; font-weight: 600">Open live ↗</a>
+</sc-if>
+<sc-if value="{{p.hasNotes}}" hint-placeholder-val="{{true}}">
+<button type="button" onClick="{{p.toggle}}" aria-expanded="{{p.open}}" style="min-height: 44px; margin-left: auto; padding: 8px 4px; border: 0; background: transparent; color: #A9D9C6; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">{{p.toggleLabel}}</button>
+</sc-if>
+</div>
+</div>
+</div>
+
+<sc-if value="{{p.open}}" hint-placeholder-val="{{false}}">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; border-top: 1px dashed #2E3633; padding-top: 18px; animation: open 350ms ease-out both">
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #A9D9C6">MY CONTRIBUTION</span><span style="font-size: 14px; line-height: 1.55; color: #B7C0BC">{{p.contribution}}</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #A9D9C6">KEY DECISION</span><span style="font-size: 14px; line-height: 1.55; color: #B7C0BC">{{p.decision}}</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #D9A06A">LIMITATION</span><span style="font-size: 14px; line-height: 1.55; color: #B7C0BC">{{p.limitation}}</span></div>
+</div>
+</sc-if>
+</article>
+</sc-for>
+</div>
+
+<footer style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px 40px; border-top: 1px solid #252C29; padding-top: 36px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 20px; font-weight: 600; letter-spacing: -0.01em; color: #E8ECEA">Kamruzzaman Khan Alve</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8A9490">RUET · RAJSHAHI, BANGLADESH</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 0 28px">
+<a href="#" style="color: #A9D9C6; text-decoration: none; font-size: 16px; padding: 12px 0">GitHub</a>
+<a href="#" style="color: #A9D9C6; text-decoration: none; font-size: 16px; padding: 12px 0">Google Scholar</a>
+<a href="#" style="color: #A9D9C6; text-decoration: none; font-size: 16px; padding: 12px 0">HuggingFace</a>
+<a href="#" style="color: #A9D9C6; text-decoration: none; font-size: 16px; padding: 12px 0">LinkedIn</a>
+<a href="#" style="color: #A9D9C6; text-decoration: none; font-size: 16px; padding: 12px 0">Email</a>
+</div>
+</footer>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":3400}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { filter: 'all', open: { resume: true } };
+    var seed = 11;
+    function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+    this.stars = [];
+    for (var i = 0; i < 40; i++) {
+      this.stars.push({ x: (rnd() * 100).toFixed(1), y: (rnd() * 100).toFixed(1), r: rnd() < 0.8 ? 2 : 3, d: (3 + rnd() * 3).toFixed(1), delay: (rnd() * 4).toFixed(1) });
+    }
+    this.projects = [
+      { id: 'resume', title: 'Resume Evaluator', tags: ['live', 'ai', 'web'], status: 'live',
+        stack: 'NEXT.JS · REACT · TYPESCRIPT · LLM INTEGRATION',
+        media: '/images/projects/resume-evaluator.jpg', caption: "The deployed app's landing page. The score shown is its illustrative example.",
+        metric: 'PDF + DOCX', metricNote: 'in and out, with editable previews',
+        problem: 'Resume feedback is hard to act on when analysis, editing and export happen in separate tools.',
+        approach: 'Parse PDF and DOCX resumes, combine structured scoring with LLM-assisted suggestions, review changes in the browser.',
+        result: 'A deployed review-to-export workflow with editable previews and both PDF and DOCX downloads.',
+        contribution: 'Built the workflow from PDF/DOCX ingestion and structured analysis to editable previews and document exports.',
+        decision: 'Keep deterministic scoring separate from LLM suggestions, and flag new numerical claims before users accept a rewrite.',
+        limitation: "Extraction can lose structure, so users must review parsed content. The score reflects this app's checks, not a specific employer's ATS." },
+      { id: 'rag', title: 'Web-RAG', tags: ['ai'], status: 'complete',
+        stack: 'PYTHON · LLAMAINDEX · OLLAMA · CHROMADB',
+        media: '[ architecture diagram ]', caption: 'Suggested: scrape → chunk → embed → ChromaDB → Ollama, as a small diagram.',
+        metric: 'local', metricNote: 'queries go to Ollama, not a cloud LLM',
+        problem: 'Answering questions across saved web sources should not require sending every query to a cloud LLM.',
+        approach: 'Use LlamaIndex to scrape and chunk pages, embed them locally, persist vectors in ChromaDB, retrieve context for Ollama.',
+        result: 'A local ingestion and question-answering pipeline with persistent retrieval and source URLs in its answers.' },
+      { id: 'clf', title: 'Bangla Sentence Classifier', tags: ['live', 'ai'], status: 'live',
+        stack: 'PYTHON · PYTORCH · TRANSFORMERS · GRADIO',
+        media: '/images/projects/bangla-sentence-classifier.jpg', caption: 'A live Bangla prediction from the deployed Space. One example illustrates the interface, not benchmark accuracy.',
+        metric: '5 classes', metricNote: 'assertive to optative, live on Hugging Face',
+        problem: 'Bangla grammatical sentence classification needs a usable interface alongside the research benchmark.',
+        approach: 'Fine-tune XLM-R with PyTorch and Transformers, then expose sentence-type predictions through Gradio.',
+        result: 'A public Hugging Face Space for five sentence types: assertive, interrogative, imperative, exclamatory, optative.',
+        contribution: 'Worked on the sentence-type research and brought the trained XLM-R classifier into a public Gradio interface with TextLabRUET.',
+        decision: 'Reuse a pretrained multilingual encoder for five grammatical classes, and keep the interface separate from model training.',
+        limitation: 'Accuracy is established for Bangla only, even though the interface accepts other languages. The Space may need time to wake up.' },
+      { id: 'grocery', title: 'Grocery Shopping Tracker', tags: ['mobile'], status: 'dev',
+        stack: 'REACT NATIVE · EXPO · TYPESCRIPT · SUPABASE',
+        media: '[ phone screenshot ]', caption: 'Suggested: the balances screen on a phone frame.',
+        metric: 'integer money', metricNote: 'balances computed without float errors',
+        problem: 'Roommates need a clear record of shared grocery spending and who owes whom.',
+        approach: 'An Expo app around equal expense splits, integer-based money calculations, and Supabase auth and access policies.',
+        result: 'In development: household membership, database safeguards, and a separately tested balance engine.' },
+      { id: 'noor', title: 'NoorTime', tags: ['mobile'], status: 'complete',
+        stack: 'REACT NATIVE · EXPO · TYPESCRIPT · ADHAN',
+        media: '[ phone screenshot ]', caption: 'Suggested: the next-prayer countdown on a phone frame.',
+        metric: 'on-device', metricNote: 'prayer times calculated without a server',
+        problem: "Prayer and fasting schedules need to follow a person's location while staying easy to check and customize.",
+        approach: 'Calculate prayer times on the device with Adhan, support GPS or manual Bangladesh city selection, persist settings with AsyncStorage.',
+        result: 'An Expo app with prayer schedules, Sehri and Iftar times, a next-prayer countdown and local reminders.' }
+    ];
+  }
+  renderVals() {
+    var self = this;
+    var f = this.state.filter;
+    var defs = [['all', 'ALL'], ['live', 'LIVE'], ['ai', 'AI & NLP'], ['web', 'WEB'], ['mobile', 'MOBILE']];
+    var filters = defs.map(function (d) {
+      var count = d[0] === 'all' ? self.projects.length : self.projects.filter(function (p) { return p.tags.indexOf(d[0]) !== -1; }).length;
+      return { label: d[1], count: count, active: d[0] === f, idle: d[0] !== f, go: function () { self.setState({ filter: d[0] }); } };
+    });
+    var list = this.projects.filter(function (p) { return f === 'all' || p.tags.indexOf(f) !== -1; }).map(function (p) {
+      var isOpen = !!self.state.open[p.id];
+      return Object.assign({}, p, {
+        isLive: p.status === 'live', isDone: p.status === 'complete', isDev: p.status === 'dev',
+        hasNotes: !!p.contribution, open: isOpen && !!p.contribution,
+        toggleLabel: isOpen ? 'HIDE ENGINEERING NOTES −' : 'ENGINEERING NOTES +',
+        toggle: function () { var o = Object.assign({}, self.state.open); o[p.id] = !o[p.id]; self.setState({ open: o }); }
+      });
+    });
+    return { stars: this.stars, filters: filters, list: list, shown: list.length };
+  }
+}
+</script>
+</body>
+</html>
